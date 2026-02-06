@@ -3,7 +3,7 @@ name: Publish themes branches
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   publish-themes:
