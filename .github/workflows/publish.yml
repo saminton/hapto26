@@ -1,0 +1,79 @@
+name: Publish themes branches
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-themes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare themes-dev (with dev files)
+        run: |
+          set -e
+
+          SRC_ROOT=www/wp-content/themes
+          DEV_DEST=/tmp/themes-dev
+
+          rm -rf $DEV_DEST
+          mkdir -p $DEV_DEST
+
+          rsync -a $SRC_ROOT/ $DEV_DEST/
+
+      - name: Prepare themes-prod (production only)
+        run: |
+          set -e
+
+          SRC_ROOT=www/wp-content/themes
+          PROD_DEST=/tmp/themes-prod
+
+          rm -rf $PROD_DEST
+          mkdir -p $PROD_DEST
+
+          for THEME in $SRC_ROOT/*; do
+            [ -d "$THEME" ] || continue
+
+            THEME_NAME=$(basename "$THEME")
+            DEST_THEME=$PROD_DEST/$THEME_NAME
+
+            echo "Cleaning theme: $THEME_NAME"
+            mkdir -p $DEST_THEME
+
+            if [ -f "$THEME/.deployignore" ]; then
+              rsync -a \
+                --exclude-from="$THEME/.deployignore" \
+                "$THEME/" \
+                "$DEST_THEME/"
+            else
+              rsync -a "$THEME/" "$DEST_THEME/"
+            fi
+          done
+
+      - name: Publish themes-dev branch
+        run: |
+          cd /tmp/themes-dev
+          git init
+          git checkout -b themes-dev
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update themes (dev)"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push --force origin themes-dev
+
+      - name: Publish themes-prod branch
+        run: |
+          cd /tmp/themes-prod
+          git init
+          git checkout -b themes-prod
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update themes (prod)"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push --force origin themes-prod
