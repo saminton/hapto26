@@ -7,12 +7,14 @@ src/
 package.json
 package-lock.json
 .npmrc
+.nvmrc
+.env.*
 
 gulpfile.js
 
 composer.json
 composer.lock
-vendor/
+tsconfig.json
 
 .git/
 .github/
