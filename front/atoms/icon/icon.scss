@@ -1,0 +1,32 @@
+@import "../../core/imports.scss";
+
+:root {
+	--icon_size: 2.4rem;
+	--icon_fill: var(--black);
+}
+
+// Styles
+
+.icon {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+
+	@include svg-fill(rgb(var(--icon_fill)));
+	@include svg-stroke(rgb(var(--icon_fill)));
+
+	// Preset
+
+	[v-preset="black"] {
+		--icon_fill: var(--black);
+		--icon_stroke: var(--black);
+	}
+
+	svg {
+		width: var(--icon_size);
+		height: var(--icon_size);
+		// inset: 0;
+	}
+}

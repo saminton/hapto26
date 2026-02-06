@@ -1,0 +1,6 @@
+@import "../../core/imports.scss";
+
+.social_links {
+	@include column-gap(1rem);
+	--icon_size: 2.6rem;
+}

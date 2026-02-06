@@ -1,0 +1,120 @@
+// No CSS output!
+// SCSS Mixins only
+
+/* Text sizes */
+/* 
+* Weight guide
+*
+* 100 thin
+* 200 extra-light
+* 300 light
+* 400 regular
+* 500 medium
+* 600 semi-bold
+* 700 bold
+* 800 extra-bold
+* 900 black
+* 
+* Font shorthand: https://www.w3schools.com/css/css_font_shorthand.asp
+* style, weight, size/line-height, font, fallback
+*/
+
+// Yell
+
+@mixin yell-1($break: $laptop) {
+	@include property(font-size, $break, 12rem, 8rem, 5rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+// Titles
+
+@mixin title-1($break: $laptop) {
+	@include property(font-size, $break, 12rem, 8rem, 5rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin title-2($break: $laptop) {
+	@include property(font-size, $break, 8rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin title-3($break: $laptop) {
+	@include property(font-size, $break, 6rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin title-4($break: $laptop) {
+	@include property(font-size, $break, 4rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+// Labels
+
+@mixin label-1($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin label-2($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin label-3($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin label-4($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+// Body
+
+@mixin body-1($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin body-2($break: $laptop) {
+	// Default font
+	font-family: "Arial", sans-serif;
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin body-3($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin body-4($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin body-5($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}
+
+@mixin body-6($break: $laptop) {
+	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 400;
+}

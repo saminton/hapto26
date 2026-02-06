@@ -1,0 +1,19 @@
+@import "../../core/imports.scss";
+
+.textarea {
+	@include input-field;
+
+	.field {
+		min-height: calc(var(--input_height) * 3);
+	}
+
+	.area {
+		padding-top: calc(var(--input_height) / 2 - 0.7em);
+		padding-bottom: calc(var(--input_height) / 2 - 0.7em);
+		flex-shrink: 1;
+		width: 100%;
+		background: transparent;
+		resize: none;
+		overflow: hidden;
+	}
+}

@@ -1,0 +1,49 @@
+{# Vars #}
+
+{% def title = '' %}
+{% def url = '' %}
+{% def is_disabled = false %}
+{% def anim = false %}
+{% def delay = false %}
+{% def is_colorized = false %}
+{% def icon = 'social/twitter' %}
+{% def preset = false %}
+
+{# Block #}
+
+{% if false %}
+	{% block content %}
+		{% if icon %}
+			{% include 'atoms/icon' with {
+				icon: icon,
+				class: 'icon',
+				is_colorized: is_colorized
+			} only %}
+		{% endif %}
+	{% endblock %}
+{% endif %}
+
+{# Template #}
+
+{% if url %}
+	<a class="icon_button {{ class }}"
+		href="{{ url }}"
+		{{ attr('disabled', is_disabled) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim, false) }}
+		{{ attr('data-delay', delay) }}
+		s-cursor="pointer"
+		aria-label="{{ title }}">
+		{{ block('content') }}
+	</a>
+{% else %}
+	<button class="icon_button {{ class }}"
+		{{ attr('disabled', is_disabled) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim) }}
+		{{ attr('data-delay', delay) }}
+		s-cursor="pointer"
+		aria-label="{{ title }}">
+		{{ block('content') }}
+	</button>
+{% endif %}

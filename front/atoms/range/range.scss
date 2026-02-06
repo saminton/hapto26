@@ -1,0 +1,11 @@
+@import "../../core/imports.scss";
+
+.range {
+	display: flex;
+
+	.input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+}

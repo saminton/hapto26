@@ -1,0 +1,13 @@
+@import "../../core/imports.scss";
+
+.nav_buttons {
+	position: relative;
+	pointer-events: none;
+	justify-content: space-between;
+	@include column-gap(1rem);
+
+	.previous,
+	.next {
+		pointer-events: all;
+	}
+}

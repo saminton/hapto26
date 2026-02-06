@@ -1,0 +1,21 @@
+@import "../../core/imports.scss";
+
+.cover {
+	position: relative;
+	max-height: var(--100vh);
+
+	@media (min-width: #{$tablet + 1px}) {
+		height: 62.5vw;
+	}
+
+	@media (min-width: #{$phone + 1px}) and (max-width: $tablet) {
+		height: 110vw;
+	}
+
+	@media (max-width: $phone) {
+		height: 200vw;
+	}
+}
+
+.title {
+}

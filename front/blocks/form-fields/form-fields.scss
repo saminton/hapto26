@@ -1,0 +1,11 @@
+@import "../../core/imports.scss";
+
+.form_fields {
+	.form {
+		@include row-gap(4rem);
+	}
+
+	fieldset {
+		@include column-gap(4rem 2rem);
+	}
+}
