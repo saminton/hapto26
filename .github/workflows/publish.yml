@@ -3,10 +3,16 @@ name: Publish themes branches
 permissions:
   contents: write
 
+concurrency:
+  group: themes-publish
+  cancel-in-progress: true
+
 on:
   push:
     branches:
       - master
+    paths:
+      - 'www/wp-content/themes/**'
 
 jobs:
   publish-themes:
