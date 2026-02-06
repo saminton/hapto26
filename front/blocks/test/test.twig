@@ -1,0 +1,44 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def margin = '' %}
+{% def padding = '' %}
+{% def font = '' %}
+{% def size = '' %}
+{% def title = '' %}
+{% def gallery = [] %}
+
+{# Template #}
+
+<section class="test {{ class }}" v-margin="{{ margin }}">
+	<div class="title" v-flux="default">
+		<p v-font="title_1" v-anim="title" v-delay=".2">
+			{{ title|strip }} Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+		</p>
+
+		{% include 'atoms/button' with {
+			title: 'Button text',
+			class: 'button'
+		} %}
+	</div>
+	<div v-flux="default">
+		<div class="columns">
+			{% for image in gallery %}
+				<div>
+					{% include 'atoms/media' with image|merge({
+						class: 'image',
+						fit: 'cover'
+					}) %}
+				</div>
+			{% endfor %}
+			{% for image in gallery %}
+				<div>
+					{% include 'atoms/media' with image|merge({
+						class: 'image',
+						fit: 'contain'
+					}) %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>

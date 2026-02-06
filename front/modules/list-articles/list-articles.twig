@@ -1,0 +1,14 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def items = [] %}
+
+{# Template #}
+
+<div class="list_articles {{ class }}">
+	<div class="items">
+		{% for item in items %}
+			{% include 'modules/card-article' with item %}
+		{% endfor %}
+	</div>
+</div>

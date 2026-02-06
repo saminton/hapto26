@@ -1,0 +1,18 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="page"
+		v-barba="container"
+		v-barba-namespace="page"
+		v-scroll="main"
+		data-ancestor="{{ ancestor_id }}"
+		data-id="{{ id }}">
+		<div v-flux="medium">
+			<h1 v-font="title_1">
+				{{ post.title }}
+			</h1>
+			<div v-margin="default_top" v-font="format">
+				{{ post.content|autop }}
+			</div>
+		</div>
+	</main>
+{% endblock %}

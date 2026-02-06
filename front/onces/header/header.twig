@@ -1,0 +1,11 @@
+{# Vars #}
+
+{% def items = [] %}
+
+{# Template #}
+
+<div class="header">
+	{% for item in items %}
+		<a href="{{ item.url }}">{{ item.title }}</a>
+	{% endfor %}
+</div>
