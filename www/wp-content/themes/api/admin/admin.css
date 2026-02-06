@@ -1,0 +1,253 @@
+/* .php-error #adminmenuback, .php-error #adminmenuwrap{
+	margin-top: 0;
+} */
+
+/* #woocommerce-product-data, #toplevel_page_woocommerce, .woocommerce-message{
+	display: none;
+} */
+
+/* Custom sidebar group styles */
+
+/* #side-sortables .inside .acf-field .acf-label {
+	background-color: #fff;
+	margin-bottom: 0;
+	padding: 8px 12px;
+	font-size: 14px;
+	line-height: 1.4;
+	border: 1px solid #c3c4c7;
+	border-bottom: none;
+	margin-top: -12px;
+}
+
+#side-sortables
+	.inside
+	.acf-field:not(.acf-field-wysiwyg):not(.acf-field-group)
+	.acf-input {
+	padding: 12px;
+	border: 1px solid #c3c4c7;
+	background-color: #fff;
+}
+
+#side-sortables .inside .acf-field-group .acf-input .acf-fields {
+	padding-top: 12px;
+}
+
+#side-sortables .inside .acf-field-group .acf-input .acf-field {
+	border-top: none;
+} */
+
+#side-sortables .acf-fields > .acf-field > .acf-label > label {
+	font-size: 14px !important;
+	font-weight: 600 !important;
+}
+
+#side-sortables .acf-repeater.-row .acf-field {
+	display: flex;
+	align-items: center;
+}
+
+#side-sortables .acf-repeater.-row .acf-field .acf-label {
+	margin: 0 !important;
+	width: auto !important;
+}
+
+#side-sortables .acf-repeater.-row .acf-field .acf-label label {
+	margin: 0 !important;
+}
+
+/*  */
+
+#wpwrap {
+	background-color: #f3f3f3;
+}
+
+#postdivrich {
+	padding-top: 40px;
+}
+
+.mce-fullscreen #content_ifr {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.mce-edit-area iframe,
+#content_ifr {
+	padding-left: 8px;
+	padding-right: 8px;
+	box-sizing: border-box;
+}
+
+.menu-top.toplevel_page_acf-options-options-globales {
+	display: none;
+}
+
+/* Group */
+
+.acf-field-group .acf-field-group .acf-fields {
+	/* border: none; */
+}
+
+.acf-field-group .acf-field-group .acf-fields > .acf-field {
+	/* padding-left: 0;
+	padding-right: 0; */
+}
+
+#normal-sortables .inside > .acf-field-group > .acf-label label,
+.inside > .acf-field-repeater > .acf-label label {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+#normal-sortables .acf-fields .acf-fields > .acf-field > .acf-label {
+	font-size: 14px;
+}
+
+.acf-image-uploader {
+	max-width: 280px;
+}
+
+/* Correct acf content alignement */
+
+.acf-fields > .acf-field {
+	padding: 12px;
+}
+
+.acf-table {
+	box-sizing: border-box;
+}
+
+/* Yoast tables cleanup */
+
+.column-wpseo-score,
+.column-wpseo-links,
+.column-wpseo-linked,
+.column-wpseo-title,
+.column-wpseo-metadesc,
+.column-wpseo-focuskw {
+	display: none;
+}
+
+/* Flexible content clones */
+
+.acf-flexible-content > .values > .layout > .acf-fields > .acf-field-group:only-child {
+	padding: 0px;
+}
+
+.acf-flexible-content
+	> .values
+	> .layout
+	> .acf-fields
+	> .acf-field-group:only-child
+	> .acf-label {
+	display: none;
+}
+
+.acf-flexible-content
+	> .values
+	> .layout
+	> .acf-fields
+	> .acf-field-group:only-child
+	> .acf-input
+	> .acf-fields {
+	border: none;
+}
+
+/* ACF fixes */
+
+.acf-field-settings .acf-field {
+	padding-left: 32px !important;
+	padding-right: 32px !important;
+	padding-top: 24px !important;
+}
+
+.acf-field-settings .acf-field-setting-fc_layout {
+	margin-left: 32px !important;
+	margin-right: 32px !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	padding-top: 0px !important;
+}
+
+.acf-field-settings-main {
+	padding-top: 0 !important;
+}
+
+.acf-admin-page.acf-internal-post-type .acf-field-editor .acf-field-settings-tab-bar,
+.acf-field-settings-footer {
+	padding-left: 32px !important;
+}
+
+.acf-true-false input {
+	display: none;
+}
+
+.acf-conditional-toggle {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+/* To move to admin theme */
+
+.acf-tab-wrap {
+	overflow: visible;
+}
+
+#titlewrap #title-prompt-text {
+	display: none;
+}
+
+#titlediv #titlewrap #title {
+	box-shadow: inset 0 0 0 1px var(--grey-400) !important;
+}
+
+.imagify-columns {
+	margin-top: 25px;
+}
+
+.imagify-columns div:nth-child(1) {
+	display: none;
+}
+
+.imagify-columns .col-1-3 {
+	width: 50%;
+}
+
+.mce-top-part {
+	top: 37px !important;
+}
+
+body:not(.toplevel_page_graphiql-ide) .wrap {
+	max-width: 980px !important;
+	margin: 0px;
+	padding-left: 50px !important;
+	padding-right: 50px !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+body.acf-admin-page .wrap {
+	max-width: none !important;
+}
+
+#wpbody-content #dashboard-widgets .postbox-container {
+	width: 49.5% !important;
+}
+
+/* ACF File field with preview */
+
+.has-value .file-wrap.show-if-value {
+	display: flex;
+}
+
+.acf-file-uploader .file-wrap .file-icon {
+	position: relative;
+	max-width: 50%;
+}
+
+.acf-file-uploader .file-wrap img {
+	max-width: 100%;
+}
+
+.acf-file-uploader .file-wrap .file-info {
+	margin-left: 0;
+}

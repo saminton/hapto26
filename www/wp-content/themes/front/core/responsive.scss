@@ -1,0 +1,158 @@
+@use "sass:math";
+
+// https://stackoverflow.com/questions/51473574/sass-pass-variable-to-content-from-within-a-mixin
+
+$break-key: null;
+$break-value: null;
+$break-index: 0;
+$key: null;
+$value: null;
+$index: 0;
+
+@mixin breakpoint($i) {
+	$values: map-values($breakpoints);
+	$current: nth($values, $i);
+	$next: null;
+
+	@if $i + 1 <= length($values) {
+		$next: nth($values, $i + 1);
+		$next: nth(map-values($breakpoints), $i + 1);
+	}
+	@if $i == 1 {
+		$current: $max; // max size
+	}
+	@if ($next) {
+		@media (min-width: ($next + 1px)) and (max-width: $current) {
+			@content; // in between sizes
+		}
+	} @else {
+		@media (max-width: $current) {
+			@content; // min size
+		}
+	}
+}
+
+@mixin breakpoints() {
+	$break-key: max !global;
+	$break-value: $max !global;
+	$break-index: 0 !global;
+	@media (min-width: ($max + 1px)) {
+		@content;
+	}
+	@each $name, $size in $breakpoints {
+		@include breakpoint($break-index + 1) {
+			$break-key: $name !global;
+			$break-value: $size !global;
+			$break-index: $break-index + 1 !global;
+			// key: $break-key;
+			@content;
+		}
+	}
+}
+
+// @mixin responsive-class($list: ()) {
+// 	$key: null !global;
+// 	$value: null !global;
+// 	$index: 0 !global;
+
+// 	@each $key, $value in $list {
+// 		$key: $key !global;
+// 		$value: $value !global;
+// 		@if $key == "" {
+// 			@content;
+// 		} @else {
+// 			&_#{$key} {
+// 				@content;
+// 			}
+// 		}
+// 		$index: $index + 1 !global;
+// 	}
+
+// 	@include breakpoints {
+// 		$index: 0 !global;
+// 		@each $key, $value in $list {
+// 			$key: $key !global;
+// 			$value: $value !global;
+// 			@if ($break-index > 1) {
+// 				// Exclude max and laptop
+// 				@if $key == "" {
+// 					&\:#{$break-key} {
+// 						@content;
+// 					}
+// 				} @else {
+// 					&_#{$key}\:#{$break-key} {
+// 						@content;
+// 					}
+// 				}
+// 				$index: $index + 1 !global;
+// 			}
+// 		}
+// 	}
+// }
+
+// @mixin responsive {
+
+// 	@content;
+
+// 	// for all breakpoints
+
+// 	@each $value in $values {
+// 		$index: index($values, $value);
+// 		// @debug $index;
+// 		// @debug $value;
+// 		@if $index != 1 {
+// 			@include breakpoint($index) {
+// 				@content;
+// 			}
+// 		}
+// 	}
+// }
+
+@mixin property($property, $break: null, $values...) {
+	// break: $break;
+
+	@if $break {
+		// if breakpoint passed
+
+		// $keys: map-keys($breakpoints);
+		$key-values: map-values($breakpoints);
+		$index: index($key-values, $break);
+		@if not $index {
+			$index: 1;
+		}
+		$value: nth($values, min($index, length($values)));
+
+		// @debug $keys;
+		// @debug $key-values;
+		// @debug $index;
+		// @debug $property;
+		// @debug $index;
+		// @debug $value;
+
+		#{$property}: $value;
+	} @else {
+		#{$property}: nth($values, 1);
+
+		// for all breakpoints
+
+		$index: 1;
+		@each $value in $values {
+			// @debug $index;
+			// @debug $value;
+			@if $index != 1 {
+				@include breakpoint($index) {
+					#{$property}: $value;
+				}
+			}
+			$index: $index + 1;
+		}
+	}
+}
+
+// @mixin responsive-check($name){
+// 	@if mixin-exists($name){
+// 		@include responsive-class{
+// 			@content;
+// 		}
+// 	}
+// }

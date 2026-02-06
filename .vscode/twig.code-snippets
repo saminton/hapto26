@@ -1,0 +1,50 @@
+{
+	"def": {
+		"prefix": "def",
+		"body": ["{% def ${1} = ${2:''} %}$0"],
+		"description": "",
+		"scope": "twig"
+	},
+	"merge": {
+		"prefix": "merge",
+		"body": ["merge({", "\tclass: '$1'$0", "})"],
+		"description": "",
+		"scope": "twig"
+	},
+	"incw": {
+		"prefix": "incw",
+		"body": ["{% include \"${1:template}\" with $0 %}"],
+		"description": "",
+		"scope": "twig"
+	},
+	"embedw": {
+		"prefix": "embedw",
+		"body": [
+			"{% embed \"${1:template}\" with $2 %}",
+			"\t{% block $3 %}",
+			"\t\t$0",
+			"\t{% endblock %}",
+			"{% endembed %}"
+		],
+		"description": "",
+		"scope": "twig"
+	},
+	"flux": {
+		"prefix": "flux",
+		"body": ["<div v-flux=\"${1:default}\">", "\t$0", "</div>"],
+		"description": "",
+		"scope": "twig"
+	},
+	"font": {
+		"prefix": "font",
+		"body": ["<span v-font=\"${1:default}\">$0</span>"],
+		"description": "",
+		"scope": "twig"
+	},
+	"attr": {
+		"prefix": "attr",
+		"body": ["{{ attr('$1', $0) }}"],
+		"description": "",
+		"scope": "twig"
+	}
+}

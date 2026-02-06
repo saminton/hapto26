@@ -1,0 +1,14 @@
+{
+	"useTabs": true,
+	"printWidth": 90,
+	"semi": true,
+	"singleQuote": false,
+	"quoteProps": "consistent",
+	"arrowParens": "always",
+	"braceStyle": "1tbs",
+	"trailingCommaPHP": false,
+	"bracketSameLine": true,
+	"htmlWhitespaceSensitivity": "strict",
+	"bracketSpacing": true,
+	"plugins": ["@zackad/prettier-plugin-twig", "@prettier/plugin-php"]
+}

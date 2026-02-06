@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"teamchilla.blueprint",
+		"mblode.twig-language-2",
+		"bmewburn.vscode-intelephense-client",
+		"esbenp.prettier-vscode"
+	]
+}

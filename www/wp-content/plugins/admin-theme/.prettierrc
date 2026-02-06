@@ -1,0 +1,11 @@
+{
+	"useTabs": true,
+	"printWidth": 100,
+	"semi": true,
+	"singleQuote": false,
+	"quoteProps": "consistent",
+	"arrowParens": "always",
+	"singleAttributePerLine": true,
+	"braceStyle": "1tbs",
+	"trailingCommaPHP": false
+}

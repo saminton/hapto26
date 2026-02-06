@@ -1,0 +1,34 @@
+@import "./imports.scss";
+
+// Font includes
+
+@import "../theme/fonts.scss";
+
+// Global
+
+@import "../core/reset.scss";
+@import "../core/global.scss";
+
+// Theme styles
+
+@import "../theme/animations.scss";
+@import "../theme/cursors.scss";
+@import "../theme/format.scss";
+
+body[grid]::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	@include flux(var(--flux_large));
+	background: linear-gradient(90deg, transparent var(--gutter), red var(--gutter));
+	opacity: 0.1;
+	pointer-events: none;
+
+	@media (min-width: #{$phone + 1px}) {
+		background-size: calc((100% - var(--gutter)) / 12);
+	}
+
+	@media (max-width: $phone) {
+		background-size: calc((100% - var(--gutter)) / 6);
+	}
+}

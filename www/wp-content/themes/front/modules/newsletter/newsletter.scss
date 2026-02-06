@@ -1,0 +1,16 @@
+.newsletter {
+	width: 100%;
+
+	&[aria-busy="true"] &-input {
+		pointer-events: none;
+	}
+
+	&-submit,
+	&-spinner {
+		margin-right: 0.9rem;
+
+		&[aria-hidden="true"] {
+			display: none;
+		}
+	}
+}

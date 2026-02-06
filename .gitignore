@@ -1,0 +1,55 @@
+# ignore everything in the "wp-content" directory, except:
+# "mu-plugins", "plugins", "themes" directory
+
+www/wp-content/*
+!www/wp-content/plugins/
+!www/wp-content/mu-plugins/
+!www/wp-content/themes/
+# !www/wp-content/uploads/
+
+
+# ignore system files
+
+.idea
+.DS_Store
+* alias
+
+# ignore package files
+
+node_modules
+*-lock.yaml
+*-lock.json
+.lock
+
+# ignore cache files
+
+/cache
+!www/wp-content/themes/front/vendor/twig/twig/src/cache
+
+# ignore config files
+
+.htaccess
+.env
+www/wp-config.php
+
+# ignore uncompressed dump files
+bdd/*.dump
+
+# ignore log files
+
+www/wp-content/uploads/wc-logs/*
+*.log*
+
+# ignore build
+
+www/wp-content/themes/**/build/*
+
+# nuxt
+
+.nuxt
+.nitro
+.cache
+.output
+.ecosystem.config.js
+nuxt/dist
+nuxt/yarn.lock

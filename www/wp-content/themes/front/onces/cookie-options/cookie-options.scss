@@ -1,0 +1,61 @@
+@import "../../core/imports.scss";
+
+.cookie_options {
+	position: absolute;
+	z-index: 200;
+
+	background: rgb(var(--text));
+	color: rgb(var(--body));
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 1.8rem 1.8rem 2.4rem 1.8rem;
+	@include transition(var(--timing), var(--ease)-out, transform, visibility);
+
+	@media (min-width: #{$phone + 1px}) {
+		bottom: 3.8rem;
+		left: 3.8rem;
+		width: 100%;
+		max-width: 37.8rem;
+	}
+
+	@media (max-width: $phone) {
+		width: calc(100% - 4rem);
+		bottom: 2rem;
+		left: 2rem;
+	}
+
+	&[data-completed="true"] {
+		transform: translateX(-100%) translateX(-5rem);
+		visibility: hidden;
+	}
+
+	&[aria-hidden="true"] {
+		display: none;
+	}
+
+	.buttons {
+		margin-top: 1.5rem;
+		@include column-gap(2rem);
+	}
+
+	.choices {
+		@include row-gap(1rem);
+		margin-top: 0.8rem;
+	}
+
+	.choice {
+	}
+
+	.checkbox {
+	}
+
+	.close {
+		position: absolute;
+		@include rect(3.4rem);
+		top: 1.8rem;
+		right: 1.8rem;
+		background: red;
+	}
+}

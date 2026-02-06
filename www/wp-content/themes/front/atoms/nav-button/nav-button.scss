@@ -1,0 +1,9 @@
+@import "../../core/imports.scss";
+
+.nav_button {
+	@include rect(4rem);
+
+	--icon_fill: var(--white);
+	background: rgb(var(--black));
+	border-radius: 100%;
+}

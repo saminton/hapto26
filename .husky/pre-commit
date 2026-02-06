@@ -1,0 +1,9 @@
+# If nvm is installed then use it
+# if [ -z "$(command -v nvm)" ]; then
+# 	echo "nvm is not installed."
+# else
+# 	nvm use
+# fi
+
+git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g' | xargs prettier --write --ignore-unknown
+git update-index --again

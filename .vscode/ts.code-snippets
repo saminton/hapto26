@@ -1,0 +1,73 @@
+{
+	"child": {
+		"prefix": "child",
+		"body": ["const $1El = child(\"${2:$1}\");$0"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"children": {
+		"prefix": "children",
+		"body": ["const $1Els = children(\"${2:$1}\");$0"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"store": {
+		"prefix": "store",
+		"body": ["const $1 = useStore(\"$1\");$0"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"on": {
+		"prefix": "on",
+		"body": ["on(${1:node}, '${2:click}', $3);$0"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"effect": {
+		"prefix": "effect",
+		"body": ["effect(() => {", "\t$0", "})"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"watch": {
+		"prefix": "watch",
+		"body": ["watch($1, $2);$0"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"goTo": {
+		"prefix": "goTo",
+		"body": [
+			"const next = () => {",
+			"\tgoTo(index.value + 1);",
+			"};",
+			"",
+			"const previous = () => {",
+			"\tgoTo(index.value - 1);",
+			"};",
+			"",
+			"const goTo = (i: number) => {",
+			"\tconst total = items.length;",
+			"",
+			"\ti = ((i % total) + total) % total; // Loop",
+			"\t// i = clamp(0, total - 1, i); // Clamp",
+			"",
+			"\tindex.value = i;",
+			"};"
+		],
+		"description": "",
+		"scope": "typescript"
+	},
+	"receive": {
+		"prefix": "receive",
+		"body": ["const $1 = receive(\"$1\", node);$0"],
+		"description": "",
+		"scope": "typescript"
+	},
+	"ref": {
+		"prefix": "ref",
+		"body": ["const $1 = ref($2);$0"],
+		"description": "",
+		"scope": "typescript"
+	}
+}

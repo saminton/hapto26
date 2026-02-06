@@ -1,0 +1,28 @@
+@import "../../core/imports.scss";
+
+.admin_widget {
+	position: fixed;
+	left: 2rem;
+	top: 50%;
+	z-index: 9999;
+
+	width: 5rem;
+	background: white;
+	transform: translateY(-50%);
+	border-radius: 1rem;
+
+	padding: 1.5rem 1rem;
+	@include row-gap(1.5rem);
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 0.3rem 0.5rem 0 rgba(var(--black), 0.2);
+
+	svg {
+		@include rect(2.5rem);
+		@include svg-fill(#444);
+	}
+
+	a {
+		display: flex;
+	}
+}

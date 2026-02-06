@@ -1,0 +1,31 @@
+@import "../../core/imports.scss";
+
+:root {
+	--label_background: var(--beige);
+	--label_color: var(--black);
+}
+
+// Styles
+
+.label {
+	display: inline-flex;
+	padding: 0.7rem 1.5rem 0.3rem;
+	background: rgb(var(--label_background));
+	min-height: 3rem;
+	border-radius: 1.5rem;
+	justify-content: center;
+	text-align: center;
+
+	// Presets
+
+	// [v-preset="purple"] {
+	// 	--label_background: var(--purple);
+	// }
+
+	// [v-preset="white"] {
+	// 	--label_background: var(--white);
+	// }
+
+	.title {
+	}
+}

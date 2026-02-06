@@ -1,0 +1,25 @@
+{
+	"name": "gulp",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"config": {},
+	"scripts": {
+		"retrieve": "git pull -X theirs && cd www/wp-content/themes/front && npm run build",
+		"setup-prod": "cp www/.htaccess.prod www/.htaccess && cp www/wp-content/themes/front/.env.prod www/wp-content/themes/front/.env && cd www/wp-content && mkdir -v -m 777 uploads && cd themes/front && npm i && npm run build",
+		"setup-mac": "bash ./tasks/setup.sh",
+		"setup-win": "cd ./tasks/ && setup.bat",
+		"format": "cd www/wp-content/themes/front/ && npm run format",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@prettier/plugin-php": "0.22.2",
+		"@zackad/prettier-plugin-twig": "0.11.1",
+		"husky": "9.1.5",
+		"prettier": "3.3.3"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
+}

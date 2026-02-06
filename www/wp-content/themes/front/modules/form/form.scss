@@ -1,0 +1,9 @@
+@import "../../core/imports.scss";
+
+.form {
+	.fields[aria-hidden="true"],
+	.success[aria-hidden="true"],
+	.error[aria-hidden="true"] {
+		display: none;
+	}
+}

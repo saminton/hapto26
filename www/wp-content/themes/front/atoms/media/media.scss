@@ -1,0 +1,30 @@
+@import "../../core/imports.scss";
+
+.media {
+	display: block;
+	position: relative;
+
+	&:not([fit]) {
+		@include aspect-ratio(var(--ratio));
+	}
+
+	.image,
+	.svg,
+	.video {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+	}
+
+	&[fit="cover"] .image,
+	&[fit="cover"] .svg,
+	&[fit="cover"] .video {
+		object-fit: cover;
+	}
+
+	&[fit="contain"] .image,
+	&[fit="contain"] .svg,
+	&[fit="contain"] .video {
+		object-fit: contain;
+	}
+}

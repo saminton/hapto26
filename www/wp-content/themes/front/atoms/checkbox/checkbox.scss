@@ -1,0 +1,67 @@
+@import "../../core/imports.scss";
+
+:root {
+	--checkbox_color: var(--black);
+	--checkbox_background: var(--white);
+	--checkbox_border: var(--black);
+	--checkbox_checked_color: var(--white);
+	--checkbox_checked_background: var(--black);
+	--checkbox_checked_border: var(--black);
+}
+
+// Styles
+
+.checkbox {
+	display: flex;
+	align-items: center;
+
+	// Presets
+
+	// [v-preset="red"] {
+	// }
+
+	.label {
+		margin-left: 1rem;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.tick {
+		position: relative;
+		display: block;
+		@include rect(2.3rem);
+		border: var(--input_border_width) solid;
+		border-radius: 4px;
+
+		color: rgb(var(--checkbox_color));
+		background: rgb(var(--checkbox_background));
+		border-color: rgb(var(--checkbox_border));
+	}
+
+	input {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	input:checked + .tick {
+		color: rgb(var(--checkbox_checked_color));
+		background: rgb(var(--checkbox_checked_background));
+		border-color: rgb(var(--checkbox_checked_border));
+	}
+
+	input:disabled + * {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	input:focus + .tick {
+		outline: var(--focus);
+	}
+}

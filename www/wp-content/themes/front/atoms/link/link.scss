@@ -1,0 +1,12 @@
+@import "../../core/imports.scss";
+
+.link {
+	text-decoration: underline;
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+
+	.icon {
+		margin-left: 0.8rem;
+	}
+}

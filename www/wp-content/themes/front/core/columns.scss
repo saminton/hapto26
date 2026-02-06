@@ -1,0 +1,124 @@
+@use "sass:math";
+
+// No CSS output!
+// SCSS Mixins only
+
+@mixin columns($cols, $gap: var(--gutter), $override: false) {
+	$debug: false;
+	$total: 0;
+	$items: 0;
+
+	// gap: $gap // safari bug & compatible with IE
+	display: flex;
+	flex-wrap: wrap;
+
+	$row-gap: $gap;
+	$column-gap: $gap;
+
+	@if $debug {
+		outline: 1px solid red;
+	}
+
+	@each $col in $cols {
+		$items: $items + 1;
+
+		@if unitless($col) {
+			$total: $total + $col;
+		}
+	}
+
+	@if $override {
+		$total: $override;
+	}
+
+	@if length($gap) == 2 {
+		$row-gap: nth($gap, 1);
+		$column-gap: nth($gap, 2);
+		gap: $row-gap $column-gap;
+		min-width: calc(100%);
+	} @else {
+		column-gap: $row-gap;
+		min-width: calc(100%);
+	}
+
+	@for $i from 1 through length($cols) {
+		$val: nth($cols, $i);
+		$perc: math.div($val, $total) * 100%;
+		$width: $val;
+
+		@if unitless($val) {
+			$width: calc(#{$perc} - #{$column-gap} + #{$column-gap} / (#{$total} / #{$val}));
+		}
+
+		& > *:nth-child(#{$items}n + #{$i}) {
+			min-width: $width;
+			max-width: $width;
+			flex-shrink: 0;
+
+			@if $debug {
+				outline: 1px solid blue;
+			}
+
+			// @if length($gap) == 2 {
+			// 	margin-bottom: $row-gap;
+			// }
+		}
+	}
+}
+
+@mixin row-gap($gap: var(--gutter), $pad: false) {
+	display: flex;
+	flex-direction: column;
+
+	@if $pad {
+		margin-top: calc(#{$gap} * -0.5);
+		margin-bottom: calc(#{$gap} * -0.5);
+
+		& > * {
+			padding-top: calc(#{$gap} * 0.5);
+			padding-bottom: calc(#{$gap} * 0.5);
+		}
+	} @else {
+		gap: $gap;
+	}
+}
+
+@mixin column-gap($gap: var(--gutter), $pad: false) {
+	display: flex;
+	flex-wrap: wrap;
+
+	$type: margin;
+	@if $pad {
+		@if length($gap) == 2 {
+			$row-gap: nth($gap, 1);
+			$column-gap: nth($gap, 2);
+
+			margin-left: calc(#{$column-gap} * -0.5);
+			margin-right: calc(#{$column-gap} * -0.5);
+			margin-top: calc(#{$row-gap} * -0.5);
+			margin-bottom: calc(#{$row-gap} * -0.5);
+
+			& > * {
+				padding-left: calc(#{$column-gap} * 0.5);
+				padding-right: calc(#{$column-gap} * 0.5);
+				padding-top: calc(#{$row-gap} * 0.5);
+				padding-bottom: calc(#{$row-gap} * 0.5);
+				flex-shrink: 0;
+			}
+		} @else {
+			margin-left: calc(#{$gap} * -0.5);
+			margin-right: calc(#{$gap} * -0.5);
+
+			& > * {
+				padding-left: calc(#{$gap} * 0.5);
+				padding-right: calc(#{$gap} * 0.5);
+			}
+		}
+	} @else {
+		@if length($gap) == 2 {
+			gap: $gap;
+		} @else {
+			column-gap: $gap;
+		}
+	}
+}

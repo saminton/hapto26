@@ -1,0 +1,13 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="{{snakeCase name}}" 
+		v-barba="container" 
+		v-barba-namespace="{{snakeCase name}}" 
+		v-scroll="main"
+		data-ancestor=""
+		data-id="">
+		{% include 'blocks/cover' with {
+			title: post.title
+		} only %}
+	</main>
+{% endblock %}

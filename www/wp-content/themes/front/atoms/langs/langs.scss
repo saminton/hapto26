@@ -1,0 +1,8 @@
+@import "../../core/imports.scss";
+
+.langs {
+	.items {
+		@include column-gap(1rem);
+		flex-wrap: nowrap;
+	}
+}
