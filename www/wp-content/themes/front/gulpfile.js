@@ -1,7 +1,7 @@
 import browserSync from "browser-sync";
 import concat from "gulp-concat";
 import esbuild from "gulp-esbuild";
-import dartSass from "sass";
+import * as dartSass from "sass";
 import gulp from "gulp";
 import gulpSass from "gulp-sass";
 import livereload from "gulp-livereload";
@@ -170,7 +170,11 @@ export function styles(complete) {
 			.src(cssPaths)
 			.pipe(sourcemaps.init())
 			.pipe(sassGlob())
-			.pipe(sassCompiler().on("error", sassCompiler.logError))
+			.pipe(
+				sassCompiler({
+					silenceDeprecations: ["import", "global-builtin", "color-functions"],
+				}).on("error", sassCompiler.logError),
+			)
 			.pipe(postcss(postOptions))
 			.pipe(sourcemaps.write())
 			.pipe(concat("app.css"))
@@ -180,60 +184,15 @@ export function styles(complete) {
 		return gulp
 			.src(cssPaths)
 			.pipe(sassGlob())
-			.pipe(sassCompiler().on("error", sassCompiler.logError))
+			.pipe(
+				sassCompiler({
+					silenceDeprecations: ["import", "global-builtin", "color-functions"],
+				}).on("error", sassCompiler.logError),
+			)
 			.pipe(postcss(postOptions))
 			.pipe(concat("app.min.css"))
 			.pipe(gulp.dest(output.styles));
 }
-
-// export async function format(file) {
-
-// 	if(isFormatting) return;
-// 	isFormatting = true;
-
-// 	console.log("Formatting", file)
-// 	await gulp
-// 		.src(file, { base: "./" })
-// 		.pipe(prettier())
-// 		.on("error", (error) => {
-// 			console.log("ERROR: parsing file on line", error.loc.start.line);
-// 			console.log(error.codeFrame);
-// 			this.emit("end");
-// 		})
-// 		.pipe(gulp.dest('.'));
-
-// 	await new Promise((resolve, reject) => {
-// 		setTimeout(() => {
-// 			resolve();
-// 		}, 1000);
-// 	})
-
-// 	isFormatting = false;
-// }
-
-// export async function format() {
-// 	const { js, css, twig, php } = getFolders();
-
-// 	await gulp
-// 		.src([...js, ...css, ...twig, ...php], { base: "./" })
-// 		.pipe(prettier())
-// 		.on("error", (error) => {
-// 			console.log("ERROR: parsing", error.fileName, "on line", error.loc.start.line);
-// 			console.log(error.codeFrame);
-// 		})
-// 		.pipe(gulp.dest("."));
-// }
-
-// export async function formatFile(path) {
-// 	await gulp
-// 		.src(path, { base: "./" })
-// 		.pipe(prettier())
-// 		.on("error", (error) => {
-// 			console.log("ERROR: parsing", error.fileName, "on line", error.loc.start.line);
-// 			console.log(error.codeFrame);
-// 		})
-// 		.pipe(gulp.dest("."));
-// }
 
 // Webserver
 
