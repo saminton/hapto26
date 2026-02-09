@@ -1,0 +1,157 @@
+{
+	"key": "group_612e47849a2cc",
+	"title": "Cookies",
+	"fields": [
+		{
+			"key": "field_612e478b71ee2",
+			"label": "Bannière cookie",
+			"name": "cookie_banner",
+			"type": "group",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_612e47bc71ee4",
+					"label": "Texte",
+					"name": "text",
+					"type": "text",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "Ce site utilise les cookies afin d'améliorer nos services. En appuyant sur \"accepter\", vous acceptez l'utilisation de tous les cookies.",
+					"placeholder": "",
+					"prepend": "",
+					"append": "",
+					"maxlength": ""
+				}
+			]
+		},
+		{
+			"key": "field_612e479e71ee3",
+			"label": "Paramétrage des cookies",
+			"name": "cookie_options",
+			"type": "group",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_612e47d471ee6",
+					"label": "Titre",
+					"name": "title",
+					"type": "text",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "Paramétrage des cookies",
+					"placeholder": "",
+					"prepend": "",
+					"append": "",
+					"maxlength": ""
+				},
+				{
+					"key": "field_612e47e471ee7",
+					"label": "Essentiel",
+					"name": "essentiel",
+					"type": "wysiwyg",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "Ces cookies sont nécessaires au bon fonctionnement du site. Ils ne peuvent pas être désactivés.",
+					"tabs": "visual",
+					"toolbar": "very_simple",
+					"media_upload": 0,
+					"delay": 0,
+					"wysiwyg_height": ""
+				},
+				{
+					"key": "field_612e47ee71ee8",
+					"label": "Mesure d'audience",
+					"name": "analytics",
+					"type": "wysiwyg",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "Ces cookies nous permettent de mesurer le nombre de visites, de visiteurs et les sources du trafic sur notre site (contenu des parcours, etc.), d’établir des statistiques afin d’en améliorer la qualité, l’ergonomie et la performance.",
+					"tabs": "visual",
+					"toolbar": "very_simple",
+					"media_upload": 0,
+					"delay": 0,
+					"wysiwyg_height": ""
+				},
+				{
+					"key": "field_612e480b71ee9",
+					"label": "Marketing",
+					"name": "ads",
+					"type": "wysiwyg",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "Les cookies marketing sont utilisés pour effectuer le suivi des visiteurs au travers des sites Web. Le but est d'afficher des publicités qui sont pertinentes et intéressantes pour l'utilisateur individuel et donc plus précieuses pour les éditeurs et annonceurs tiers.",
+					"tabs": "visual",
+					"toolbar": "very_simple",
+					"media_upload": 0,
+					"delay": 0,
+					"wysiwyg_height": ""
+				}
+			]
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "options_page",
+				"operator": "==",
+				"value": "acf-options-divers-default"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "seamless",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": ["the_content"],
+	"active": true,
+	"description": "",
+	"show_in_rest": 1,
+	"modified": 1675178175
+}

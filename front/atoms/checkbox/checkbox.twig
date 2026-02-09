@@ -1,0 +1,36 @@
+{# Vars #}
+
+{% def name = '' %}
+{% def value = '' %}
+{% def label = '' %}
+{% def anim = false %}
+{% def delay = false %}
+{% def attr = '' %}
+{% def is_checked = false %}
+{% def is_disabled = false %}
+{% def is_required = false %}
+{% def preset = false %}
+
+{# Template #}
+
+<label class="checkbox {{ class }}"
+	{{ attr('v-anim', anim) }}
+	{{ attr('data-delay', delay) }}
+	{{ attr('v-preset', preset) }}
+	s-cursor="pointer">
+	<input type="checkbox"
+		name="{{ name }}"
+		value="{{ value }}"
+		{{ attr('checked', is_checked) }}
+		{{ attr('disabled', is_disabled) }}
+		{{ attr('required', is_required) }}
+		{{ attr|default('') }} />
+
+	<span class="tick"></span>
+
+	<span class="label">
+		{% block label %}
+			<span v-font="label_1">{{ label }}</span>
+		{% endblock %}
+	</span>
+</label>
