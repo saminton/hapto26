@@ -4,7 +4,7 @@ import { toArray } from "utils";
 
 export function getBounds(
 	el: Element, //
-	scroll: Scroll = null
+	scroll: Scroll | undefined = undefined,
 ): Bounds {
 	if (!el) console.warn(`Bounds: No HTML element passed`);
 
@@ -29,7 +29,7 @@ export function getBounds(
 export function getRelativeBounds(
 	a: HTMLElement | Bounds,
 	b: HTMLElement | Bounds,
-	scroll?: Scroll
+	scroll?: Scroll,
 ): Bounds {
 	if (a! instanceof HTMLElement) a = getBounds(a, scroll);
 	if (b! instanceof HTMLElement) b = getBounds(b, scroll);
@@ -49,7 +49,7 @@ export function getRelativePosition(a: Bounds, b: Bounds): Bounds {
 	const right = b.right - a.right;
 	const bottom = b.bottom - a.bottom;
 
-	return { x, y, left, top, right, bottom };
+	return { x, y, left, top, right, bottom, width: right - left, height: bottom - top };
 }
 
 export function getStyles(el: HTMLElement, ...names) {
@@ -95,8 +95,8 @@ export const getTransform = (el: HTMLElement) => {
 	};
 };
 
-let globalStyle = null;
-export const cssVar = (name: string, node: HTMLElement = null) => {
+let globalStyle;
+export const cssVar = (name: string, node: HTMLElement | undefined) => {
 	if (!globalStyle) {
 		globalStyle = getComputedStyle(document.documentElement);
 	}
@@ -107,7 +107,7 @@ export const cssVar = (name: string, node: HTMLElement = null) => {
 	}
 };
 
-export const cssVarRGB = (name: string, node: HTMLElement = null): number[] => {
+export const cssVarRGB = (name: string, node: HTMLElement | undefined): number[] => {
 	return cssVar(name, node)
 		.split(",")
 		.map((value: string) => Number(value) / 255);
@@ -116,7 +116,7 @@ export const cssVarRGB = (name: string, node: HTMLElement = null): number[] => {
 export const attr = (
 	els: HTMLElement | HTMLElement[] | NodeList,
 	prop: string,
-	value: boolean | string | number
+	value: boolean | string | number,
 ) => {
 	toArray(els).forEach((el) => {
 		if (!el) return;
@@ -129,7 +129,7 @@ export const attr = (
 export const style = (
 	els: HTMLElement | HTMLElement[] | NodeList,
 	prop: string,
-	value: boolean | string | number
+	value: boolean | string | number,
 ) => {
 	if (!isNaN(Number(value)) && value != "")
 		value = Math.round(Number(value) * 1000) / 1000;
@@ -162,7 +162,7 @@ export type CSSStyle = {
 
 export function styles(
 	el: HTMLElement | HTMLElement[],
-	styles: Partial<CSSStyleDeclaration> | CSSStyle
+	styles: Partial<CSSStyleDeclaration> | CSSStyle,
 ) {
 	let transform = "";
 	for (const [key, value] of Object.entries(styles)) {
@@ -185,7 +185,7 @@ export function styles(
 export const aria = (
 	els: HTMLElement | HTMLElement[] | NodeList,
 	prop: string,
-	value: boolean | string
+	value: boolean | string,
 ) => {
 	if (!els) return;
 	if (value === true) value = "true";
@@ -249,7 +249,7 @@ export const aria = (
 
 	if (correct.indexOf(prop) == -1)
 		console.warn(
-			`aria-${prop} is incorrect, available attributes: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes`
+			`aria-${prop} is incorrect, available attributes: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes`,
 		);
 
 	toArray(els).forEach((el) => {

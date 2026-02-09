@@ -7,6 +7,6 @@ export type Bounds = {
 	top: number;
 	right: number;
 	bottom: number;
-	width?: number;
-	height?: number;
+	width: number;
+	height: number;
 };

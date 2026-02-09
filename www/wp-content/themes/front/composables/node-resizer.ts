@@ -2,11 +2,11 @@ import { isRef } from "@vue/reactivity";
 import { debounce, toArray } from "../utils";
 
 function NodeResizer() {
-	let storedItems = [];
+	let storedItems: {}[] = [];
 
 	const onResize = (entries) => {
 		entries.forEach((entry) => {
-			storedItems.forEach((item) => {
+			storedItems.forEach((item: any) => {
 				if (entry.target === item.el) item.callback(entry);
 			});
 		});
@@ -38,7 +38,7 @@ function NodeResizer() {
 
 // Instance
 
-let resizer = null;
+let resizer;
 
 // Composables
 

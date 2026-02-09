@@ -45,10 +45,10 @@ export function Scroll(args) {
 	const store = useStore("scroll");
 	const emitter = useEmitter();
 	const resizer = useNodeResizer();
-	let mutator = null;
+	let mutator;
 
 	const isSmoothed = computed(() => !(device.isTouch || device.isTablet));
-	const childEls = ref(null);
+	const childEls = ref([]);
 
 	const position = ref(0);
 	const target = ref(0);
@@ -61,8 +61,8 @@ export function Scroll(args) {
 
 	const ease = easing("1, 0, 1, 1");
 
-	let stopSync = null;
-	let anim = null;
+	let stopSync;
+	let anim;
 	if (isMain) store.el = node;
 	node.scrollTop = 0; // reset scroll (firefox refresh page bug fix)
 
@@ -173,10 +173,10 @@ export function Scroll(args) {
 	const onKeyDown = (el, event) => {
 		if (!isEnabled.value || !size.value) return;
 
-		const tagName = document.activeElement.tagName.toLowerCase();
+		const tagName = document.activeElement?.tagName.toLowerCase();
 		const ignore = ["input", "button", "a", "textarea"];
 
-		if (ignore.indexOf(tagName) != -1) return null;
+		if (!tagName || ignore.indexOf(tagName) != -1) return null;
 
 		switch (event.keyCode) {
 			case 40:
@@ -256,7 +256,7 @@ export function Scroll(args) {
 			node.style.overflowY = "auto";
 
 			// Remove any applied transforms
-			childEls.value?.forEach((el) => {
+			childEls.value?.forEach((el: HTMLElement) => {
 				el.style.transform = "";
 				// el.style.willChange = "";
 			});

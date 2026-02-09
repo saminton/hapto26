@@ -9,8 +9,8 @@ import { useReactivity } from "core";
 
 export const useAccordion = (props: {
 	el?: HTMLElement;
-	summaryEl?: HTMLButtonElement;
-	contentEl?: HTMLElement;
+	summaryEl: HTMLButtonElement;
+	contentEl: HTMLElement;
 	isActive?: boolean | Ref<boolean>;
 }) => {
 	// Vars
@@ -27,7 +27,7 @@ export const useAccordion = (props: {
 	}) as typeof props;
 
 	const formEls = Array.from(contentEl.querySelectorAll("button, input, textarea"));
-	const isOpen = ref(null);
+	const isOpen = ref(false);
 	let contentHeight = 0;
 
 	const { watch, effect } = useReactivity();
@@ -92,7 +92,7 @@ export const useAccordion = (props: {
 
 	effect(() => {
 		// Make form elements unfocasables when collapsed
-		formEls.forEach((el: HTMLElement) => {
+		formEls.forEach((el: Element) => {
 			if (!isOpen.value) el.setAttribute("tabindex", "-1");
 			else el.removeAttribute("tabindex");
 		});
