@@ -1,3 +1,5 @@
+@use "../core/utils";
+
 // convert fonts
 // https://transfonter.org/
 
@@ -20,5 +22,5 @@ $karla: $dir + "karla/karla";
 
 // Karla
 
-@include font-face("Karla", $karla + "-regular", 400, normal);
-@include font-face("Karla", $karla + "-italic", 400, italic);
+@include utils.font-face("Karla", $karla + "-regular", 400, normal);
+@include utils.font-face("Karla", $karla + "-italic", 400, italic);

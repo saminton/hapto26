@@ -1,3 +1,4 @@
+@use "sass:list";
 @use "sass:math";
 
 // No CSS output!
@@ -22,7 +23,7 @@
 	@each $col in $cols {
 		$items: $items + 1;
 
-		@if unitless($col) {
+		@if math.is-unitless($col) {
 			$total: $total + $col;
 		}
 	}
@@ -31,9 +32,9 @@
 		$total: $override;
 	}
 
-	@if length($gap) == 2 {
-		$row-gap: nth($gap, 1);
-		$column-gap: nth($gap, 2);
+	@if list.length($gap) == 2 {
+		$row-gap: list.nth($gap, 1);
+		$column-gap: list.nth($gap, 2);
 		gap: $row-gap $column-gap;
 		min-width: calc(100%);
 	} @else {
@@ -41,12 +42,12 @@
 		min-width: calc(100%);
 	}
 
-	@for $i from 1 through length($cols) {
-		$val: nth($cols, $i);
+	@for $i from 1 through list.length($cols) {
+		$val: list.nth($cols, $i);
 		$perc: math.div($val, $total) * 100%;
 		$width: $val;
 
-		@if unitless($val) {
+		@if math.is-unitless($val) {
 			$width: calc(#{$perc} - #{$column-gap} + #{$column-gap} / (#{$total} / #{$val}));
 		}
 
@@ -89,9 +90,9 @@
 
 	$type: margin;
 	@if $pad {
-		@if length($gap) == 2 {
-			$row-gap: nth($gap, 1);
-			$column-gap: nth($gap, 2);
+		@if list.length($gap) == 2 {
+			$row-gap: list.nth($gap, 1);
+			$column-gap: list.nth($gap, 2);
 
 			margin-left: calc(#{$column-gap} * -0.5);
 			margin-right: calc(#{$column-gap} * -0.5);
@@ -115,7 +116,7 @@
 			}
 		}
 	} @else {
-		@if length($gap) == 2 {
+		@if list.length($gap) == 2 {
 			gap: $gap;
 		} @else {
 			column-gap: $gap;

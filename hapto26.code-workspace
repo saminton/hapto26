@@ -1,17 +1,17 @@
 {
 	"folders": [
 		{
+			"name": "hapto26",
 			"path": ".",
 		},
 		{
+			"name": "api",
 			"path": "www/wp-content/themes/api",
 		},
 		{
+			"name": "front",
 			"path": "www/wp-content/themes/front",
 		},
-		// {
-		// 	"path": "nuxt"
-		// }
 	],
 	"settings": {
 		"editor.formatOnSave": true,

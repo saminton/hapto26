@@ -1,3 +1,6 @@
+@use "../core/responsive";
+@use "breakpoints";
+
 // No CSS output!
 // SCSS Mixins only
 
@@ -21,100 +24,100 @@
 
 // Yell
 
-@mixin yell-1($break: $laptop) {
-	@include property(font-size, $break, 12rem, 8rem, 5rem);
+@mixin yell-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 12rem, 8rem, 5rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
 // Titles
 
-@mixin title-1($break: $laptop) {
-	@include property(font-size, $break, 12rem, 8rem, 5rem);
+@mixin title-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 12rem, 8rem, 5rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin title-2($break: $laptop) {
-	@include property(font-size, $break, 8rem, 1.7rem, 1.7rem);
+@mixin title-2($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 8rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin title-3($break: $laptop) {
-	@include property(font-size, $break, 6rem, 1.7rem, 1.7rem);
+@mixin title-3($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 6rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin title-4($break: $laptop) {
-	@include property(font-size, $break, 4rem, 1.7rem, 1.7rem);
+@mixin title-4($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 4rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
 // Labels
 
-@mixin label-1($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin label-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin label-2($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin label-2($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin label-3($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin label-3($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin label-4($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin label-4($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
 // Body
 
-@mixin body-1($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin body-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin body-2($break: $laptop) {
+@mixin body-2($break: breakpoints.$laptop) {
 	// Default font
 	font-family: "Arial", sans-serif;
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin body-3($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin body-3($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin body-4($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin body-4($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin body-5($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin body-5($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }
 
-@mixin body-6($break: $laptop) {
-	@include property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+@mixin body-6($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
 	font-weight: 400;
 }

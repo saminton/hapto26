@@ -1,3 +1,7 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
 @use "sass:math";
 
 // No CSS output!
@@ -35,11 +39,11 @@
 // }
 
 @function def($a, $b: null) {
-	@if ($b and type-of($b) == string and str-index($b, "--") == 1) {
+	@if ($b and meta.type-of($b) == string and string.index($b, "--") == 1) {
 		$b: var($b);
 	}
 
-	@if (type-of($a) == string and str-index($a, "--") == 1) {
+	@if (meta.type-of($a) == string and string.index($a, "--") == 1) {
 		@if $b {
 			@return var($a, $b);
 		} @else {
@@ -52,7 +56,7 @@
 
 @mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
 	@font-face {
-		font-family: quote($font-name);
+		font-family: string.quote($font-name);
 		font-display: swap;
 		src: url($file-name + ".eot");
 		src:
@@ -67,19 +71,30 @@
 }
 
 @function str-replace($string, $search, $replace: "") {
-	$index: str-index($string, $search);
+	@if type-of($string) != string {
+		@return $string;
+	}
+	$index: string.index($string, $search);
 	@if $index {
-		@return str-slice($string, 1, $index - 1) + $replace +
-			str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+		@return string.slice($string, 1, $index - 1) + $replace +
+			str-replace(
+				string.slice($string, $index + string.length($search)),
+				$search,
+				$replace
+			);
 	}
 	@return $string;
 }
 
+@function color-rgb($color) {
+	@return color.red($color) + ", " + color.green($color) + ", " + color.blue($color);
+}
+
 @mixin transition($timing: var(--timing), $easing: var(--ease), $properties...) {
-	@if length($properties) == 0 {
+	@if list.length($properties) == 0 {
 		$properties: transform, opacity, visibility;
 	}
-	@if length($properties) == 1 {
+	@if list.length($properties) == 1 {
 		transition: $properties $timing $easing;
 		will-change: $properties;
 	} @else {
@@ -135,18 +150,11 @@
 	}
 }
 
-@function map-set($map, $key, $value) {
-	$new: (
-		$key: $value,
-	);
-	@return map-merge($map, $new);
-}
-
 // Set to number of elements, will generate classes for each
 
 @mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
 	@font-face {
-		font-family: quote($font-name);
+		font-family: string.quote($font-name);
 		font-display: swap;
 		src: url($file-name + ".eot");
 		src:

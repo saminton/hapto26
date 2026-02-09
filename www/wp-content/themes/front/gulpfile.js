@@ -172,7 +172,7 @@ export function styles(complete) {
 			.pipe(sassGlob())
 			.pipe(
 				sassCompiler({
-					silenceDeprecations: ["import", "global-builtin", "color-functions"],
+					silenceDeprecations: ["global-builtin", "color-functions"],
 				}).on("error", sassCompiler.logError),
 			)
 			.pipe(postcss(postOptions))
@@ -186,7 +186,7 @@ export function styles(complete) {
 			.pipe(sassGlob())
 			.pipe(
 				sassCompiler({
-					silenceDeprecations: ["import", "global-builtin", "color-functions"],
+					silenceDeprecations: ["global-builtin", "color-functions"],
 				}).on("error", sassCompiler.logError),
 			)
 			.pipe(postcss(postOptions))

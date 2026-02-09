@@ -1,10 +1,13 @@
+@use "breakpoints";
+@use "typography";
+
 // No CSS output!
 // SCSS Mixins only
 
 @mixin input-label {
 	display: flex;
 	margin-bottom: 0.6rem;
-	@include label-1;
+	@include typography.label-1;
 }
 
 @mixin input-field($type: select) {
@@ -28,7 +31,7 @@
 		background: rgba(var(--input_background));
 		border-color: rgb(var(--input_border));
 
-		@media (max-width: $phone) {
+		@media (max-width: breakpoints.$phone) {
 			font-size: 1.8rem;
 		}
 	}

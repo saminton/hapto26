@@ -1,4 +1,17 @@
-@import "../../core/imports.scss";
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
 
 :root {
 	--scrollbar_background: var(--black);

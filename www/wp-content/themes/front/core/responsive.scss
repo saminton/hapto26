@@ -1,3 +1,7 @@
+@use "sass:list";
+@use "sass:map";
+@use "../theme/breakpoints";
+
 @use "sass:math";
 
 // https://stackoverflow.com/questions/51473574/sass-pass-variable-to-content-from-within-a-mixin
@@ -10,16 +14,16 @@ $value: null;
 $index: 0;
 
 @mixin breakpoint($i) {
-	$values: map-values($breakpoints);
-	$current: nth($values, $i);
+	$values: map.values(breakpoints.$breakpoints);
+	$current: list.nth($values, $i);
 	$next: null;
 
-	@if $i + 1 <= length($values) {
-		$next: nth($values, $i + 1);
-		$next: nth(map-values($breakpoints), $i + 1);
+	@if $i + 1 <= list.length($values) {
+		$next: list.nth($values, $i + 1);
+		$next: list.nth(map.values(breakpoints.$breakpoints), $i + 1);
 	}
 	@if $i == 1 {
-		$current: $max; // max size
+		$current: breakpoints.$max; // max size
 	}
 	@if ($next) {
 		@media (min-width: ($next + 1px)) and (max-width: $current) {
@@ -34,12 +38,12 @@ $index: 0;
 
 @mixin breakpoints() {
 	$break-key: max !global;
-	$break-value: $max !global;
+	$break-value: breakpoints.$max !global;
 	$break-index: 0 !global;
-	@media (min-width: ($max + 1px)) {
+	@media (min-width: (breakpoints.$max + 1px)) {
 		@content;
 	}
-	@each $name, $size in $breakpoints {
+	@each $name, $size in breakpoints.$breakpoints {
 		@include breakpoint($break-index + 1) {
 			$break-key: $name !global;
 			$break-value: $size !global;
@@ -115,12 +119,12 @@ $index: 0;
 		// if breakpoint passed
 
 		// $keys: map-keys($breakpoints);
-		$key-values: map-values($breakpoints);
-		$index: index($key-values, $break);
+		$key-values: map.values(breakpoints.$breakpoints);
+		$index: list.index($key-values, $break);
 		@if not $index {
 			$index: 1;
 		}
-		$value: nth($values, min($index, length($values)));
+		$value: list.nth($values, min($index, list.length($values)));
 
 		// @debug $keys;
 		// @debug $key-values;
@@ -131,7 +135,7 @@ $index: 0;
 
 		#{$property}: $value;
 	} @else {
-		#{$property}: nth($values, 1);
+		#{$property}: list.nth($values, 1);
 
 		// for all breakpoints
 

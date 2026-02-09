@@ -1,31 +1,34 @@
+@use "../core/columns";
+@use "typography";
+
 [v-font="format"] {
-	@include row-gap(1em); // default spacing
+	@include columns.row-gap(1em); // default spacing
 
 	// Titles
 
 	h1 {
-		@include title-1(null);
+		@include typography.title-1(null);
 	}
 
 	* + h1 {
 	}
 
 	h2 {
-		@include title-2(null);
+		@include typography.title-2(null);
 	}
 
 	* + h2 {
 	}
 
 	h3 {
-		@include title-3(null);
+		@include typography.title-3(null);
 	}
 
 	* + h3 {
 	}
 
 	h4 {
-		@include title-4(null);
+		@include typography.title-4(null);
 	}
 
 	* + h4 {
@@ -64,7 +67,7 @@
 
 	ul,
 	ol {
-		@include row-gap(0.5em);
+		@include columns.row-gap(0.5em);
 		counter-reset: list;
 	}
 
