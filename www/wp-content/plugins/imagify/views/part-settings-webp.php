@@ -3,52 +3,85 @@
 use Imagify\Stats\OptimizedMediaWithoutNextGen;
 use Imagify\Webp\Display;
 
-defined( 'ABSPATH' ) || die( 'Cheatin’ uh?' );
+defined( 'ABSPATH' ) || exit;
 
 $settings = Imagify_Settings::get_instance();
 ?>
 <div>
-	<h3 class="imagify-options-subtitle"><?php _e( 'Next-Gen image format', 'imagify' ); ?></h3>
+	<h3 class="imagify-options-subtitle"><?php esc_html_e( 'Next-Gen image format', 'imagify' ); ?></h3>
 
 	<div class="imagify-setting-line">
 		<?php
-		$settings->field_checkbox( [
-			'option_name' => 'convert_to_avif',
-			'label'       => __( 'Create AVIF versions of images', 'imagify' ),
-			'attributes'  => [
-				'aria-describedby' => 'describe-convert_to_avif',
-			],
-		] );
+		$message       = __( 'Select WebP for high compatibility, AVIF for superior compression. Please note that the generation process will start automatically after saving the settings.', 'imagify' );
+		$message_class = 'info';
+		$disabled      = false;
+
+		if ( has_filter( 'imagify_nextgen_images_formats' ) ) {
+			$message = sprintf(
+				// translators: %1$s and %2$s are <code> tag opening and closing, %3$s and %4$s are <a> tag opening and closing.
+				__( 'Next-Gen Images format is currently defined by the %1$simagify_nextgen_images_format%2$s filter. %3$sRead more%4$s', 'imagify' ),
+				'<code>',
+				'</code>',
+				'<a href="https://imagify.io/documentation/how-to-use-the-next-gen-image-format-filter/" target="_blank">',
+				'</a>'
+			);
+
+			$message_class = 'error';
+			$disabled      = true;
+		}
+
+		$attributes = [
+			'aria-describedby' => 'describe-optimization_format',
+		];
+
+		if ( $disabled ) {
+			$attributes['disabled'] = true;
+		}
+
+		$settings->field_inline_radio_list(
+			[
+				'option_name' => 'optimization_format',
+				'legend'      => __( 'Next-gen image format', 'imagify' ),
+				'info'        => $message,
+				'info_class'  => $message_class,
+				'values'      => [
+					'off'  => __( 'Off', 'imagify' ),
+					'avif' => __( 'AVIF', 'imagify' ),
+					'webp' => __( 'WebP', 'imagify' ),
+				],
+				'attributes'  => $attributes,
+			]
+		);
 		?>
-		<div class="imagify-info">
-			<span class="dashicons dashicons-info"></span>
-			<?php esc_html_e( 'Enabling this option will start the process of creating AVIF version of your images automatically.', 'imagify' ); ?>
-		</div>
 	</div>
 
 	<div class="imagify-setting-line">
 
 		<div class="imagify-options-line">
 			<?php
-			$settings->field_checkbox( [
-				'option_name' => 'display_nextgen',
-				'label'       => __( 'Display images in Next-Gen format on the site', 'imagify' ),
-			] );
+			$settings->field_checkbox(
+				[
+					'option_name' => 'display_nextgen',
+					'label'       => __( 'Display images in Next-Gen format on the site', 'imagify' ),
+				]
+			);
 			?>
 
 			<div class="imagify-options-line">
 				<?php
-				$settings->field_radio_list( [
-					'option_name' => 'display_nextgen_method',
-					'values'      => [
-						'rewrite' => __( 'Use rewrite rules', 'imagify' ),
-						/* translators: 1 and 2 are <em> tag opening and closing. */
-						'picture' => sprintf( __( 'Use &lt;picture&gt; tags %1$s(preferred)%2$s', 'imagify' ), '<em>', '</em>' ),
-					],
-					'attributes'  => [
-						'aria-describedby' => 'describe-convert_to_webp',
-					],
-				] );
+				$settings->field_radio_list(
+					[
+						'option_name' => 'display_nextgen_method',
+						'values'      => [
+							'rewrite' => __( 'Use rewrite rules', 'imagify' ),
+							/* translators: 1 and 2 are <em> tag opening and closing. */
+							'picture' => sprintf( __( 'Use &lt;picture&gt; tags %1$s(preferred)%2$s', 'imagify' ), '<em>', '</em>' ),
+						],
+						'attributes'  => [
+							'aria-describedby' => 'describe-convert_to_webp',
+						],
+					]
+				);
 				?>
 
 				<div class="imagify-options-line">
@@ -78,19 +111,23 @@ $settings = Imagify_Settings::get_instance();
 							);
 						}
 
-						$settings->field_hidden( [
-							'option_name'   => 'cdn_url',
-							'current_value' => $cdn_source['url'],
-						] );
+						$settings->field_hidden(
+							[
+								'option_name'   => 'cdn_url',
+								'current_value' => $cdn_source['url'],
+							]
+						);
 					} else {
-						$settings->field_text_box( [
-							'option_name' => 'cdn_url',
-							'label'       => __( 'If you use a CDN, specify the URL:', 'imagify' ),
-							'attributes'  => [
-								'size'        => 30,
-								'placeholder' => __( 'https://cdn.example.com', 'imagify' ),
-							],
-						] );
+						$settings->field_text_box(
+							[
+								'option_name' => 'cdn_url',
+								'label'       => __( 'If you use a CDN, specify the URL:', 'imagify' ),
+								'attributes'  => [
+									'size'        => 30,
+									'placeholder' => __( 'https://cdn.example.com', 'imagify' ),
+								],
+							]
+						);
 					}
 					?>
 				</div>
@@ -170,9 +207,9 @@ $settings = Imagify_Settings::get_instance();
 				}
 				?>
 
-				<div <?php echo $aria; ?> class="imagify-progress <?php echo $class; ?>">
+				<div <?php echo $aria; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> class="imagify-progress <?php echo esc_attr( $class ); ?>">
 					<div class="progress">
-						<div class="bar" <?php echo $style; ?>><div class="percent"><?php echo $progress; ?></div></div>
+						<div class="bar" <?php echo $style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><div class="percent"><?php echo esc_html( $progress ); ?></div></div>
 					</div>
 				</div>
 			</div>

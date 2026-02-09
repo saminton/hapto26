@@ -132,7 +132,7 @@ function Mutator() {
 					() => {
 						resolve();
 						dispose();
-					}
+					},
 				);
 			});
 
@@ -288,7 +288,7 @@ function Mutator() {
 
 // Instance
 
-let mutator = null;
+let mutator;
 
 // Composables
 

@@ -139,6 +139,7 @@ export function Scroll(args) {
 	// Functions
 
 	const onWheel = (el, event) => {
+		console.log(`isEnabled.value`, isEnabled.value);
 		if (!isEnabled.value || !size.value || !page.isReady) return null;
 		event.stopPropagation();
 

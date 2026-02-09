@@ -2,9 +2,10 @@
 namespace Imagify\Optimization;
 
 use Imagify_Requirements;
+use WP_Error;
 
 /**
- * A generic optimization class focussed on the file itself.
+ * A generic optimization class focused on the file itself.
  *
  * @since  1.9
  * @author Grégory Viguier
@@ -318,7 +319,7 @@ class File {
 		}
 
 		if ( ! $this->is_image() ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'not_an_image',
 				sprintf(
 				/* translators: %s is a file path. */
@@ -338,7 +339,7 @@ class File {
 		$result = $editor->multi_resize( [ $destination ] );
 
 		if ( ! $result ) {
-			return new \WP_Error( 'image_resize_error', __( 'The thumbnail could not be created.', 'imagify' ) );
+			return new WP_Error( 'image_resize_error', __( 'The thumbnail could not be created.', 'imagify' ) );
 		}
 
 		$result = reset( $result );
@@ -362,7 +363,7 @@ class File {
 		$moved = $this->filesystem->move( $source_thumb_path, $destination_thumb_path, true );
 
 		if ( ! $moved ) {
-			return new \WP_Error( 'move_error', __( 'The file could not be moved to its final destination.', 'imagify' ) );
+			return new WP_Error( 'move_error', __( 'The file could not be moved to its final destination.', 'imagify' ) );
 		}
 
 		return $result;
@@ -417,10 +418,14 @@ class File {
 
 		// Make sure the backup copy exists.
 		if ( ! $this->filesystem->exists( $backup_path ) ) {
-			return new \WP_Error( 'backup_doesnt_exist', __( 'The file could not be saved.', 'imagify' ), array(
-				'file_path'   => $this->filesystem->make_path_relative( $path ),
-				'backup_path' => $this->filesystem->make_path_relative( $backup_path ),
-			) );
+			return new \WP_Error(
+				'backup_doesnt_exist',
+				__( 'The file could not be saved.', 'imagify' ),
+				[
+					'file_path'   => $this->filesystem->make_path_relative( $path ),
+					'backup_path' => $this->filesystem->make_path_relative( $backup_path ),
+				]
+			);
 		}
 
 		// Check if a '-scaled' version of the image exists.
@@ -432,10 +437,14 @@ class File {
 			$this->filesystem->copy( $scaled_path, $scaled_backup_path, $overwrite, FS_CHMOD_FILE );
 
 			if ( ! $this->filesystem->exists( $scaled_backup_path ) ) {
-				return new \WP_Error( 'backup_doesnt_exist', __( 'The file could not be saved.', 'imagify' ), array(
-					'file_path'   => $this->filesystem->make_path_relative( $scaled_path ),
-					'backup_path' => $this->filesystem->make_path_relative( $scaled_backup_path ),
-				) );
+				return new \WP_Error(
+					'backup_doesnt_exist',
+					__( 'The file could not be saved.', 'imagify' ),
+					[
+						'file_path'   => $this->filesystem->make_path_relative( $scaled_path ),
+						'backup_path' => $this->filesystem->make_path_relative( $scaled_backup_path ),
+					]
+				);
 			}
 		}
 
@@ -461,15 +470,18 @@ class File {
 	 * @return \sdtClass|\WP_Error Optimized image data. A \WP_Error object on error.
 	 */
 	public function optimize( $args = [] ) {
-		$args = array_merge( [
-			'backup'             => true,
-			'backup_path'        => null,
-			'backup_source'      => null,
-			'optimization_level' => 0,
-			'convert'            => '',
-			'context'            => 'wp',
-			'original_size'      => 0,
-		], $args );
+		$args = array_merge(
+			[
+				'backup'             => true,
+				'backup_path'        => null,
+				'backup_source'      => null,
+				'optimization_level' => 0,
+				'convert'            => '',
+				'context'            => 'wp',
+				'original_size'      => 0,
+			],
+			$args
+		);
 
 		$can_be_processed = $this->can_be_processed();
 
@@ -525,13 +537,15 @@ class File {
 
 		if ( $args['convert'] ) {
 			$data['convert'] = $args['convert'];
-			$format = $args['convert'];
+			$format          = $args['convert'];
 		}
 
-		$response = upload_imagify_image( [
-			'image' => $this->path,
-			'data'  => wp_json_encode( $data ),
-		] );
+		$response = upload_imagify_image(
+			[
+				'image' => $this->path,
+				'data'  => wp_json_encode( $data ),
+			]
+		);
 
 		if ( is_wp_error( $response ) ) {
 			return new \WP_Error( 'api_error', $response->get_error_message() );
@@ -613,9 +627,12 @@ class File {
 			return $this->editor;
 		}
 
-		$this->editor = wp_get_image_editor( $this->path, [
-			'methods' => $this->get_editor_methods(),
-		] );
+		$this->editor = wp_get_image_editor(
+			$this->path,
+			[
+				'methods' => $this->get_editor_methods(),
+			]
+		);
 
 		if ( ! is_wp_error( $this->editor ) ) {
 			return $this->editor;
@@ -745,10 +762,9 @@ class File {
 	/**
 	 * Get the file extension.
 	 *
-	 * @since  1.9
-	 * @author Grégory Viguier
+	 * @since 1.9
 	 *
-	 * @return string|null
+	 * @return string|false
 	 */
 	public function get_extension() {
 		return $this->get_file_type()->ext;

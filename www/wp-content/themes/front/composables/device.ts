@@ -64,7 +64,7 @@ function Device() {
 
 // Instance
 
-let instance = null;
+let instance;
 
 // Composable
 

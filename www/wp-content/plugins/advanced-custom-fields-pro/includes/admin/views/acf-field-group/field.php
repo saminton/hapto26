@@ -1,4 +1,14 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2025 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 //phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- included template file.
 
 // Define input name prefix using unique identifier.
@@ -34,7 +44,7 @@ if ( acf_is_pro() && acf_get_field_type_prop( $field['type'], 'pro' ) ) {
 }
 
 if ( acf_is_pro() && acf_get_field_type_prop( $field['type'], 'pro' ) && ! acf_pro_is_license_active() ) {
-	$field_type_label .= '<span class="acf-pro-label acf-pro-label-field-type">PRO</span>';
+	$field_type_label .= '<span class="acf-pro-label-field-type"><img src="' . esc_url( acf_get_url( 'assets/images/pro-chip.svg' ) ) . '" alt="' . esc_attr__( 'ACF PRO Logo', 'acf' ) . '"></span>';
 
 	if ( ! acf_pro_is_license_expired() ) {
 		$inactive_field_class = ' acf-js-tooltip';
@@ -217,7 +227,7 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 									$field,
 									array(
 										'label'        => __( 'Instructions', 'acf' ),
-										'instructions' => __( 'Instructions for authors. Shown when submitting data', 'acf' ),
+										'instructions' => __( 'Instructions for content editors. Shown when submitting data.', 'acf' ),
 										'type'         => 'textarea',
 										'name'         => 'instructions',
 										'rows'         => 5,
@@ -319,6 +329,7 @@ if ( isset( $field['conditional_logic'] ) && is_array( $field['conditional_logic
 				?>
 				<div class="acf-field-settings-footer">
 					<a class="button close-field edit-field" title="<?php esc_attr_e( 'Close Field', 'acf' ); ?>" href="#"><?php esc_html_e( 'Close Field', 'acf' ); ?></a>
+					<a class="acf-btn acf-btn-secondary close-add-field" title="<?php esc_attr_e( 'Close and Add Field', 'acf' ); ?>" href="#"><?php esc_html_e( 'Close and Add Field', 'acf' ); ?></a>
 				</div>
 			</div>
 		</div>

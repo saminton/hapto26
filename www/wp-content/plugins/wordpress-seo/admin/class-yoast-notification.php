@@ -59,6 +59,8 @@ class Yoast_Notification {
 	 * -     capabilities: Capabilities that a user must have for this Notification to show.
 	 * - capability_check: How to check capability pass: all or any.
 	 * -  wpseo_page_only: Only display on wpseo page or on every page.
+	 * -   yoast_branding: Whether to show the Yoast SEO branding in the notification.
+	 * -    resolve_nonce: Security nonce to use in case of resolving the notification.
 	 *
 	 * @var array
 	 */
@@ -80,6 +82,7 @@ class Yoast_Notification {
 		'capabilities'     => [],
 		'capability_check' => self::MATCH_ALL,
 		'yoast_branding'   => false,
+		'resolve_nonce'    => '',
 	];
 
 	/**
@@ -115,7 +118,7 @@ class Yoast_Notification {
 	 * @deprecated 21.6
 	 * @codeCoverageIgnore
 	 *
-	 * @return WP_User The user to show this notification for.
+	 * @return WP_User|null The user to show this notification for.
 	 */
 	public function get_user() {
 		_deprecated_function( __METHOD__, 'Yoast SEO 21.6' );
@@ -175,6 +178,15 @@ class Yoast_Notification {
 	 */
 	public function get_priority() {
 		return $this->options['priority'];
+	}
+
+	/**
+	 * Get the nonce to resolve the alert.
+	 *
+	 * @return string
+	 */
+	public function get_resolve_nonce() {
+		return $this->options['resolve_nonce'];
 	}
 
 	/**
@@ -356,6 +368,15 @@ class Yoast_Notification {
 	}
 
 	/**
+	 * Get the message for the notification.
+	 *
+	 * @return string The message.
+	 */
+	public function get_message() {
+		return wpautop( $this->message );
+	}
+
+	/**
 	 * Wraps the message with a Yoast SEO icon.
 	 *
 	 * @param string $message The message to wrap.
@@ -379,7 +400,7 @@ class Yoast_Notification {
 	/**
 	 * Get the JSON if provided.
 	 *
-	 * @return false|string
+	 * @return string|false
 	 */
 	public function get_json() {
 		if ( empty( $this->options['data_json'] ) ) {

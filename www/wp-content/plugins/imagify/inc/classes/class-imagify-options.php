@@ -36,14 +36,15 @@ class Imagify_Options extends Imagify_Abstract_Options {
 		'resize_larger_w'        => 0,
 		'display_nextgen'        => 0,
 		'display_nextgen_method' => 'picture',
-		'display_webp'        => 0,
-		'display_webp_method' => 'picture',
+		'display_webp'           => 0,
+		'display_webp_method'    => 'picture',
 		'cdn_url'                => '',
 		'disallowed-sizes'       => [],
-		'admin_bar_menu'         => 0,
+		'admin_bar_menu'         => 1,
 		'partner_links'          => 0,
 		'convert_to_avif'        => 0,
 		'convert_to_webp'        => 0,
+		'optimization_format'    => 'webp',
 	];
 
 	/**
@@ -96,10 +97,6 @@ class Imagify_Options extends Imagify_Abstract_Options {
 		parent::__construct();
 	}
 
-	/** ----------------------------------------------------------------------------------------- */
-	/** SANITIZATION, VALIDATION ================================================================ */
-	/** ----------------------------------------------------------------------------------------- */
-
 	/**
 	 * Sanitize and validate an option value. Basic casts have been made.
 	 *
@@ -107,10 +104,10 @@ class Imagify_Options extends Imagify_Abstract_Options {
 	 *
 	 * @param  string $key     The option key.
 	 * @param  mixed  $value   The value.
-	 * @param  mixed  $default The default value.
+	 * @param  mixed  $default_value The default value.
 	 * @return mixed
 	 */
-	public function sanitize_and_validate_value( $key, $value, $default ) {
+	public function sanitize_and_validate_value( $key, $value, $default_value ) {
 		static $max_sizes;
 
 		switch ( $key ) {
@@ -127,7 +124,13 @@ class Imagify_Options extends Imagify_Abstract_Options {
 					return $reset_values[ $key ];
 				}
 				return $value;
-
+			case 'optimization_format':
+				if ( ! in_array( $value, [ 'off', 'webp', 'avif' ], true ) ) {
+					// For an invalid value, return the "reset" value.
+					$reset_values = $this->get_reset_values();
+					return $reset_values[ $key ];
+				}
+				return $value;
 			case 'auto_optimize':
 			case 'backup':
 			case 'lossless':
@@ -143,7 +146,7 @@ class Imagify_Options extends Imagify_Abstract_Options {
 			case 'resize_larger_w':
 				if ( $value <= 0 ) {
 					// Invalid.
-					return $default;
+					return $default_value;
 				}
 				if ( ! isset( $max_sizes ) ) {
 					$max_sizes = get_imagify_max_intermediate_image_size();
@@ -156,7 +159,7 @@ class Imagify_Options extends Imagify_Abstract_Options {
 
 			case 'disallowed-sizes':
 				if ( ! $value ) {
-					return $default;
+					return $default_value;
 				}
 
 				$value = array_keys( $value );

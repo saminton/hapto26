@@ -56,7 +56,7 @@ function Gtag() {
 
 // Instance
 
-let instance = null;
+let instance;
 
 // Composable
 

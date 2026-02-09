@@ -1,5 +1,4 @@
-import { watch } from "@vue-reactivity/watch";
-import { computed, ComputedGetter, ComputedRef, effect } from "@vue/reactivity";
+import { computed, ComputedGetter, ComputedRef, effect, watch } from "@vue/reactivity";
 
 export const useReactivity = () => {
 	const handles = [];

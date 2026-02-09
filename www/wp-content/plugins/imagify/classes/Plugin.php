@@ -86,16 +86,16 @@ class Plugin {
 			return;
 		}
 
-		$this->container->share(
+		$this->container->addShared(
 			'event_manager',
 			function () {
 				return new EventManager();
 			}
 		);
 
-		$this->container->share(
+		$this->container->addShared(
 			'filesystem',
-			function() {
+			function () {
 				return new Imagify_Filesystem();
 			}
 		);
@@ -115,7 +115,6 @@ class Plugin {
 		\Imagify\Auth\Basic::get_instance()->init();
 		\Imagify\Job\MediaOptimization::get_instance()->init();
 		Bulk::get_instance()->init();
-		AdminBar::get_instance()->init();
 
 		if ( is_admin() ) {
 			Notices::get_instance()->init();
@@ -131,9 +130,6 @@ class Plugin {
 		}
 
 		add_action( 'init', [ $this, 'maybe_activate' ] );
-
-		// Load plugin translations.
-		imagify_load_translations();
 
 		imagify_add_command( new BulkOptimizeCommand() );
 		imagify_add_command( new GenerateMissingNextgenCommand() );
@@ -190,7 +186,6 @@ class Plugin {
 		require_once $inc_path . 'functions/i18n.php';
 		require_once $inc_path . 'functions/partners.php';
 		require_once $inc_path . 'common/attachments.php';
-		require_once $inc_path . 'common/admin-bar.php';
 		require_once $inc_path . 'common/partners.php';
 		require_once $inc_path . '3rd-party/3rd-party.php';
 

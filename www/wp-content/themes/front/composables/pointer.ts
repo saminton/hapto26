@@ -69,7 +69,7 @@ function Pointer() {
 
 // Instance
 
-let instance = null;
+let instance;
 
 // Composables
 

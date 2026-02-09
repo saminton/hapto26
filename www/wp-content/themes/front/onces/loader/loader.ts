@@ -24,7 +24,9 @@ export function Loader(args) {
 
 	// Hooks
 
-	onMounted(() => {});
+	onMounted(() => {
+		on(window, "click", onClick);
+	});
 
 	onReady(() => {
 		hide();
@@ -33,6 +35,11 @@ export function Loader(args) {
 	onUnmounted(() => {});
 
 	// Functions
+
+	const onClick = (e) => {
+		console.log(`click`);
+		store.isOpen ? hide() : show();
+	};
 
 	const show = async () => {
 		store.isOpen = true;
@@ -69,7 +76,7 @@ export function Loader(args) {
 		() => store.isOpen,
 		() => {
 			node.setAttribute("aria-hidden", !store.isOpen);
-		}
+		},
 	);
 
 	store.show = show;

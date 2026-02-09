@@ -59,9 +59,12 @@ abstract class AbstractBulk implements BulkInterface {
 
 		$data = wp_parse_args( $data, $defaults );
 
-		$data = array_map( function( $item ) {
-			return empty( $item ) ? '' : $item;
-		}, $data );
+		$data = array_map(
+			function ( $item ) {
+				return empty( $item ) ? '' : $item;
+			},
+			$data
+		);
 
 		if ( ! empty( $data['count-optimized'] ) ) {
 			// translators: %s is a formatted number, dont use %d.
@@ -112,10 +115,10 @@ abstract class AbstractBulk implements BulkInterface {
 	 * @return int The number of media.
 	 */
 	public function has_optimized_media_without_nextgen() {
-		$format = 'webp';
+		$format = get_imagify_option( 'optimization_format' );
 
-		if ( get_imagify_option( 'convert_to_avif' ) ) {
-			$format = 'avif';
+		if ( 'off' === $format ) {
+			return 0;
 		}
 
 		return count( $this->get_optimized_media_ids_without_format( $format )['ids'] );

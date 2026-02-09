@@ -64,7 +64,7 @@ function Renderer() {
 
 // Instance
 
-let renderer = null;
+let renderer;
 
 // Composables
 
@@ -84,7 +84,7 @@ const listen = (node: HTMLElement, callback, timing: string) => {
 		() => {
 			if (intersect.isIntersecting) tick.start();
 			else tick.stop();
-		}
+		},
 	);
 
 	onUnmounted(() => tick.stop());

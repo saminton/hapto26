@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2025 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! class_exists( 'acf_field_link' ) ) :
 
@@ -15,7 +24,6 @@ if ( ! class_exists( 'acf_field_link' ) ) :
 		 * @param   n/a
 		 * @return  n/a
 		 */
-
 		function initialize() {
 
 			// vars
@@ -41,7 +49,6 @@ if ( ! class_exists( 'acf_field_link' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function get_link( $value = '' ) {
 
 			// vars
@@ -171,7 +178,6 @@ if ( ! class_exists( 'acf_field_link' ) ) :
 		 *
 		 * @return  $value (mixed) the modified value
 		 */
-
 		function format_value( $value, $post_id, $field ) {
 
 			// bail early if no value
@@ -202,7 +208,6 @@ if ( ! class_exists( 'acf_field_link' ) ) :
 		 * @param   $post_id (int)
 		 * @return  $post_id (int)
 		 */
-
 		function validate_value( $valid, $value, $field, $input ) {
 
 			// bail early if not required
@@ -233,7 +238,6 @@ if ( ! class_exists( 'acf_field_link' ) ) :
 		 *
 		 * @return  $value - the modified value
 		 */
-
 		function update_value( $value, $post_id, $field ) {
 
 			// Check if value is an empty array and convert to empty string.

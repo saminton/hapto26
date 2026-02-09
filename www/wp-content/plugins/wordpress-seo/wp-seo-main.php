@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * {@internal Nobody should be able to overrule the real version number as this can cause
  *            serious issues with the options, so no if ( ! defined() ).}}
  */
-define( 'WPSEO_VERSION', '22.4' );
+define( 'WPSEO_VERSION', '26.9' );
 
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
@@ -34,9 +34,9 @@ define( 'YOAST_VENDOR_NS_PREFIX', 'YoastSEO_Vendor' );
 define( 'YOAST_VENDOR_DEFINE_PREFIX', 'YOASTSEO_VENDOR__' );
 define( 'YOAST_VENDOR_PREFIX_DIRECTORY', 'vendor_prefixed' );
 
-define( 'YOAST_SEO_PHP_REQUIRED', '7.2.5' );
-define( 'YOAST_SEO_WP_TESTED', '6.5' );
-define( 'YOAST_SEO_WP_REQUIRED', '6.3' );
+define( 'YOAST_SEO_PHP_REQUIRED', '7.4' );
+define( 'YOAST_SEO_WP_TESTED', '6.9' );
+define( 'YOAST_SEO_WP_REQUIRED', '6.8' );
 
 if ( ! defined( 'WPSEO_NAMESPACES' ) ) {
 	define( 'WPSEO_NAMESPACES', true );
@@ -221,10 +221,8 @@ function _wpseo_activate() {
 	WPSEO_Options::ensure_options_exist();
 
 	if ( ! is_multisite() || ! ms_is_switched() ) {
-		if ( WPSEO_Options::get( 'stripcategorybase' ) === true ) {
-			// Constructor has side effects so this registers all hooks.
-			$GLOBALS['wpseo_rewrite'] = new WPSEO_Rewrite();
-		}
+		// Constructor has side effects so this registers all hooks.
+		$GLOBALS['wpseo_rewrite'] = new WPSEO_Rewrite();
 	}
 	add_action( 'shutdown', [ 'WPSEO_Utils', 'clear_rewrites' ] );
 
@@ -341,8 +339,22 @@ function wpseo_init() {
 	WPSEO_Options::get_instance();
 	WPSEO_Meta::init();
 
-	if ( version_compare( WPSEO_Options::get( 'version', 1 ), WPSEO_VERSION, '<' ) ) {
-		if ( function_exists( 'opcache_reset' ) ) {
+	if ( version_compare( WPSEO_Options::get( 'version', 1, [ 'wpseo' ] ), WPSEO_VERSION, '<' ) ) {
+		// Invalidate the opcache in 50% of the cases, randomly staggered based on the site URL.
+		// @TODO: Move the staggering logic to its own class, but only after a few releases after the complete sunset of the opcache invalidation. Make sure to document that in the future, maybe `12` should be used as modulus, so that it's easier to tinker the percentage (divisible by 2, 3, 4, 6). (see the technical choices of https://github.com/Yoast/wordpress-seo/pull/22812).
+		$random_seed               = hexdec( substr( hash( 'sha256', site_url() ), 0, 8 ) );
+		$should_invalidate_opcache = ( $random_seed % 2 ) !== 0;
+
+		/**
+		 * Filter: 'Yoast\WP\SEO\should_invalidate_opcache' - Allow developers to enable / disable
+		 * opcache invalidation upon upgrade of the Yoast SEO plugin.
+		 *
+		 * @since 26.1
+		 *
+		 * @param bool $should_invalidate Whether opcache should be invalidated.
+		 */
+		$should_invalidate_opcache = (bool) apply_filters( 'Yoast\WP\SEO\should_invalidate_opcache', $should_invalidate_opcache );
+		if ( $should_invalidate_opcache && function_exists( 'opcache_reset' ) ) {
 			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Prevent notices when opcache.restrict_api is set.
 			@opcache_reset();
 		}
@@ -351,20 +363,15 @@ function wpseo_init() {
 		// Get a cleaned up version of the $options.
 	}
 
-	if ( WPSEO_Options::get( 'stripcategorybase' ) === true ) {
-		$GLOBALS['wpseo_rewrite'] = new WPSEO_Rewrite();
-	}
+	$GLOBALS['wpseo_rewrite'] = new WPSEO_Rewrite();
 
-	if ( WPSEO_Options::get( 'enable_xml_sitemap' ) === true ) {
+	if ( WPSEO_Options::get( 'enable_xml_sitemap', null, [ 'wpseo' ] ) === true ) {
 		$GLOBALS['wpseo_sitemaps'] = new WPSEO_Sitemaps();
 	}
 
 	if ( ! wp_doing_ajax() ) {
 		require_once WPSEO_PATH . 'inc/wpseo-non-ajax-functions.php';
 	}
-
-	// Init it here because the filter must be present on the frontend as well or it won't work in the customizer.
-	new WPSEO_Customizer();
 
 	$integrations   = [];
 	$integrations[] = new WPSEO_Slug_Change_Watcher();
@@ -408,17 +415,12 @@ function wpseo_admin_init() {
 
 /* ***************************** BOOTSTRAP / HOOK INTO WP *************************** */
 $spl_autoload_exists = function_exists( 'spl_autoload_register' );
-$filter_exists       = function_exists( 'filter_input' );
 
 if ( ! $spl_autoload_exists ) {
 	add_action( 'admin_init', 'yoast_wpseo_missing_spl', 1 );
 }
 
-if ( ! $filter_exists ) {
-	add_action( 'admin_init', 'yoast_wpseo_missing_filter', 1 );
-}
-
-if ( ! wp_installing() && ( $spl_autoload_exists && $filter_exists ) ) {
+if ( ! wp_installing() && ( $spl_autoload_exists ) ) {
 	add_action( 'plugins_loaded', 'wpseo_init', 14 );
 	add_action( 'setup_theme', [ 'Yoast_Dynamic_Rewrites', 'instance' ], 1 );
 	add_action( 'rest_api_init', 'wpseo_init_rest_api' );
@@ -542,25 +544,25 @@ function yoast_wpseo_missing_autoload_notice() {
  * Throw an error if the filter extension is disabled (prevent white screens) and self-deactivate plugin.
  *
  * @since 2.0
+ * @deprecated 23.3
+ * @codeCoverageIgnore
  *
  * @return void
  */
 function yoast_wpseo_missing_filter() {
-	if ( is_admin() ) {
-		add_action( 'admin_notices', 'yoast_wpseo_missing_filter_notice' );
-
-		yoast_wpseo_self_deactivate();
-	}
+	_deprecated_function( __FUNCTION__, 'Yoast SEO 23.3' );
 }
 
 /**
  * Returns the notice in case of missing filter extension.
  *
+ * @deprecated 23.3
+ * @codeCoverageIgnore
+ *
  * @return void
  */
 function yoast_wpseo_missing_filter_notice() {
-	$message = esc_html__( 'The filter extension seem to be unavailable. Please ask your web host to enable it.', 'wordpress-seo' );
-	yoast_wpseo_activation_failed_notice( $message );
+	_deprecated_function( __FUNCTION__, 'Yoast SEO 23.3' );
 }
 
 /**
@@ -571,8 +573,14 @@ function yoast_wpseo_missing_filter_notice() {
  * @return void
  */
 function yoast_wpseo_activation_failed_notice( $message ) {
+	$title = sprintf(
+		/* translators: %s: Yoast SEO. */
+		esc_html__( '%s activation failed', 'wordpress-seo' ),
+		'Yoast SEO'
+	);
+
 	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- This function is only called in 3 places that are safe.
-	echo '<div class="error"><p>' . esc_html__( 'Activation failed:', 'wordpress-seo' ) . ' ' . strip_tags( $message, '<a>' ) . '</p></div>';
+	echo '<div class="error yoast-migrated-notice"><h4 class="yoast-notice-migrated-header">' . $title . '</h4><div class="notice-yoast-content"><p>' . strip_tags( $message, '<a>' ) . '</p></div></div>';
 }
 
 /**

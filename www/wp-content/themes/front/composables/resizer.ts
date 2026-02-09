@@ -32,7 +32,7 @@ function Resizer() {
 
 // Instance
 
-let resizer = null;
+let resizer;
 
 // Composables
 

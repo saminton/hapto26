@@ -61,6 +61,7 @@ class Plugin {
 
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 9999 );
+		add_action( 'init', array( $this, 'init_block_access' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		add_action( 'network_admin_notices', array( $this, 'admin_notices' ) );
 		add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
@@ -89,6 +90,8 @@ class Plugin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts_notifs' ) );
 		add_action( 'admin_notices', array( $this, 'warning_options_discussion' ) );
 		//add_action( 'admin_notices', array( $this, 'warning_notice_for_comment_registration' ) );
+
+		add_filter( 'manage_sites_action_links', array( $this, 'manage_sites_action_links' ), 10, 3 );
 	}
 
 	public function site_status_tests( $tests ) {
@@ -370,12 +373,24 @@ class Plugin {
 				admin_url( 'plugin-install.php' )
 			);
 
+			$details_url_wpboutik = add_query_arg(
+				array(
+					'tab'       => 'plugin-information',
+					'plugin'    => 'wpboutik',
+					'TB_iframe' => true,
+					'width'     => 722,
+					'height'    => 949,
+				),
+				admin_url( 'plugin-install.php' )
+			);
+
 			$out .= '<div id="whl_settings">';
 			$out .= sprintf( __( 'Need help? Try the <a href="%1$s" target="_blank">support forum</a>. This plugin is kindly brought to you by <a href="%2$s" target="_blank">WPServeur</a>', 'wps-hide-login' ), 'http://wordpress.org/support/plugin/wps-hide-login/', 'https://www.wpserveur.net/?refwps=14&campaign=wpshidelogin' ) . ' (' . __( 'WordPress specialized hosting', 'wps-hide-login' ) . ')';
 			$out .= '<br>' . __( 'Discover our other plugins:', 'wps-hide-login' ) . ' ';
 			$out .= __( 'the plugin', 'wps-hide-login' ) . ' <a href="' . $details_url_wpsbidouille . '" class="thickbox open-plugin-details-modal">' . __( 'WPS Bidouille', 'wps-hide-login' ) . '</a>';
 			$out .= ', ' . __( 'the plugin', 'wps-hide-login' ) . ' <a href="' . $details_url_wpscleaner . '" class="thickbox open-plugin-details-modal">' . __( 'WPS Cleaner', 'wps-hide-login' ) . '</a>';
-			$out .= ' ' . __( 'and', 'wps-hide-login' ) . ' <a href="' . $details_url_wpslimitlogin . '" class="thickbox open-plugin-details-modal">' . __( 'WPS Limit Login', 'wps-hide-login' ) . '</a>';
+			$out .= ' ' . __( 'and', 'wps-hide-login' ) . ' <a href="' . $details_url_wpslimitlogin . '" class="thickbox open-plugin-details-modal">' . __( 'WPS Limit Login', 'wps-hide-login' ) . '</a>.';
+			$out .= '<br>' . __( 'You want to find out how to simplify ecommerce with WordPress, try', 'wps-hide-login' ) . ' <a href="' . $details_url_wpboutik . '" class="thickbox open-plugin-details-modal">' . __( 'WPBoutik', 'wps-hide-login' ) . '</a>.';
 			$out .= '</div>';
 
 		}
@@ -476,14 +491,6 @@ class Plugin {
 	public function plugins_loaded() {
 
 		global $pagenow;
-
-		if ( ! is_multisite()
-		     && ( strpos( rawurldecode( $_SERVER['REQUEST_URI'] ), 'wp-signup' ) !== false
-		          || strpos( rawurldecode( $_SERVER['REQUEST_URI'] ), 'wp-activate' ) !== false ) && apply_filters( 'wps_hide_login_signup_enable', false ) === false ) {
-
-			wp_die( __( 'This feature is not enabled.', 'wps-hide-login' ) );
-
-		}
 
 		$request = parse_url( rawurldecode( $_SERVER['REQUEST_URI'] ) );
 
@@ -633,6 +640,8 @@ class Plugin {
 	public function filter_wp_login_php( $url, $scheme = null ) {
 		global $pagenow;
 
+		$origin_url = $url;
+
 		if ( strpos( $url, 'wp-login.php?action=postpass' ) !== false ) {
 			return $url;
 		}
@@ -640,6 +649,10 @@ class Plugin {
 		if ( is_multisite() && 'install.php' === $pagenow ) {
 			return $url;
 		}
+
+		/*if ( strpos( $url, 'wp-admin/?action=postpass' ) === false ) {
+			return $url;
+		}*/
 
 		if ( strpos( $url, 'wp-login.php' ) !== false && strpos( wp_get_referer(), 'wp-login.php' ) === false ) {
 
@@ -665,6 +678,19 @@ class Plugin {
 
 			}
 
+		}
+
+		if ( isset( $_POST['post_password'] ) ) {
+			global $current_user;
+			if ( ! is_user_logged_in() && is_wp_error( wp_authenticate_username_password( null, $current_user->user_login, $_POST['post_password'] ) ) ) {
+				return $origin_url;
+			}
+		}
+
+		if ( ! is_user_logged_in() ) {
+			if ( file_exists( WP_CONTENT_DIR . '/plugins/gravityforms/gravityforms.php' ) && isset( $_GET['gf_page'] ) ) {
+				return $origin_url;
+			}
 		}
 
 		return $url;
@@ -809,11 +835,11 @@ class Plugin {
 					)
 				);
 			else :*/ ?>
-                <div class="wps-updates notice notice-warning is-dismissible"
-                     data-dismissible="disable-notice-warning-comments-forever">
-                    <p><?php _e( 'WPS Hide Login : Please note, if you check the comment_registration option "Users must be registered and logged in to comment", the login link will not be hidden on the comment block.', 'wps-hide-login' ); ?></p>
-                </div>
-			    <?php
+            <div class="wps-updates notice notice-warning is-dismissible"
+                 data-dismissible="disable-notice-warning-comments-forever">
+                <p><?php _e( 'WPS Hide Login : Please note, if you check the comment_registration option "Users must be registered and logged in to comment", the login link will not be hidden on the comment block.', 'wps-hide-login' ); ?></p>
+            </div>
+		<?php
 			//endif;
 		endif;
 	}
@@ -836,12 +862,12 @@ class Plugin {
 					)
 				);
 			else :*/ ?>
-                <div class="wps-updates notice notice-warning is-dismissible"
-                     data-dismissible="disable-notice-warning-comment-registration-forever">
-                    <p><?php _e( 'WPS Hide Login : Please note that the comment_registration option “Users must be registered and logged in to comment” is activated on your site, the connection link will not be hidden on the comments block.', 'wps-hide-login' ); ?></p>
-                </div>
-                <?php
-            //endif;
+            <div class="wps-updates notice notice-warning is-dismissible"
+                 data-dismissible="disable-notice-warning-comment-registration-forever">
+                <p><?php _e( 'WPS Hide Login : Please note that the comment_registration option “Users must be registered and logged in to comment” is activated on your site, the connection link will not be hidden on the comments block.', 'wps-hide-login' ); ?></p>
+            </div>
+		<?php
+			//endif;
 		endif;
 	}
 
@@ -863,6 +889,31 @@ class Plugin {
 			return false;
 		} else {
 			return true;
+		}
+	}
+
+	public function manage_sites_action_links( $actions, $blog_id, $blogname ) {
+
+		$actions['backend'] = sprintf(
+			'<a href="%1$s" class="edit">%2$s</a>',
+			esc_url( get_site_url( $blog_id, $this->new_login_slug() ) ),
+			__( 'Dashboard' )
+		);
+
+		return $actions;
+	}
+
+	/**
+	 * Block access to wp-signup.php and wp-activate.php on non-multisite installations.
+	 * This runs on 'init' hook to ensure translations are loaded.
+	 */
+	public function init_block_access() {
+		if ( ! is_multisite()
+		     && ( strpos( rawurldecode( $_SERVER['REQUEST_URI'] ), 'wp-signup' ) !== false
+		          || strpos( rawurldecode( $_SERVER['REQUEST_URI'] ), 'wp-activate' ) !== false ) && apply_filters( 'wps_hide_login_signup_enable', false ) === false ) {
+
+			wp_die( __( 'This feature is not enabled.', 'wps-hide-login' ) );
+
 		}
 	}
 }

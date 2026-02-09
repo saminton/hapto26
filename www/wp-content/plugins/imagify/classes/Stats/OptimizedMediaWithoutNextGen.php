@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace Imagify\Stats;
 
 use Imagify\Bulk\Bulk;
+use Imagify\Optimization\Process\ProcessInterface;
 use Imagify\EventManagement\SubscriberInterface;
 use Imagify\Traits\InstanceGetterTrait;
+use WP_Error;
 
 /**
  * Class to get and cache the number of optimized media without next-gen versions.
  */
-class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface {
+final class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface {
 	use InstanceGetterTrait;
 
 	/**
@@ -62,7 +64,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 	 */
 	public function get_cached_stat() {
 		$contexts = implode( '|', imagify_get_context_names() );
-		$stat     = get_transient( static::NAME );
+		$stat     = get_transient( self::NAME );
 
 		if ( isset( $stat['stat'], $stat['contexts'] ) && $stat['contexts'] === $contexts ) {
 			// The number is stored and the contexts are the same.
@@ -74,7 +76,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 			'stat'     => $this->get_stat(),
 		];
 
-		set_transient( static::NAME, $stat, 2 * DAY_IN_SECONDS );
+		set_transient( self::NAME, $stat, 2 * DAY_IN_SECONDS );
 
 		return $stat['stat'];
 	}
@@ -85,7 +87,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 	 * @since 2.2
 	 */
 	public function clear_cache() {
-		delete_transient( static::NAME );
+		delete_transient( self::NAME );
 	}
 
 	/**
@@ -97,7 +99,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 	 * @param array            $item    The item being processed.
 	 */
 	public function maybe_clear_cache_after_optimization( $process, $item ) {
-		if ( ! $process->get_media()->is_image() || false === get_transient( static::NAME ) ) {
+		if ( ! $process->get_media()->is_image() || false === get_transient( self::NAME ) ) {
 			return;
 		}
 
@@ -107,7 +109,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 		$new_sizes = array_intersect_key( $sizes, $new_sizes );
 		$size_name = 'full' . $process::WEBP_SUFFIX;
 
-		if ( get_imagify_option( 'convert_to_avif' ) ) {
+		if ( 'avif' === get_imagify_option( 'optimization_format' ) ) {
 			$size_name = 'full' . $process::AVIF_SUFFIX;
 		}
 
@@ -140,14 +142,14 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 	 * @param array            $data     The optimization data, before deleting it.
 	 */
 	public function maybe_clear_cache_after_restoration( $process, $response, $files, $data ) {
-		if ( ! $process->get_media()->is_image() || false === get_transient( static::NAME ) ) {
+		if ( ! $process->get_media()->is_image() || false === get_transient( self::NAME ) ) {
 			return;
 		}
 
 		$sizes     = isset( $data['sizes'] ) ? (array) $data['sizes'] : [];
 		$size_name = 'full' . $process::WEBP_SUFFIX;
 
-		if ( get_imagify_option( 'convert_to_avif' ) ) {
+		if ( 'avif' === get_imagify_option( 'optimization_format' ) ) {
 			$size_name = 'full' . $process::AVIF_SUFFIX;
 		}
 
@@ -167,7 +169,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 	 * @param ProcessInterface $process An optimization process.
 	 */
 	public function maybe_clear_cache_on_deletion( $process ) {
-		if ( false === get_transient( static::NAME ) ) {
+		if ( false === get_transient( self::NAME ) ) {
 			return;
 		}
 
@@ -175,7 +177,7 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 		$sizes     = isset( $data['sizes'] ) ? (array) $data['sizes'] : [];
 		$size_name = 'full' . $process::WEBP_SUFFIX;
 
-		if ( get_imagify_option( 'convert_to_avif' ) ) {
+		if ( 'avif' === get_imagify_option( 'optimization_format' ) ) {
 			$size_name = 'full' . $process::AVIF_SUFFIX;
 		}
 
@@ -198,11 +200,11 @@ class OptimizedMediaWithoutNextGen implements StatInterface, SubscriberInterface
 	 * @return void
 	 */
 	public function maybe_clear_stat_cache( $old_value, $value ) {
-		if ( isset( $old_value['convert_to_avif'] ) && isset( $value['convert_to_avif'] ) ) {
+		if ( ! isset( $old_value['optimization_format'], $value['optimization_format'] ) ) {
 			return;
 		}
 
-		if ( ! isset( $old_value['convert_to_avif'] ) && ! isset( $value['convert_to_avif'] ) ) {
+		if ( $old_value['optimization_format'] === $value['optimization_format'] ) {
 			return;
 		}
 

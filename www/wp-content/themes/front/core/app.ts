@@ -81,7 +81,8 @@ export function App(components, services, plugins) {
 		// Usefull for plugin pages / woocommerce
 		barba.hooks.afterLeave((data) => {
 			if (!data.next.html.includes('v-barba="container"'))
-				window.location.href = data.next.url.href;
+				location.assign(data.next.url.href);
+			// window.location.href = data.next.url.href;
 		});
 
 		barba.hooks.before((data) => {
@@ -121,6 +122,9 @@ export function App(components, services, plugins) {
 		// Wait for components to load
 		await events.once(mutator, "complete");
 
+		console.log("hide loader");
+		console.log(`scroll`, scroll);
+		loader.hide();
 		page.isReady = true;
 		scroll.isEnabled = true;
 

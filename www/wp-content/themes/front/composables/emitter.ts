@@ -58,7 +58,7 @@ export function Emitter() {
 
 // Instance
 
-let emitter = null;
+let emitter;
 
 // Composables
 
