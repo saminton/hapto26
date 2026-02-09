@@ -121,47 +121,33 @@ body {
 /* Titles */
 
 [v-font*="title_1"] {
-	@if meta.mixin-exists(title-1) {
-		@include typography.title-1(null);
-	}
+	@include typography.title-1(null);
 }
 
 [v-font*="title_2"] {
-	@if meta.mixin-exists(title-2) {
-		@include typography.title-2(null);
-	}
+	@include typography.title-2(null);
 }
 
 [v-font*="title_3"] {
-	@if meta.mixin-exists(title-3) {
-		@include typography.title-3(null);
-	}
+	@include typography.title-3(null);
 }
 
 [v-font*="title_4"] {
-	@if meta.mixin-exists(title-4) {
-		@include typography.title-4(null);
-	}
+	@include typography.title-4(null);
 }
 
-[v-font*="title_5"] {
-	@if meta.mixin-exists(title-5) {
-		@include title-5(null);
-	}
-}
+// [v-font*="title_5"] {
+// 		@include typography.title-5(null);
+// }
 
 /* Labels */
 
 [v-font*="label_1"] {
-	@if meta.mixin-exists(label-1) {
-		@include typography.label-1(null);
-	}
+	@include typography.label-1(null);
 }
 
 [v-font*="label_2"] {
-	@if meta.mixin-exists(label-2) {
-		@include typography.label-2(null);
-	}
+	@include typography.label-2(null);
 }
 
 [v-font*="label_3"] {
@@ -171,60 +157,42 @@ body {
 }
 
 [v-font*="label_4"] {
-	@if meta.mixin-exists(label-4) {
-		@include typography.label-4(null);
-	}
+	@include typography.label-4(null);
 }
 
-[v-font*="label_5"] {
-	@if meta.mixin-exists(label-5) {
-		@include label-5(null);
-	}
-}
+// [v-font*="label_5"] {
+// 	@include typography.label-5(null);
+// }
 
 /* Body */
 
 [v-font*="body_1"] {
-	@if meta.mixin-exists(body-1) {
-		@include typography.body-1(null);
-	}
+	@include typography.body-1(null);
 }
 
 [v-font*="body_2"] {
-	@if meta.mixin-exists(body-2) {
-		@include typography.body-2(null);
-	}
+	@include typography.body-2(null);
 }
 
 [v-font*="body_3"] {
-	@if meta.mixin-exists(body-3) {
-		@include typography.body-3(null);
-	}
+	@include typography.body-3(null);
 }
 
 [v-font*="body_4"] {
-	@if meta.mixin-exists(body-4) {
-		@include typography.body-4(null);
-	}
+	@include typography.body-4(null);
 }
 
 [v-font*="body_5"] {
-	@if meta.mixin-exists(body-5) {
-		@include typography.body-5(null);
-	}
+	@include typography.body-5(null);
 }
 
 [v-font*="body_6"] {
-	@if meta.mixin-exists(body-6) {
-		@include typography.body-6(null);
-	}
+	@include typography.body-6(null);
 }
 
-[v-font*="body_7"] {
-	@if meta.mixin-exists(body-7) {
-		@include body-7(null);
-	}
-}
+// [v-font*="body_7"] {
+// 	@include body-7(null);
+// }
 
 /* Fluxs */
 

@@ -113,6 +113,9 @@
 			"/db-replace": true,
 			"/xmlrpc": true,
 		},
+		"[scss]": {
+			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
+		},
 	},
 	"tasks": {
 		"version": "2.0.0",

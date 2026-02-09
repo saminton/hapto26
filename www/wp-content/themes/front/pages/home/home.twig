@@ -13,6 +13,10 @@
 			gallery: fields.gallery
 		} %} #}
 
+		<h1 v-font="title_1">
+			{{ post.title }}
+		</h1>
+
 		{% include 'blocks/form-fields' with {
 			margin: 'default'
 		} %}
