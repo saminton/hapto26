@@ -1,0 +1,34 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.cover {
+	position: relative;
+	max-height: var(--100vh);
+
+	@media (min-width: #{$tablet + 1px}) {
+		height: 62.5vw;
+	}
+
+	@media (min-width: #{$phone + 1px}) and (max-width: $tablet) {
+		height: 110vw;
+	}
+
+	@media (max-width: $phone) {
+		height: 200vw;
+	}
+}
+
+.title {
+}

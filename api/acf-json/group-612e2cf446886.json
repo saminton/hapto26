@@ -1,0 +1,61 @@
+{
+	"key": "group_612e2cf446886",
+	"title": "API Keys",
+	"fields": [
+		{
+			"key": "field_612e2d072eebd",
+			"label": "Clefs API",
+			"name": "api_keys",
+			"type": "group",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"layout": "block",
+			"sub_fields": [
+				{
+					"key": "field_612e2d192eebe",
+					"label": "Analytics",
+					"name": "analytics",
+					"type": "text",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "",
+					"placeholder": "",
+					"prepend": "",
+					"append": "",
+					"maxlength": ""
+				}
+			]
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "options_page",
+				"operator": "==",
+				"value": "acf-options-api"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "seamless",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": ["the_content"],
+	"active": true,
+	"description": "",
+	"show_in_rest": 1,
+	"modified": 1675178175
+}

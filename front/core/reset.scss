@@ -1,0 +1,178 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+	outline: none;
+	font: inherit;
+	text-decoration: none;
+	word-break: normal;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+}
+
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+	width: 100%;
+
+	word-break: break-word;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: none;
+	-webkit-tap-highlight-color: transparent;
+	-ms-text-size-adjust: 100%;
+	color: rgb(var(--text));
+}
+
+html,
+body {
+	overscroll-behavior: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+
+	// Remove native scroll
+	// height: 100%;
+	// overflow-x: hidden;
+
+	overflow: hidden;
+}
+
+body {
+	width: 100%;
+}
+
+/* Tables */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+caption,
+th,
+td {
+	text-align: left;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+/* Text */
+
+q,
+blockquote {
+	quotes: none;
+}
+
+/* Media */
+
+img,
+video {
+	display: flex;
+	height: auto;
+	width: 100%;
+}
+
+img {
+	pointer-events: none; /* Prevent IE click on image opening image in tab */
+}
+
+svg {
+	overflow: visible;
+	width: 100%;
+	height: auto;
+}
+
+a {
+	color: inherit;
+}
+
+strong {
+	font-weight: 700;
+}
+
+/* Forms */
+
+button {
+	cursor: pointer;
+	background-color: inherit;
+	appearance: none;
+	color: inherit;
+	text-transform: inherit;
+}
+
+button:disabled {
+	cursor: not-allowed;
+}
+
+input,
+select {
+	appearance: none;
+	color: inherit;
+}
+
+textarea {
+	resize: none;
+}
+
+input[type="number"] {
+	appearance: textfield;
+}
+
+input[type="checkbox"] {
+	appearance: none;
+}
+
+input:-webkit-autofill {
+	-webkit-background-clip: text;
+}
+
+select::-ms-expand {
+	display: none;
+}
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+/* Other */
+
+pre {
+	white-space: pre-wrap;
+	font-size: 14px;
+	font:
+		500 14px/18px Arial,
+		sans-serif;
+}
+
+main {
+	position: absolute;
+	inset: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+main:not([ready]) {
+	opacity: 0;
+}
+
+[v-line] {
+	display: block;
+	white-space: nowrap;
+	will-change: transform;
+}
+
+[v-clip] {
+	display: inline-block;
+}

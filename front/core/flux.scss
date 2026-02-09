@@ -1,0 +1,13 @@
+// No CSS output!
+// SCSS Mixins only
+
+// Decoration
+
+@mixin flux($width: var(--flux_default), $gutter: var(--gutter)) {
+	width: calc(#{$width} + 2 * #{$gutter});
+	max-width: 100%;
+	padding-left: $gutter;
+	padding-right: $gutter;
+	margin-left: auto;
+	margin-right: auto;
+}

@@ -1,0 +1,65 @@
+// Will generate css variables with matching names
+
+$colors: (
+	black: #202020,
+	body: #0f0,
+	text: #202020,
+	white: #fff,
+	success: #0f0,
+	error: #f00,
+	light_grey: #bbb,
+	grey: #888,
+	dark_grey: #333,
+	selection: #9db8f7,
+);
+
+$gutters: (
+	gutter: 2rem,
+	gutter_small: 1rem,
+);
+
+// Generates util classes ex:
+// .margin
+// .margin_small
+// .margin_top
+// .margin_top_small
+// .pad
+// .pad_small
+// .pad_top
+// .pad_top_small
+
+$spacings: (
+	spacing_tiny: 1rem,
+	spacing_small: 3rem,
+	spacing_medium: 7rem,
+	spacing_default: 10rem,
+	spacing_large: 15rem,
+);
+
+$fluxs: (
+	flux_default: 140rem,
+	flux_small: 140rem,
+	flux_medium: 140rem,
+	flux_max: 140rem,
+);
+
+$timings: (
+	timing: 0.5s,
+	timing_short: 0.2s,
+	timing_long: 1s,
+);
+
+$easings: (
+	ease: cubic-bezier(0.25, 0, 0.25, 1),
+	ease_alt: cubic-bezier(0.25, 0, 0.25, 1),
+	ease_in: cubic-bezier(0.75, 0, 0.75, 1),
+	ease_in_alt: cubic-bezier(0.75, 0, 0.75, 1),
+	ease_out: cubic-bezier(0.25, 0, 0.25, 1),
+	ease_out_alt: cubic-bezier(0.25, 0, 0.25, 1),
+);
+
+$extra: (
+	radius_small: 0.2rem,
+	radius_medium: 0.4rem,
+	focus: 4px solid rgba(var(--text)),
+);
