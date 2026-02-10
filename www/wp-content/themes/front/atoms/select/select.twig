@@ -1,0 +1,82 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def label = '' %}
+{% def name = '' %}
+{% def type = '' %}
+{% def default = '' %}
+{% def placeholder = false %}
+{% def anim = false %}
+{% def delay = false %}
+{% def is_required = false %}
+{% def options = [] %}
+{% def preset = '' %}
+{# Template #}
+
+<label class="select {{ class }}"
+	{{ attr('v-anim', anim) }}
+	{{ attr('v-preset', preset) }}>
+	{% if label %}
+		<span class="label">
+			{{ label }}
+			{% if is_required %}
+				<sup>*</sup>
+			{% endif %}
+		</span>
+	{% endif %}
+
+	<div class="field">
+		<select class="area"
+			name="{{ name }}"
+			{{ attr('required', is_required) }}
+			{{ attr('query-type', type) }}>
+			{% if placeholder %}
+				<option value="" disabled selected hidden>
+					{{ placeholder|raw }}
+				</option>
+			{% endif %}
+
+			{% for item in options %}
+				<option value="{{ item.value }}"
+					{{ attr('selected', item.value == default and placeolder != false) }}>
+					{{ item.label }}
+				</option>
+			{% endfor %}
+		</select>
+
+		{% include 'atoms/icon' with {
+			icon: 'defaults/expand-down',
+			class: 'expand'
+		} %}
+	</div>
+
+	<div class="dropdown">
+		<div class="options" v-scroll>
+			{% for item in options %}
+				<div class="option"
+					data-value="{{ item.value }}"
+					{{
+					attr(
+						'data-selected',
+						item.value == default and placeolder != false
+					)
+					}}>
+					{{ item.label }}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</label>
+
+{# <select name="{{ name }}" {{ attr('required', is_required) }}>
+	{% if placeholder %}
+		<option value="" disabled selected hidden>{{ placeholder|raw }}</option>
+	{% endif %}
+
+	{% for item in options %}
+		<option value="{{ item.value }}"
+			{{ attr('selected', item.value == default and placeolder != false) }}>{{
+				item.label
+			}}</option>
+	{% endfor %}
+</select> #}

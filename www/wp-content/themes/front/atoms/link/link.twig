@@ -1,0 +1,66 @@
+{# Vars #}
+
+{% def title = '' %}
+{% def url = '' %}
+{% def is_disabled = false %}
+{% def anim = false %}
+{% def delay = false %}
+{% def icon = false %}
+{% def font = 'body_4' %}
+
+{# Block #}
+
+{% if false %}
+	{% block content %}
+		{% block before %}
+			{# Before #}
+		{% endblock %}
+
+		<span class="text" v-font="{{ font }}">
+			{% block text %}
+				{{ title }}
+			{% endblock %}
+		</span>
+
+		{% block after %}
+			{# After #}
+			{% if icon %}
+				{% include 'atoms/icon' with {
+					class: 'icon',
+					icon: icon
+				} %}
+			{% endif %}
+		{% endblock %}
+	{% endblock %}
+{% endif %}
+
+{# Template #}
+
+{% if url %}
+	<a class="link {{ class }}"
+		href="{{ url }}"
+		s-cursor="pointer"
+		{{ style(style) }}
+		{{ attr('target', target) }}
+		{{ attr('download', download) }}
+		{{ attr('rel', rel) }}
+		{{ attr('type', type) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim, false) }}
+		{{ attr('a-delay', delay) }}>
+		{{ block('content') }}
+	</a>
+{% else %}
+	<button class="link {{ class }}"
+		s-cursor="pointer"
+		{{ style(style) }}
+		{{ attr('name', name) }}
+		{{ attr('type', type) }}
+		{{ attr('value', value) }}
+		{{ attr('disabled', is_disabled) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim) }}
+		{{ attr('a-delay', delay) }}>
+		{{ block('content') }}
+	</button>
+{% endif %}

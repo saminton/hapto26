@@ -1,0 +1,65 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.select {
+	position: relative;
+	z-index: 1;
+	max-width: 21rem;
+	width: 100%;
+	@include input-field;
+}
+
+.field {
+	position: relative;
+	z-index: 2;
+}
+
+.dropdown {
+	position: absolute;
+	width: 100%;
+	top: 0%;
+	background: white;
+	@include transition(var(--timing), var(--ease), height, opacity);
+	overflow: hidden;
+	height: fit-content;
+	border-radius: var(--radius_medium);
+
+	&::before {
+		content: "";
+		position: absolute;
+		height: 1px;
+		width: 100%;
+		top: var(--input_height);
+		background: rgb(var(--grey20));
+	}
+}
+
+.select:not([open]) .dropdown {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.options {
+	@include row-gap(0.5rem);
+	height: fit-content;
+	padding-top: calc(var(--input_height) + 1rem);
+	padding-left: var(--input_padding);
+	padding-right: var(--input_padding);
+	padding-bottom: 1rem;
+}
+
+.expand {
+	padding-right: calc(var(--input_padding) - 1rem);
+}

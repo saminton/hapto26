@@ -1,0 +1,79 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+:root {
+	--radio_color: var(--black);
+	--radio_background: var(--white);
+	--radio_border: var(--black);
+	--radio_checked_color: var(--white);
+	--radio_checked_background: var(--black);
+	--radio_checked_border: var(--black);
+}
+
+// Radio
+
+.radio {
+	display: flex;
+	align-items: center;
+
+	// Presets
+
+	// [v-preset="red"] {
+
+	// }
+
+	.label {
+		margin-left: 1rem;
+	}
+
+	.tick {
+		position: relative;
+		display: block;
+		@include rect(2.3rem);
+		border: var(--input_border_width) solid;
+		border-radius: 100%;
+
+		color: rgb(var(--radio_color));
+		background: rgb(var(--radio_background));
+		border-color: rgb(var(--radio_border));
+	}
+
+	input {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	input:checked + .tick {
+		color: rgb(var(--radio_checked_color));
+		background: rgb(var(--radio_checked_background));
+		border-color: rgb(var(--radio_checked_border));
+	}
+
+	input:disabled + * {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	input:focus + .tick {
+		outline: var(--focus);
+	}
+}

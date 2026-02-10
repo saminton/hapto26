@@ -1,0 +1,66 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+:root {
+	--icon_button_fill: var(--white);
+	--icon_button_background: var(--black);
+	--icon_button_border: var(--black);
+	// --icon_button_hover_fill: var(--black);
+	// --icon_button_hover_background: var(--black);
+	// --icon_button_hover_border: var(--black);
+}
+
+.icon_button {
+	@include rect(4.8rem);
+	border: 1px solid;
+	border-radius: 100%;
+	flex-shrink: 0;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	background: rgb(var(--icon_button_background));
+	border-color: rgb(var(--icon_button_border));
+
+	--icon_fill: #{var(--icon_button_fill)};
+	--icon_stroke: #{var(--icon_button_fill)};
+
+	// &:hover {
+	// 	background: rgb(var(--icon_button_hover_background));
+	// 	border-color: rgb(var(--icon_button_hover_border));
+	// 	--icon_hover_fill: #{var(--icon_button_hover_fill)};
+	// 	--icon_hover_stroke: #{var(--icon_button_hover_fill)};
+	// }
+
+	[v-layout="small"] {
+		@include rect(3.2rem);
+	}
+
+	[v-layout="large"] {
+		@include rect(6.4rem);
+	}
+
+	// Presets
+
+	// [v-preset="red"] {
+	// 	--icon_button_color: var(--white);
+	// 	--icon_button_background: var(--black);
+	// 	--icon_button_border: var(--black);
+	// 	--icon_button_hover_color: var(--white);
+	// 	--icon_button_hover_background: 0, 0, 0;
+	// 	--icon_button_hover_border: var(--black);
+	// }
+}

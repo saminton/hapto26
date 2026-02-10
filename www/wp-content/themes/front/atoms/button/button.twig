@@ -1,0 +1,100 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def title = '' %}
+{% def name = false %}
+{% def value = false %}
+{% def target = null %}
+{% def url = false %}
+{% def download = false %}
+{% def rel = false %}
+{% def is_disabled = false %}
+{% def anim = false %}
+{% def delay = false %}
+{% def icon_left = false %}
+{% def icon = false %}
+{% def margin = '' %}
+{% def size = 'default' %}
+{% def variant = '' %}
+
+{% def is_clickable = true %}
+
+{% set external = route.host not in url %}
+{% set target = external and target is same as(null) ? '_blank' : target %}
+{% set rel = external ? 'external' : rel %}
+
+{# Block #}
+
+{% if false %}
+	{% block content %}
+		{% block before %}
+			{# Before #}
+			{% if icon_left %}
+				{% include 'atoms/icon' with {
+					icon: icon_left,
+					class: 'icon_left'
+				} %}
+			{% endif %}
+		{% endblock %}
+
+		<span class="text" v-font="label_1">
+			{% block text %}
+				{{ title }}
+			{% endblock %}
+		</span>
+
+		{% block after %}
+			{# After #}
+			{% if icon %}
+				{% include 'atoms/icon' with {
+					class: 'icon',
+					icon: icon
+				} %}
+			{% endif %}
+		{% endblock %}
+	{% endblock %}
+{% endif %}
+
+{# Template #}
+
+{% if not is_clickable %}
+	<span class="button {{ class }}"
+		href="{{ url }}"
+		s-cursor="pointer"
+		size="{{ size }}"
+		{{ attr('variant', variant) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim, false) }}
+		{{ attr('a-delay', delay) }}>
+		{{ block('content') }}
+	</span>
+{% elseif url %}
+	<a class="button {{ class }}"
+		href="{{ url }}"
+		s-cursor="pointer"
+		size="{{ size }}"
+		{{ attr('variant', variant) }}
+		{{ attr('target', target) }}
+		{{ attr('download', download) }}
+		{{ attr('rel', rel) }}
+		{{ attr('type', type) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim, false) }}
+		{{ attr('a-delay', delay) }}>
+		{{ block('content') }}
+	</a>
+{% else %}
+	<button class="button {{ class }}"
+		s-cursor="pointer"
+		size="{{ size }}"
+		{{ attr('variant', variant) }}
+		{{ attr('name', name) }}
+		{{ attr('type', type) }}
+		{{ attr('value', value) }}
+		{{ attr('disabled', is_disabled) }}
+		{{ attr('v-preset', preset) }}
+		{{ attr('v-anim', anim) }}
+		{{ attr('a-delay', delay) }}>
+		{{ block('content') }}
+	</button>
+{% endif %}

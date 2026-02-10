@@ -1,0 +1,15 @@
+{# Vars #}
+
+{% def title = '' %}
+{% def margin = '' %}
+{% def padding = '' %}
+
+{# Template #}
+
+<section class="cover"
+	{{ attr('v-margin', margin) }}
+	{{ attr('v-padding', padding) }}>
+	<h1 v-font="title_1">
+		{{ title|strip }}
+	</h1>
+</section>
