@@ -12,7 +12,7 @@ on:
     branches:
       - master
     paths:
-      - 'www/wp-content/themes/**'
+      - 'www/wp-content/themes/front/bundles/**'
 
 jobs:
   publish-themes:
