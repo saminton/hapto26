@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>color/facebook2</title>
-    <g id="color/facebook2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Rectangle" fill="#FFFFFF" x="12" y="5" width="12" height="22"></rect>
-        <path d="M25.675,3 L4.325,3 C3.593,3 3,3.593 3,4.325 L3,25.676 C3,26.407 3.593,27 4.325,27 L15.82,27 L15.82,17.706 L12.692,17.706 L12.692,14.084 L15.82,14.084 L15.82,11.413 C15.82,8.313 17.713,6.625 20.479,6.625 C21.804,6.625 22.942,6.724 23.274,6.768 L23.274,10.008 L21.356,10.009 C19.852,10.009 19.561,10.724 19.561,11.772 L19.561,14.085 L23.148,14.085 L22.681,17.707 L19.561,17.707 L19.561,27 L25.677,27 C26.407,27 27,26.407 27,25.675 L27,4.325 C27,3.593 26.407,3 25.675,3 Z" id="Path" fill="#4267B2" fill-rule="nonzero"></path>
-    </g>
-</svg>
