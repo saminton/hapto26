@@ -28,6 +28,7 @@ export function App(components, services, plugins) {
 		const transitions = getTransitions();
 		const scroll = useStore("scroll");
 		const loader = useStore("loader");
+		const store = useStore("pointer");
 
 		device.init();
 		pointer.init();
@@ -52,8 +53,6 @@ export function App(components, services, plugins) {
 				delay: 1,
 			});
 		};
-
-		const store = useStore("pointer");
 
 		if (document.querySelector(`main[v-barba]`))
 			barba.init({
@@ -122,15 +121,9 @@ export function App(components, services, plugins) {
 		// Wait for components to load
 		await events.once(mutator, "complete");
 
-		console.log("hide loader");
-		console.log(`scroll`, scroll);
 		loader.hide();
 		page.isReady = true;
 		scroll.isEnabled = true;
-
-		effect(() => {
-			attr(page.el, "ready", page.isReady);
-		});
 	};
 
 	// Prevent focus state on click

@@ -1,5 +1,4 @@
-import { watch, WatchStopHandle } from "@vue-reactivity/watch";
-import { isRef, reactive, ref, Ref } from "@vue/reactivity";
+import { watch, isRef, reactive, ref, Ref, WatchStopHandle } from "@vue/reactivity";
 import { stores } from "../theme";
 
 function Store() {

@@ -7,7 +7,7 @@ declare function afterReady(callback: CallableFunction);
 declare function provide(name: string, values: any): any;
 declare function inject(name: string, values?: unknown): any;
 declare function supply(name: string, values: any): any;
-declare function defineEmits(): (name: string) => void;
+declare function defineEmits(name: string): void;
 declare function defineExpose(values: object): void;
 
 // Files
@@ -27,11 +27,11 @@ declare module "*.glsl" {
 	export default content;
 }
 
-window.onMounted = undefined;
-window.onUnmounted = undefined;
-window.onReady = undefined;
-window.afterReady = undefined;
-window.provide = undefined;
-window.inject = undefined;
-window.defineEmits = undefined;
-window.defineExpose = undefined;
+window.onMounted = () => {};
+window.onUnmounted = () => {};
+window.onReady = () => {};
+window.afterReady = () => {};
+window.provide = () => {};
+window.inject = () => {};
+window.defineEmits = () => {};
+window.defineExpose = () => {};

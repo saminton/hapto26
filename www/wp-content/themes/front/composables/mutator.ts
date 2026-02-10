@@ -1,7 +1,16 @@
-import { watch } from "@vue-reactivity/watch";
+import { watch } from "@vue/reactivity";
 import { Emitter, useStore } from "composables";
 import md5 from "md5";
 import { kebabCase, snakeCase } from "../utils";
+import { Component, Service } from "core";
+
+type Entry = {
+	type: "component" | "service" | "plugin";
+	el: HTMLElement;
+	class: any;
+	name: string;
+	uid?: string;
+};
 
 function Mutator() {
 	let componentConstructs = [];
@@ -47,7 +56,7 @@ function Mutator() {
 		// }
 
 		// Create components
-		const items = traverse(node).reduce((result, item) => {
+		const items = traverse(node).reduce((result: any[], item: Entry) => {
 			if (item.type == "service") {
 				try {
 					const instance = new item.class(item);
@@ -148,7 +157,7 @@ function Mutator() {
 		if (node.nodeType !== 1) return null; // do nothing on text nodes
 
 		const items = traverse(node);
-		items.forEach((item) => {
+		items.forEach((item: Entry) => {
 			if (item.type == "service") {
 				let i = this.services.length;
 				while (i--) {
@@ -195,12 +204,12 @@ function Mutator() {
 	// Find components within a given node
 
 	const traverse = (node: HTMLElement) => {
-		const found = [];
+		const found: Entry[] = [];
 
 		const check = (el: HTMLElement) => {
 			// Components
 
-			componentConstructs.forEach((component) => {
+			componentConstructs.forEach((component: Component) => {
 				const name = snakeCase(component.name);
 				const uid = md5(name).slice(0, 4);
 
@@ -216,7 +225,7 @@ function Mutator() {
 			});
 
 			// Services
-			serviceConstructs.forEach((service) => {
+			serviceConstructs.forEach((service: Service) => {
 				const name = kebabCase(service.name);
 				if (el.hasAttribute("v-" + name))
 					found.unshift({
@@ -229,7 +238,7 @@ function Mutator() {
 
 			// plugins
 
-			pluginConstructs.forEach((plugin) => {
+			pluginConstructs.forEach((plugin: Component) => {
 				const name = snakeCase(plugin.name);
 
 				if (el.classList.contains(name)) {
@@ -244,7 +253,7 @@ function Mutator() {
 		};
 
 		const recursive = (node) => {
-			Array.from(node.children).forEach((el: HTMLElement) => {
+			Array.from(node.children).forEach((el: any) => {
 				check(el);
 				recursive(el);
 			});

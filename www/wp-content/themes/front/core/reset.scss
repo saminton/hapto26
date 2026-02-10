@@ -163,9 +163,9 @@ main {
 	overflow-y: auto;
 }
 
-main:not([ready]) {
-	opacity: 0;
-}
+// main:not([ready]) {
+// 	opacity: 0;
+// }
 
 [v-line] {
 	display: block;

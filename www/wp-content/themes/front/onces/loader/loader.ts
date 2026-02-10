@@ -24,9 +24,7 @@ export function Loader(args) {
 
 	// Hooks
 
-	onMounted(() => {
-		on(window, "click", onClick);
-	});
+	onMounted(() => {});
 
 	onReady(() => {
 		hide();
@@ -35,11 +33,6 @@ export function Loader(args) {
 	onUnmounted(() => {});
 
 	// Functions
-
-	const onClick = (e) => {
-		console.log(`click`);
-		store.isOpen ? hide() : show();
-	};
 
 	const show = async () => {
 		store.isOpen = true;
@@ -71,6 +64,10 @@ export function Loader(args) {
 	};
 
 	// Effects
+
+	effect(() => {
+		console.log(`loader is open`, store.isOpen);
+	});
 
 	watch(
 		() => store.isOpen,

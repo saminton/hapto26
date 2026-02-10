@@ -1,6 +1,6 @@
 // Singleton
 
-import { watch } from "@vue-reactivity/watch";
+import { watch } from "@vue/reactivity";
 import { useRoute, useCookie } from "core";
 
 function Gtag() {

@@ -5,7 +5,13 @@ import { useReactivity } from "./reactivity";
 export type Component = {
 	el: HTMLElement;
 	name: string;
+	class: string;
+	uid: string;
+	promise: Promise<void>;
 	provides: [];
+	ready: () => Promise<void>;
+	mount: () => Promise<void>;
+	destroy: () => void;
 };
 
 export function Component(args) {
@@ -73,7 +79,7 @@ export function Component(args) {
 		const { watch, effect } = useReactivity();
 
 		onMounted(() => {
-			let found = undefined;
+			let found;
 			while (el.parentElement) {
 				el = el.parentElement;
 				// Find component
@@ -102,7 +108,6 @@ export function Component(args) {
 				// console.warn(`No parent found providing "${name}"`);
 			}
 		});
-
 		return refer;
 	};
 

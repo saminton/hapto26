@@ -1,8 +1,7 @@
-import { ref } from "@vue/reactivity";
+import { ref, watch } from "@vue/reactivity";
 import { useRoute } from "core";
 import { useEvents } from "./events";
 import { withDefaults } from "utils";
-import { watch } from "@vue-reactivity/watch";
 
 function AudioManager() {
 	const files = [];
@@ -54,7 +53,7 @@ function AudioManager() {
 			restart?: boolean;
 			time?: number;
 			multiple?: boolean; // Todo
-		}
+		},
 	) => {
 		const file = files.find((file) => file.fileName == fileName);
 		if (!file) {

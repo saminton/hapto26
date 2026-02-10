@@ -1,6 +1,5 @@
-import { ref } from "@vue/reactivity";
+import { ref, watch } from "@vue/reactivity";
 import { useEmitter, onEmitted } from "./emitter";
-import { watch } from "@vue-reactivity/watch";
 import { useStore } from "composables";
 import { debounce } from "utils";
 

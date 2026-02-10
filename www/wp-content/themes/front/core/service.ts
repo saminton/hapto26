@@ -3,7 +3,12 @@ import { Emitter } from "composables";
 export type Service = {
 	el: HTMLElement;
 	name: string;
+	class: string;
 	supplying: [];
+	promise: Promise<void>;
+	ready: () => Promise<void>;
+	mount: () => Promise<void>;
+	destroy: () => void;
 };
 
 export function Service(args) {

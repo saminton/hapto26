@@ -19,8 +19,6 @@ export function Example(args) {
 
 	// Vars
 
-	console.log("plugin example");
-
 	// Hooks
 
 	onMounted(() => {});

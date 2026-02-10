@@ -48,8 +48,6 @@ export function FileUpload(args) {
 		on(uploadEl, "change", changed);
 		on(buttonEl, "click", () => uploadEl.click());
 		update();
-
-		console.log(`templateEl`, templateEl);
 	});
 
 	onUnmounted(() => {});
@@ -57,7 +55,6 @@ export function FileUpload(args) {
 	// Handles
 
 	const changed = (el: HTMLElement, e?: Event) => {
-		console.log(`e`, e);
 		// files.length = 0;
 		if (multiple) {
 			files.push(...Array.from(uploadEl.files));
@@ -70,7 +67,6 @@ export function FileUpload(args) {
 	// Functions
 
 	const update = () => {
-		console.log(`'update'`, "update");
 		itemsEl.innerHTML = "";
 
 		// Update input
