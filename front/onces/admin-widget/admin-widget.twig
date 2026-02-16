@@ -1,0 +1,16 @@
+{# Vars #}
+
+{% def class = '' %}
+
+{# Template #}
+
+{% if user.is_admin %}
+	<div class="admin_widget">
+		<a target="_blank" href="{{ urls.admin }}" aria-label="Admin">
+			{{ svg('assets/svgs/wordpress.svg') }}
+		</a>
+		<a class="edit" href="{{ urls.edit }}" target="_blank" aria-label="Edit">
+			{{ svg('assets/svgs/edit.svg') }}
+		</a>
+	</div>
+{% endif %}

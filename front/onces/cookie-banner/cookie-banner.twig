@@ -1,0 +1,18 @@
+{# Vars #}
+
+{% def text = '' %}
+
+{# Template #}
+
+<div class="cookie_banner">
+	<button class="close" aria-label="{{ 'Fermer'|translate }}"></button>
+
+	<div class="content">
+		<span class="text">{{ text }}</span>
+		<div class="buttons">
+			<button class="accept">{{ 'Accepter'|translate }}</button>
+			<button class="refuse">{{ 'Refuser'|translate }}</button>
+			<button class="params">{{ 'Paramétrer'|translate }}</button>
+		</div>
+	</div>
+</div>

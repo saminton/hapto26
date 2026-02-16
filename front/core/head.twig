@@ -1,0 +1,55 @@
+{# Vars #}
+
+{% def title = '' %}
+{% def description = '' %}
+{% def og_local = '' %}
+{% def og_type = '' %}
+{% def og_url = '' %}
+{% def og_site_name = '' %}
+{% def article_modified_time = '' %}
+{% def image = '' %}
+{% def styles = [] %}
+{% def is_public = false %}
+{% def favicon = [] %}
+{% def enqueues = [] %}
+{% def allow = [] %}
+{% def dequeue = [] %}
+
+{# Template #}
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta charset="UTF-8" />
+
+	<title>
+		{{ title|raw }}
+	</title>
+
+	{% for enqueue in enqueues %}
+		{% if
+			(allow and enqueue.id in allow)
+				or (not allow and enqueue.id not in dequeue)
+				or enqueue.tag == 'meta' %}
+			{# <span>{{ enqueue.id }}</span> #}
+			{{ enqueue.html|raw }}
+		{% endif %}
+	{% endfor %}
+
+	<script>
+		window.initAt = Date.now();
+	</script>
+
+	{# Robots #}
+	{% if is_public == 0 %}
+		<meta name="robots" content="noindex, nofollow" />
+	{% endif %}
+
+	{# Favicon #}
+	{% if favicon.is_set %}
+		<link rel="icon" href="{{ favicon[32] }}" sizes="32x32" />
+		<link rel="shortcut icon" href="{{ favicon[192] }}" sizes="192x192" />
+		<link rel="apple-touch-icon" href="{{ favicon[180] }}" sizes="180x180" />
+	{% endif %}
+</head>

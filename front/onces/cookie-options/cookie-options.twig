@@ -1,0 +1,60 @@
+{# Vars #}
+
+{% def title = '' %}
+{% def essentiel = '' %}
+{% def analytics = '' %}
+{% def ads = '' %}
+
+{# Template #}
+
+<div class="cookie_options">
+	<button class="close" aria-label="{{ 'Fermer'|translate }}"></button>
+
+	<div class="header">
+		<span class="title">{{ title }}</span>
+	</div>
+
+	<div class="choices">
+		<div class="choice">
+			{% include 'atoms/checkbox' with {
+				label: 'Essentiel'|translate,
+				is_disabled: true,
+				is_checked: true,
+				class: 'checkbox',
+				font: 'body_5'
+			} only %}
+			<p v-font="label_3">
+				{{ essentiel|strip }}
+			</p>
+		</div>
+
+		<div class="choice">
+			{% include 'atoms/checkbox' with {
+				label: "Mesure d'audience"|translate,
+				class: 'checkbox',
+				font: 'body_5',
+				name: 'analytics'
+			} only %}
+			<p v-font="label_3">
+				{{ analytics|strip }}
+			</p>
+		</div>
+
+		<div class="choice">
+			{% include 'atoms/checkbox' with {
+				label: 'Publicité'|translate,
+				class: 'checkbox',
+				font: 'body_5',
+				name: 'ads'
+			} only %}
+			<p v-font="label_3">
+				{{ ads|strip }}
+			</p>
+		</div>
+	</div>
+
+	<div class="buttons">
+		<button class="accept">{{ 'Valider ce choix'|translate }}</button>
+		<button class="refuse">{{ 'Tout refuser'|translate }}</button>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+{# Vars #}
+
+{% def scripts = [] %}
+{% def allow = [] %}
+{% def dequeue = [] %}
+
+{# Template #}
+
+{# Styles #}
+{% for style in styles %}
+	{% if
+		(allow and style.id in allow) or (not allow and style.id not in dequeue) %}
+		<style rel="{{ style.rel }}" media="{{ style.media }}"></style>
+	{% endif %}
+{% endfor %}
+
+{# Scripts #}
+{% for script in scripts %}
+	{% if
+		(allow and script.id in allow)
+			or (not allow and script.id not in dequeue) %}
+		<script src="{{ script.src }}">
+			{{ script.content }}
+		</script>
+	{% endif %}
+{% endfor %}
+
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id={{
+	api.analytics
+	}}"></script>
+<script>
+	window.dataLayer = window.dataLayer || []; function gtag() {
+	dataLayer.push(arguments); } gtag("js", new Date()); gtag("config", "{{
+		api.analytics
+	}}");
+</script>
