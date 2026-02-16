@@ -14,11 +14,11 @@
 :root {
 	/* Convert colors to rgb */
 	@each $key, $value in variables.$colors {
-		--#{"" + $key}: #{color.red($value) +
+		--#{"" + $key}: #{color.channel($value, "red", $space: rgb) +
 			", " +
-			color.green($value) +
+			color.channel($value, "green", $space: rgb) +
 			", " +
-			color.blue($value)};
+			color.channel($value, "blue", $space: rgb)};
 	}
 
 	/* CSS variables */

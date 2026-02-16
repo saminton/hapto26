@@ -32,9 +32,6 @@ node_modules
 .env
 www/wp-config.php
 
-# ignore uncompressed dump files
-bdd/*.dump
-
 # ignore log files
 
 www/wp-content/uploads/wc-logs/*
@@ -43,6 +40,7 @@ www/wp-content/uploads/wc-logs/*
 # ignore build
 
 www/wp-content/themes/**/build/*
+!www/wp-content/themes/**/build/*.min.*
 
 # nuxt
 

@@ -71,7 +71,7 @@
 }
 
 @function str-replace($string, $search, $replace: "") {
-	@if type-of($string) != string {
+	@if meta.type-of($string) != string {
 		@return $string;
 	}
 	$index: string.index($string, $search);

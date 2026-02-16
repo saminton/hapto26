@@ -126,29 +126,22 @@ export function scripts(complete) {
 // Styles
 
 export function styles(complete) {
-	const postOptions = [
-		sortMQ(),
-		cssModules({
-			generateScopedName: function (selector, filepath, css) {
-				// console.log(hash);
+	const scopeModule = function (selector, filepath, css) {
+		// console.log(hash);
 
-				let filename = filepath
-					.replace(/^.*[\\/]/, "")
-					.replace(/\.[^/.]+$/, "")
-					.replace("-", "_");
+		let filename = filepath
+			.replace(/^.*[\\/]/, "")
+			.replace(/\.[^/.]+$/, "")
+			.replace("-", "_");
 
-				let uid = "";
-				// No uids for plugins folders
-				if (!filepath.includes("/plugins/")) uid = "-" + md5(filename).slice(0, 4);
+		let uid = "";
+		// No uids for plugins folders
+		if (!filepath.includes("/plugins/")) uid = "-" + md5(filename).slice(0, 4);
 
-				if (selector == filename) return filename + uid;
-				// return filename + "-" + selector + uid;
-				return selector + uid;
-			},
-			hashPrefix: "prefix",
-			getJSON: () => null,
-		}),
-	];
+		if (selector == filename) return filename + uid;
+		// return filename + "-" + selector + uid;
+		return selector + uid;
+	};
 
 	const cssPaths = [
 		"core/app.scss",
@@ -166,14 +159,18 @@ export function styles(complete) {
 			.src(cssPaths)
 			.pipe(sourcemaps.init())
 			.pipe(sassGlob())
+			.pipe(sassCompiler().on("error", sassCompiler.logError))
 			.pipe(
-				sassCompiler({
-					silenceDeprecations: ["global-builtin", "color-functions"],
-				}).on("error", sassCompiler.logError),
+				postcss([
+					cssModules({
+						generateScopedName: scopeModule,
+						hashPrefix: "prefix",
+						// getJSON: () => null,
+					}),
+				]),
 			)
-			.pipe(postcss(postOptions))
-			.pipe(sourcemaps.write())
 			.pipe(concat("app.css"))
+			.pipe(sourcemaps.write())
 			.pipe(gulp.dest(output.styles))
 			.pipe(livereload());
 	else
@@ -182,10 +179,20 @@ export function styles(complete) {
 			.pipe(sassGlob())
 			.pipe(
 				sassCompiler({
+					style: "compressed",
 					silenceDeprecations: ["global-builtin", "color-functions"],
 				}).on("error", sassCompiler.logError),
 			)
-			.pipe(postcss(postOptions))
+			.pipe(
+				postcss([
+					sortMQ(),
+					cssModules({
+						generateScopedName: scopeModule,
+						hashPrefix: "prefix",
+						getJSON: () => null,
+					}),
+				]),
+			)
 			.pipe(concat("app.min.css"))
 			.pipe(gulp.dest(output.styles));
 }
