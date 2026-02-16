@@ -12,7 +12,7 @@ on:
     branches:
       - master
     paths:
-      - 'www/wp-content/themes/front/bundles/**'
+      - "www/wp-content/themes/front/bundles/**"
 
 jobs:
   publish-themes:
@@ -21,6 +21,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Prepare plugins
+        run: |
+          set -e
+
+          SRC_ROOT=www/wp-content/plugins
+          DEV_DEST=/tmp/plugins
+
+          rm -rf $DEV_DEST
+          mkdir -p $DEV_DEST
+
+          rsync -a $SRC_ROOT/ $DEV_DEST/
 
       - name: Prepare themes-dev (with dev files)
         run: |
@@ -62,6 +74,18 @@ jobs:
               rsync -a "$THEME/" "$DEST_THEME/"
             fi
           done
+
+      - name: Publish plugins branch
+        run: |
+          cd /tmp/plugins
+          git init
+          git checkout -b plugins
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update plugins"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push --force origin plugins
 
       - name: Publish themes-dev branch
         run: |

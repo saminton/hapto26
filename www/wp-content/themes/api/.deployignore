@@ -18,3 +18,4 @@ tsconfig.json
 
 .git/
 .github/
+.deployignore

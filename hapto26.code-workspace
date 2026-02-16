@@ -116,6 +116,7 @@
 		"[scss]": {
 			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
 		},
+		"github-actions.workflows.pinned.workflows": [],
 	},
 	"tasks": {
 		"version": "2.0.0",
