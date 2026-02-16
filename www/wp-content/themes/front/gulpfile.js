@@ -165,7 +165,7 @@ export function styles(complete) {
 					cssModules({
 						generateScopedName: scopeModule,
 						hashPrefix: "prefix",
-						// getJSON: () => null,
+						getJSON: () => null,
 					}),
 				]),
 			)
