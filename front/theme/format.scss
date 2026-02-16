@@ -1,0 +1,110 @@
+@use "../core/columns";
+@use "typography";
+
+[v-font="format"] {
+	@include columns.row-gap(1em); // default spacing
+
+	// Titles
+
+	h1 {
+		@include typography.title-1(null);
+	}
+
+	* + h1 {
+	}
+
+	h2 {
+		@include typography.title-2(null);
+	}
+
+	* + h2 {
+	}
+
+	h3 {
+		@include typography.title-3(null);
+	}
+
+	* + h3 {
+	}
+
+	h4 {
+		@include typography.title-4(null);
+	}
+
+	* + h4 {
+	}
+
+	h5 {
+		// @include title-5(null);
+	}
+
+	* + h5 {
+	}
+
+	h6 {
+		// @include title-6(null);
+	}
+
+	* + h6 {
+	}
+
+	// Text decorations
+
+	a {
+		text-decoration: underline;
+	}
+
+	b,
+	strong {
+		font-weight: 700;
+	}
+
+	i {
+		font-style: italic;
+	}
+
+	// Lists
+
+	ul,
+	ol {
+		@include columns.row-gap(0.5em);
+		counter-reset: list;
+	}
+
+	ul li,
+	ol li {
+		position: relative;
+		padding-left: 1em;
+	}
+
+	ul li {
+		&::before {
+			content: "•";
+			position: absolute;
+			left: 0;
+			// Adjust folling to taste
+			background: currentColor;
+			width: 0.5em;
+			clip-path: circle(15%);
+		}
+	}
+
+	ol li {
+		position: relative;
+		counter-increment: list;
+		padding-left: 1em;
+
+		&::before {
+			content: counter(list);
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+
+	p + p,
+	p + ol,
+	p + ul {
+		margin-top: 1em;
+	}
+}

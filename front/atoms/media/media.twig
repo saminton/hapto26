@@ -1,0 +1,61 @@
+{# Vars #}
+{% def class = '' %}
+{% def anim = false %}
+{% def filename = '' %}
+{% def fit = false %}
+{% def url = 'https://picsum.photos/800/800.jpg?random=' ~ random(1084) %}
+{% def width = 0 %}
+{% def height = 0 %}
+{% def type = 'image' %}
+
+{# Image #}
+{% def srcset = '' %}
+{% def ratio = 1 %}
+{% def caption = false %}
+{% def loading = 'lazy' %}
+{% def fetchpriority = 'auto' %}
+
+{# Video #}
+{% def autoplay = true %}
+{% def muted = autoplay %}
+{% def loop = true %}
+
+{# Template #}
+<div class="media {{ class }}"
+	style="--ratio: {{ ratio }}"
+	type="{{ type }}"
+	{{ attr('v-anim', anim) }}
+	{{ attr('load-anim', load_anim) }}
+	{{ attr('fit', fit) }}
+	{{ attr('preload', preload|bool) }}>
+	{% if type == 'video' %}
+		<video class="video"
+			src="{{ url|upload }}"
+			loading="{{ loading }}"
+			fetchpriority="{{ fetchpriority }}"
+			playsinline
+			{{ attr('autoplay', autoplay) }}
+			{{ attr('muted', muted) }}
+			{{ attr('loop', loop) }}
+			alt=""></video>
+	{% elseif '.svg' in url %}
+		<img class="svg"
+			src="{{ url|upload }}"
+			loading="{{ loading }}"
+			fetchpriority="{{ fetchpriority }}"
+			alt="" />
+	{% else %}
+		<img class="image"
+			src="{{ url|upload }}"
+			srcset="{{ srcset|upload }}"
+			width="{{ width }}"
+			height="{{ height }}"
+			loading="{{ loading }}"
+			fetchpriority="{{ fetchpriority }}"
+			alt="" />
+	{% endif %}
+
+	{% if caption %}
+		<span>{{ caption }}</span>
+	{% endif %}
+</div>

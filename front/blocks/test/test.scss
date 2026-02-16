@@ -1,0 +1,25 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.test {
+	.columns {
+		@include columns(1 1 1, var(--gutter) var(--gutter));
+	}
+
+	.image {
+		@include aspect-ratio(0.75);
+		background: rgb(var(--black));
+	}
+}

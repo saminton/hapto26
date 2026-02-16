@@ -1,0 +1,261 @@
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:math";
+
+@use "../theme/breakpoints";
+@use "../theme/typography";
+@use "../theme/variables";
+@use "flux";
+@use "responsive";
+@use "utils";
+
+:root {
+	/* Convert colors to rgb */
+	@each $key, $value in variables.$colors {
+		--#{"" + $key}: #{color.channel($value, "red", $space: rgb) +
+			", " +
+			color.channel($value, "green", $space: rgb) +
+			", " +
+			color.channel($value, "blue", $space: rgb)};
+	}
+
+	/* CSS variables */
+
+	$root: map.merge(variables.$gutters, variables.$spacings);
+	$root: map.merge($root, variables.$fluxs);
+	$root: map.merge($root, variables.$timings);
+	$root: map.merge($root, variables.$easings);
+	$root: map.merge($root, variables.$extra);
+	$root: map.merge($root, breakpoints.$breakpoints);
+
+	@each $key, $values in $root {
+		// If values is a list
+		@if list.length($values) != 1 {
+			// Save last used value in list
+			$last-value: list.nth($values, 1);
+			// For all breakpoints
+			@include responsive.breakpoints {
+				// Max size
+				@if (responsive.$break-index == 0) {
+					--#{"" + $key}: #{list.nth($values, 1)};
+					$last-value: list.nth($values, 1);
+				}
+				// All other breakpoints
+				@else {
+					// If now value for breakpoitn use last-value
+					@if responsive.$break-index <= list.length($values) {
+						--#{"" + $key}: #{list.nth($values, responsive.$break-index)};
+						// Save last used value in list
+						$last-value: #{list.nth($values, responsive.$break-index)};
+					}
+					// Use value based on breakpoint index
+					@else {
+						--#{"" + $key}: #{$last-value};
+					}
+				}
+			}
+		}
+		// Values is not a list, use as is
+		@else {
+			--#{"" + $key}: #{$values};
+		}
+	}
+}
+
+html {
+	@include responsive.breakpoints {
+		@if (responsive.$break-index == 0) {
+			// Max breakpoint
+			font-size: math.div(breakpoints.$max, breakpoints.$laptop-target) * 10px;
+		} @else if(responsive.$break-index > list.length(breakpoints.$breakpoints) - 1) {
+			// Last Breakpoint
+			font-size: math.div(1000, utils.strip-unit(breakpoints.$phone-target)) * 1vw;
+		} @else {
+			// Breakpoint or window height
+			font-size: #{"min"
+				}(1.3vh, math.div(1000, utils.strip-unit(responsive.$break-value)) * 1vw);
+		}
+	}
+}
+
+body {
+	@include typography.body-2(null);
+	background: rgb(var(--body));
+	color: rgb(var(--text));
+}
+
+/* Yell */
+
+[v-font*="yell_1"] {
+	@if meta.mixin-exists(yell-1) {
+		@include typography.yell-1(null);
+	}
+}
+
+[v-font*="yell_2"] {
+	@if meta.mixin-exists(yell-2) {
+		@include yell-2(null);
+	}
+}
+
+[v-font*="yell_3"] {
+	@if meta.mixin-exists(yell-3) {
+		@include yell-3(null);
+	}
+}
+
+[v-font*="yell_4"] {
+	@if meta.mixin-exists(yell-4) {
+		@include yell-4(null);
+	}
+}
+
+[v-font*="yell_5"] {
+	@if meta.mixin-exists(yell-5) {
+		@include yell-5(null);
+	}
+}
+
+/* Titles */
+
+[v-font*="title_1"] {
+	@include typography.title-1(null);
+}
+
+[v-font*="title_2"] {
+	@include typography.title-2(null);
+}
+
+[v-font*="title_3"] {
+	@include typography.title-3(null);
+}
+
+[v-font*="title_4"] {
+	@include typography.title-4(null);
+}
+
+// [v-font*="title_5"] {
+// 		@include typography.title-5(null);
+// }
+
+/* Labels */
+
+[v-font*="label_1"] {
+	@include typography.label-1(null);
+}
+
+[v-font*="label_2"] {
+	@include typography.label-2(null);
+}
+
+[v-font*="label_3"] {
+	@if meta.mixin-exists(label-3) {
+		@include typography.label-3(null);
+	}
+}
+
+[v-font*="label_4"] {
+	@include typography.label-4(null);
+}
+
+// [v-font*="label_5"] {
+// 	@include typography.label-5(null);
+// }
+
+/* Body */
+
+[v-font*="body_1"] {
+	@include typography.body-1(null);
+}
+
+[v-font*="body_2"] {
+	@include typography.body-2(null);
+}
+
+[v-font*="body_3"] {
+	@include typography.body-3(null);
+}
+
+[v-font*="body_4"] {
+	@include typography.body-4(null);
+}
+
+[v-font*="body_5"] {
+	@include typography.body-5(null);
+}
+
+[v-font*="body_6"] {
+	@include typography.body-6(null);
+}
+
+// [v-font*="body_7"] {
+// 	@include body-7(null);
+// }
+
+/* Fluxs */
+
+[v-flux*="max"] {
+	background: red;
+	// based on largest breakpoint
+	@include flux.flux(
+		math.div(utils.strip-unit(breakpoints.$laptop-target), 10) + "rem",
+		0rem
+	);
+}
+
+@each $key, $value in variables.$fluxs {
+	$name: utils.str-replace($key, "flux_", "");
+	$name: utils.str-replace($name, "-", "_");
+	[v-flux*="#{$name}"] {
+		@include flux.flux(var(--#{$key}));
+	}
+}
+
+/* Spacings */
+
+@each $key, $value in variables.$spacings {
+	$size: utils.str-replace($key, "spacing_", "");
+	$size: utils.str-replace($size, "-", "_");
+
+	[v-margin="#{$size}"] {
+		margin-top: var(--#{$key});
+		margin-bottom: var(--#{$key});
+	}
+
+	[v-margin*="top_#{$size}"] {
+		margin-top: var(--#{$key});
+	}
+
+	[v-margin*="bottom_#{$size}"] {
+		margin-bottom: var(--#{$key});
+	}
+
+	[v-padding="#{$size}"] {
+		padding-top: var(--#{$key});
+		padding-bottom: var(--#{$key});
+	}
+
+	[v-padding*="top_#{$size}"] {
+		padding-top: var(--#{$key});
+	}
+
+	[v-padding*="bottom_#{$size}"] {
+		padding-bottom: var(--#{$key});
+	}
+}
+
+*:focus:not(:active) {
+	outline: var(--focus);
+}
+
+::selection {
+	background: rgb(var(--selection));
+	text-shadow: none;
+}
+
+::-moz-selection {
+	background: rgb(var(--selection));
+	text-shadow: none;
+}

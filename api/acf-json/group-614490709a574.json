@@ -1,0 +1,98 @@
+{
+	"key": "group_614490709a574",
+	"title": "Social Media",
+	"fields": [
+		{
+			"key": "field_614490751679f",
+			"label": "Liens",
+			"name": "social",
+			"type": "repeater",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": {
+				"width": "",
+				"class": "",
+				"id": ""
+			},
+			"layout": "table",
+			"pagination": 0,
+			"min": 0,
+			"max": 0,
+			"collapsed": "",
+			"button_label": "Add Row",
+			"rows_per_page": 20,
+			"sub_fields": [
+				{
+					"key": "field_61449095167a0",
+					"label": "Plateforme",
+					"name": "platform",
+					"type": "select",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"choices": {
+						"linkedin": "Linkedin",
+						"facebook": "Facebook",
+						"twitter": "Twitter",
+						"youtube": "Youtube",
+						"instagram": "Instagram",
+						"vimeo": "Vimeo",
+						"pinterest": "Pinterest",
+						"twitch": "Twitch",
+						"tiktok": "Tiktok"
+					},
+					"default_value": false,
+					"allow_null": 0,
+					"multiple": 0,
+					"ui": 0,
+					"return_format": "array",
+					"ajax": 0,
+					"placeholder": "",
+					"parent_repeater": "field_614490751679f"
+				},
+				{
+					"key": "field_614490ed167a1",
+					"label": "URL",
+					"name": "url",
+					"type": "url",
+					"instructions": "",
+					"required": 0,
+					"conditional_logic": 0,
+					"wrapper": {
+						"width": "",
+						"class": "",
+						"id": ""
+					},
+					"default_value": "",
+					"placeholder": "",
+					"parent_repeater": "field_614490751679f"
+				}
+			]
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "options_page",
+				"operator": "==",
+				"value": "acf-options-reseaux-sociaux"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "seamless",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": ["the_content"],
+	"active": true,
+	"description": "",
+	"show_in_rest": 1,
+	"modified": 1675178175
+}
