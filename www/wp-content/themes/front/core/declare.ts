@@ -7,7 +7,7 @@ declare function afterReady(callback: CallableFunction);
 declare function provide(name: string, values: any): any;
 declare function inject(name: string, values?: unknown): any;
 declare function supply(name: string, values: any): any;
-declare function defineEmits(name: string): void;
+declare function defineEmits(name?: string): (name: string) => void;
 declare function defineExpose(values: object): void;
 
 // Files
@@ -33,5 +33,5 @@ window.onReady = () => {};
 window.afterReady = () => {};
 window.provide = () => {};
 window.inject = () => {};
-window.defineEmits = () => {};
+window.defineEmits = () => () => {};
 window.defineExpose = () => {};
