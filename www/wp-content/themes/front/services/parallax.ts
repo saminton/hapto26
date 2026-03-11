@@ -9,7 +9,7 @@ import {
 import { Service, useReactivity } from "core";
 import { extend, getProps, receive } from "utils";
 
-export function Parallax(args) {
+export function Parallax(args: Service) {
 	// Extend
 
 	extend(Service, this, args);

@@ -2,11 +2,11 @@ import { Ref, unref } from "@vue/reactivity";
 import { useReactivity } from "core";
 // import { Color } from "three";
 import { Color, Vector2, Vector3, Vector4, withDefaults } from "utils";
-import { onResized } from "./resizer";
-import { useStore } from "./store";
 import { useBounds } from "./bounds";
 import { onRendered } from "./renderer";
+import { onResized } from "./resizer";
 import { useSticky } from "./sticky";
+import { useStore } from "./store";
 
 type Uniform = {
 	value: number | Vector2 | Vector3 | string | WebGLTexture;
@@ -126,7 +126,7 @@ export const useCanvasGL = (props: {
 					break;
 
 				case value instanceof WebGLTexture:
-					gl.activeTexture(gl["TEXTURE" + textureIndex]);
+					gl.activeTexture((gl as any)["TEXTURE" + textureIndex]);
 					gl.bindTexture(gl.TEXTURE_2D, value);
 					gl.uniform1i(uniform.location, textureIndex);
 					textureIndex++;

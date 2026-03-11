@@ -1,17 +1,8 @@
-import { ref } from "@vue/reactivity";
-import {
-	events,
-	onNodeResized,
-	onResized,
-	useAnim,
-	useEvents,
-	useStore,
-} from "composables";
-import { useIntersect } from "composables/intersector";
+import { onResized, useEvents, useStore } from "composables";
 import { Component, useReactivity, useScope } from "core";
-import { extend, getBounds, getProps, receive } from "utils";
+import { extend, getBounds, getProps } from "utils";
 
-export function Image(args) {
+export function Image(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -50,7 +41,7 @@ export function Image(args) {
 	const setSize = () => {
 		const bounds = getBounds(node);
 		const containerRatio = bounds.width / bounds.height;
-		const attr = getProps(sourceEl);
+		const attr = sourceEl ? getProps(sourceEl) : {};
 		const imageRatio = attr.width / attr.height;
 		let width = bounds.width;
 		let height = bounds.height;

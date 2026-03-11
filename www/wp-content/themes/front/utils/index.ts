@@ -9,4 +9,5 @@ export * from "./types";
 export * from "./form";
 export * from "./data";
 // export * from "./three";
-// export * from "./vectors";
+export * from "./vectors";
+export * from "./colors";

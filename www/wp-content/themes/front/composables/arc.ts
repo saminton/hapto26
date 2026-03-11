@@ -1,9 +1,10 @@
 import { getBounds, withDefaults } from "utils";
-import { AnimData, onDisplayChange, useAnim } from "composables";
+import { Anim, AnimData, onDisplayChange, useAnim } from "composables";
 import { onResized } from "./resizer";
 import { Ref, ref, unref } from "@vue/reactivity";
 import { useReactivity } from "core";
-import { getAnimations } from "theme";
+import { getAnimations, Animation } from "theme";
+import { Bounds } from "types";
 
 // Inspired par
 // https://circletype.labwire.ca/
@@ -42,7 +43,7 @@ export const useArc = (props: {
 
 	const { watch, effect } = useReactivity();
 
-	let items = [];
+	let items: { el: HTMLElement; rotation: number; bounds: Bounds }[];
 	let fontSize: number;
 	let lineHeight: number;
 	let letterSpacing: number;
@@ -51,8 +52,8 @@ export const useArc = (props: {
 	let isSetup = false;
 
 	const hasAnim = props.anim || props.timeline;
-	let anim;
-	let animations;
+	let anim: Anim;
+	let animations: Animation[];
 
 	if (hasAnim) {
 		animations = getAnimations();
@@ -72,7 +73,7 @@ export const useArc = (props: {
 
 	onResized(() => setup());
 
-	onDisplayChange(props.el, (isDisplayed) => {
+	onDisplayChange(props.el, (isDisplayed: boolean) => {
 		if (isDisplayed) setup();
 	});
 
@@ -95,9 +96,9 @@ export const useArc = (props: {
 
 			return {
 				el: el,
-				rotation: null,
+				rotation: 0,
 				bounds: null,
-			};
+			} as { el: HTMLElement; rotation: number; bounds: Bounds };
 		});
 
 		const style = window.getComputedStyle(props.el);
@@ -125,7 +126,7 @@ export const useArc = (props: {
 	};
 
 	const degreesPerRadian = 180 / Math.PI;
-	const radiansToDegrees = (angleInRadians) => angleInRadians * degreesPerRadian;
+	const radiansToDegrees = (angleInRadians: number) => angleInRadians * degreesPerRadian;
 
 	const draw = () => {
 		if (!isSetup) return;
@@ -170,7 +171,7 @@ export const useArc = (props: {
 		});
 	};
 
-	const createAnim = (data) => {
+	const createAnim = (data: AnimData) => {
 		// Add letters to anim data
 		data.letters = letters;
 

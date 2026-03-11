@@ -9,7 +9,7 @@
 		{% embed 'modules/form' with {} %}
 			{% block content %}
 				<div class="form" v-margin="top_default">
-					<fieldset>
+					{# <fieldset>
 						{% include 'atoms/file-upload' with {
 							label: 'Single file upload'
 						} %}
@@ -18,8 +18,13 @@
 							label: 'Multiple file upload',
 							multiple: true
 						} %}
-					</fieldset>
+					</fieldset> #}
 					<fieldset>
+						{% include 'atoms/input' with {
+							label: 'Text',
+							type: 'text',
+							placeholder: 'placeholder'
+						} %}
 						{% include 'atoms/input' with {
 							label: 'Email',
 							type: 'email',
@@ -27,14 +32,14 @@
 							placeholder: 'placeholder'
 						} %}
 						{% include 'atoms/input' with {
-							label: 'Email',
-							type: 'email',
+							label: 'Text disabled',
+							type: 'text',
 							placeholder: 'placeholder',
 							is_disabled: true
 						} %}
 					</fieldset>
 
-					<fieldset>
+					{# <fieldset>
 						{% include 'atoms/password' with {
 							label: 'Password',
 							value: 'value'
@@ -178,6 +183,14 @@
 
 					<fieldset>
 						{% include 'atoms/icon' %}
+					</fieldset> #}
+
+					<fieldset>
+						{% include 'atoms/button' with {
+							title: 'submit',
+							type: 'submit',
+							preset: 'button:small'
+						} only %}
 					</fieldset>
 				</div>
 			{% endblock %}

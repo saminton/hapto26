@@ -42,7 +42,7 @@ export const useAccordion = (props: {
 
 		resize();
 		on(summaryEl, "click", onToggle);
-		update(isOpen.value, null);
+		update(isOpen.value, false);
 	});
 
 	onBeforeResize(() => {
@@ -59,7 +59,7 @@ export const useAccordion = (props: {
 		contentEl.style.overflow = "hidden";
 	};
 
-	const onToggle = (el, e) => {
+	const onToggle = (el: HTMLElement, e: Event) => {
 		if (!unref(isActive)) return;
 		e.preventDefault();
 
@@ -74,7 +74,7 @@ export const useAccordion = (props: {
 		isOpen.value = false;
 	};
 
-	const update = (current, old) => {
+	const update = (current: boolean, old: boolean) => {
 		contentEl.style.height = old ? contentHeight + "px" : "0";
 		requestAnimationFrame(() => {
 			contentEl.style.height = current ? contentHeight + "px" : "0";

@@ -2,9 +2,29 @@ import { computed, ref } from "@vue/reactivity";
 import { events, onRendered, useEvents } from "composables";
 import { useIntersect } from "composables/intersector";
 import { Component, useReactivity, useScope } from "core";
-import { aria, debounce, extend, getProps } from "utils";
+import { aria, attr, debounce, extend, getProps } from "utils";
 
-export function Video(args) {
+export interface VideoComponent extends Component {
+	el: HTMLElement;
+	url: string;
+	src: string;
+	autoplay: boolean;
+	muted: boolean;
+	loop: boolean;
+	hasControls: boolean;
+	platform: string;
+	state: number;
+	isMuted: boolean;
+	play: () => void;
+	pause: () => void;
+	toggle: () => void;
+	seek: (time: number) => void;
+	load: (src: string) => void;
+	mute: () => void;
+	unMute: () => void;
+}
+
+export function Video(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -50,8 +70,8 @@ export function Video(args) {
 
 	const state = ref(-1);
 
-	let youtube;
-	let vimeo;
+	let youtube: any;
+	let vimeo: any;
 
 	onMounted(() => {
 		on([playEl, overlayEl, coverEl], "click", toggle);
@@ -90,7 +110,7 @@ export function Video(args) {
 		if (state.value == 1) controlsHidden.value = true;
 	}, 750);
 
-	const progressClick = (el, e) => {
+	const progressClick = (el: HTMLElement, e: MouseEvent) => {
 		let rect = progressEl.getBoundingClientRect();
 		let x = e.clientX - rect.left;
 
@@ -99,7 +119,7 @@ export function Video(args) {
 		seek(progress * duration);
 	};
 
-	const load = async (src: string = null) => {
+	const load = async (src: string = "") => {
 		state.value = 3;
 		if (src) current.value = src;
 
@@ -153,7 +173,7 @@ export function Video(args) {
 			const scriptEl = document.createElement("script");
 			scriptEl.src = src;
 			const el = document.getElementsByTagName("script")[0];
-			el.parentNode.insertBefore(scriptEl, el);
+			el.parentNode?.insertBefore(scriptEl, el);
 
 			scriptEl.onload = () => {
 				resolve();
@@ -196,7 +216,7 @@ export function Video(args) {
 						else pause();
 						resolve();
 					},
-					onStateChange: (e) => {
+					onStateChange: (e: any) => {
 						if (e.data == 0 && loop) youtube.seekTo(0);
 						state.value = e.data;
 					},
@@ -259,12 +279,10 @@ export function Video(args) {
 	);
 
 	effect(() => {
-		node.setAttribute("loaded", isLoaded.value);
+		attr(node, "loaded", isLoaded.value);
 	});
 
 	effect(() => {
-		console.log(state.value);
-
 		switch (state.value) {
 			case 1:
 				if (!platform) sourceEl.play();
@@ -290,7 +308,7 @@ export function Video(args) {
 	});
 
 	effect(() => {
-		if (state.value == 1) aria(coverEl, "hidden", true);
+		if (coverEl && state.value == 1) aria(coverEl, "hidden", true);
 	});
 
 	effect(() => {

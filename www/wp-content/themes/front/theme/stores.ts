@@ -1,4 +1,4 @@
-export const stores = {
+export const stores: { [key: string]: any } = {
 	device: {
 		width: 0,
 		height: 0,

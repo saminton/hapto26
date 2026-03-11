@@ -8,6 +8,7 @@
 {% def is_colorized = false %}
 {% def icon = 'social/twitter' %}
 {% def preset = false %}
+{% def type = 'button' %}
 
 {# Block #}
 
@@ -42,6 +43,7 @@
 		{{ attr('v-preset', preset) }}
 		{{ attr('v-anim', anim) }}
 		{{ attr('data-delay', delay) }}
+		type="{{ type }}"
 		s-cursor="pointer"
 		aria-label="{{ title }}">
 		{{ block('content') }}

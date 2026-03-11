@@ -1,9 +1,15 @@
 import { ref } from "@vue/reactivity";
 import { useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
-import { aria, extend, getProps } from "utils";
+import { aria, attr, extend, getProps } from "utils";
 
-export function Password(args) {
+interface PasswordComponent extends Component {
+	el: HTMLInputElement;
+	isVisible: boolean;
+	toggle: () => void;
+}
+
+export function Password(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -40,7 +46,7 @@ export function Password(args) {
 	effect(() => {
 		aria(iconEls[0], "hidden", !isVisible.value);
 		aria(iconEls[1], "hidden", isVisible.value);
-		inputEl.setAttribute("type", isVisible.value ? "text" : "password");
+		if (inputEl) attr(inputEl, "type", isVisible.value ? "text" : "password");
 	});
 
 	// Handles

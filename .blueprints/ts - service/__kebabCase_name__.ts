@@ -3,6 +3,10 @@ import { ref, reactive } from "@vue/reactivity";
 import { Service, useReactivity } from "core";
 import { extend, getProps } from "utils";
 
+export export interface {pascalCase name}Service extends Service {
+
+};
+
 export function {{pascalCase name}}(args) {
 	// Extend
 

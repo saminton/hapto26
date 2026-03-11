@@ -1,0 +1,68 @@
+{# Vars #}
+
+{% def class = '' %}
+
+{# Template #}
+
+<section class="contact_form">
+	<div v-flux="default">
+		{% embed 'modules/form'
+			with {
+				class: 'fields'
+			}
+		%}
+			{% block content %}
+				<div class="row">
+					{% include 'atoms/input' with {
+						label: 'Entreprise',
+						type: 'company',
+						placeholder: 'Entreprise'
+					} %}
+				</div>
+				<div class="row">
+					{% include 'atoms/input' with {
+						label: 'Nom',
+						name: 'lastname',
+						placeholder: 'Nom',
+						is_required: true
+					} %}
+					{% include 'atoms/input' with {
+						label: 'Prénom',
+						name: 'firstname',
+						placeholder: 'Prénom',
+						is_required: true
+					} %}
+				</div>
+				<div class="row">
+					{% include 'atoms/input' with {
+						label: 'Téléphone',
+						name: 'firstname',
+						placeholder: '+33 Tél',
+						type: 'tel',
+						is_required: true
+					} %}
+					{% include 'atoms/input' with {
+						label: 'Nom',
+						name: 'email',
+						type: 'email',
+						placeholder: 'Email',
+						is_required: true
+					} %}
+				</div>
+				<div class="row">
+					{% include 'atoms/textarea' with {
+						label: 'Message',
+						placeholder: 'Message',
+						name: 'message',
+						is_required: true
+					} %}
+				</div>
+				<input type="text" style="display: none;" name="birthdate" />
+				{% include 'atoms/button' with {
+					title: 'submit',
+					type: 'submit'
+				} %}
+			{% endblock %}
+		{% endembed %}
+	</div>
+</section>

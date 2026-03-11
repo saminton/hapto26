@@ -2,9 +2,15 @@ import { Component, useReactivity, useScope } from "core";
 import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend, ajax, aria } from "utils";
-import { useForm } from "composables/form";
+import { FormState, useForm } from "composables/form";
 
-export function Newsletter(args) {
+export interface NewsletterComponent extends Component {
+	el: HTMLElement;
+	errorMessage: string;
+	successMessage: string;
+}
+
+export function Newsletter(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -56,13 +62,13 @@ export function Newsletter(args) {
 		return response;
 	};
 
-	const error = (response) => {
+	const error = (response: any) => {
 		inputEl.value = "";
 		inputEl.placeholder = response.detail ?? errorMessage;
 		inputEl.focus();
 	};
 
-	const sent = (response) => {
+	const sent = (response: any) => {
 		if (!response.id) {
 			error(response);
 			return;
@@ -75,8 +81,8 @@ export function Newsletter(args) {
 	// Effects
 
 	effect(() => {
-		aria(node, "busy", form.isSending.value);
-		aria(submitEl, "hidden", form.isSending.value);
-		aria(spinnerEl, "hidden", !form.isSending.value);
+		aria(node, "busy", form.state.value == FormState.SENDING);
+		if (submitEl) aria(submitEl, "hidden", form.state.value == FormState.SENT);
+		if (spinnerEl) aria(spinnerEl, "hidden", form.state.value != FormState.SENDING);
 	});
 }

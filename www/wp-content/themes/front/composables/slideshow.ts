@@ -4,6 +4,20 @@ import { onNodeResized } from "./node-resizer";
 import { onRendered } from "./renderer";
 import { useEvents } from "composables";
 
+export type Slideshow = {
+	el: HTMLElement;
+	containers: HTMLElement[];
+	index: number;
+	previous: () => void;
+	next: () => void;
+	goTo: (i: number) => void;
+	play: () => void;
+	pause: () => void;
+	timer: number;
+	progress: number;
+	isPaused: boolean;
+};
+
 export function useSlideshow(props: {
 	el: HTMLElement;
 	containers: HTMLElement[];
@@ -51,7 +65,7 @@ export function useSlideshow(props: {
 	// Hooks
 
 	onMounted(() => {
-		goTo(unref(startIndex), false);
+		goTo(unref(startIndex));
 		if (unref(autoHeight)) adjustHeight();
 
 		on(nextEls, "click", next);
@@ -66,7 +80,7 @@ export function useSlideshow(props: {
 		if (isPaused.value || interval == 0) return;
 		timer.value -= event.deltaTime;
 		if (timer.value < 0) {
-			timer.value = interval;
+			timer.value = unref(interval);
 			next();
 		}
 	});
@@ -99,8 +113,8 @@ export function useSlideshow(props: {
 		);
 	};
 
-	const goTo = async (i: number, isAnimated: boolean = true) => {
-		if (!unref(canInterrupt) && isBusy.value) return null;
+	const goTo = async (i: number) => {
+		if (!unref(canInterrupt) && isBusy.value) return;
 		isBusy.value = true;
 
 		// loop around when smaller then first or larger than last index

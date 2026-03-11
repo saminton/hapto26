@@ -80,13 +80,11 @@ export const useLateral = (props: { el: HTMLElement }) => {
 	};
 
 	effect(() => {
-		parentEl.style.height = isActive.value ? size.value + "px" : "";
+		if (parentEl) parentEl.style.height = isActive.value ? size.value + "px" : "";
 		// parentEl.style.clipPath = isActive.value ? "inset(0)" : "";
 	});
 
 	effect(() => {
-		console.log(position.value);
-
 		childrenEls.forEach((el) => {
 			el.style.transform = `translate3d(-${position.value}px, 0, 0)`;
 		});

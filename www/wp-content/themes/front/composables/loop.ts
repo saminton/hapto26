@@ -2,7 +2,7 @@ import { Ref, reactive, ref, unref } from "@vue/reactivity";
 import { onAfterResize, onBeforeResize } from "composables";
 import { useReactivity } from "core";
 import { Bounds, Vector2 } from "types";
-import { getBounds, receive } from "utils";
+import { getBounds, receive, toArray } from "utils";
 import { onBeforeRender } from "./renderer";
 
 type Item = {
@@ -25,7 +25,7 @@ export function useLoop(props: {
 	const node = unref(props.el);
 	const containerEl = props.boundsEl ?? node.parentElement;
 	const scroll = receive("scroll", node);
-	const children = Array.from(node.children);
+	const children = toArray(node.children) as HTMLElement[];
 
 	let items: Item[] = [];
 	const bounds: Bounds = reactive({
@@ -122,9 +122,9 @@ export function useLoop(props: {
 	};
 
 	const append = () => {
-		let appended = [];
+		let appended: Item[] = [];
 
-		children.forEach((child: HTMLElement, i) => {
+		children.forEach((child: HTMLElement, i: number) => {
 			const clone = node.appendChild(child.cloneNode(true)) as HTMLElement;
 			const bounds = getBounds(clone);
 

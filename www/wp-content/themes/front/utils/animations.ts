@@ -4,7 +4,8 @@ import { cssVar } from "./html";
 
 gsap.registerPlugin(CustomEase);
 export const easing = (name: string) => {
-	if (name.includes(",")) return CustomEase.create("cubic", name);
+	const match = cssVar(name).match(/cubic-bezier\(([^)]+)\)/);
+	if (match && match[1]) return CustomEase.create("cubic", match[1]);
 	return CustomEase.create("cubic", cssVar(name));
 };
 

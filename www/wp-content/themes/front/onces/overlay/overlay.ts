@@ -1,9 +1,14 @@
 import { Component, useReactivity, useScope } from "core";
 import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
-import { getProps, extend } from "utils";
+import { getProps, extend, aria } from "utils";
 
-export function Overlay(args) {
+export interface OverlayComponent extends Component {
+	el: HTMLElement;
+	isOpen: boolean;
+}
+
+export function Overlay(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -21,7 +26,6 @@ export function Overlay(args) {
 
 	onMounted(() => {
 		//
-		console.log(store);
 	});
 
 	onUnmounted(() => {});
@@ -35,6 +39,6 @@ export function Overlay(args) {
 	// Effects
 
 	effect(() => {
-		node.ariaHidden = !store.isOpen;
+		aria(node, "hidden", !store.isOpen);
 	});
 }

@@ -3,7 +3,7 @@ import { useBounds, useDrag, useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { extend, getBounds, getProps, remap } from "utils";
 
-export function Range(args) {
+export function Range(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -59,7 +59,7 @@ export function Range(args) {
 	// Functions
 
 	const update = () => {
-		dragEl.style.transform = `translateX(${position.value}px)`;
+		if (dragEl) dragEl.style.transform = `translateX(${position.value}px)`;
 	};
 
 	// Effects

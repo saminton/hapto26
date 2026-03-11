@@ -3,7 +3,14 @@ import { useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { aria, debounce, extend, getProps } from "utils";
 
-export function Input(args) {
+export interface InputComponent extends Component {
+	el: HTMLInputElement;
+	value: string;
+	isFocused: boolean;
+	clear: () => void;
+}
+
+export function Input(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -12,8 +19,8 @@ export function Input(args) {
 	// Props
 
 	const { on, once } = useEvents();
-	const { child, children } = useScope(this);
-	const { watch, effect } = useReactivity();
+	const { child } = useScope(this);
+	const { effect } = useReactivity();
 
 	const {} = getProps(node);
 
@@ -47,7 +54,7 @@ export function Input(args) {
 
 	// Function
 
-	const onChange = (el, e) => {
+	const onChange = (el: HTMLInputElement, e: Event) => {
 		value.value = el.value;
 	};
 

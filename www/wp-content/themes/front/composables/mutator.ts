@@ -1,8 +1,32 @@
 import { watch } from "@vue/reactivity";
-import { Emitter, useStore } from "composables";
+import { Emitter, EmitterConstructor, useStore } from "composables";
 import md5 from "md5";
-import { kebabCase, snakeCase } from "../utils";
+import { kebabCase, snakeCase, toArray } from "../utils";
 import { Component, Service } from "core";
+
+type Mutator = {
+	init: (args: {
+		el: HTMLElement;
+		components: Component[];
+		services: Service[];
+		plugins: Component[];
+	}) => void;
+	findComponent: (el: HTMLElement) => Component | null;
+	findService: (name: string, el: HTMLElement) => Service | null;
+	findServices: (name: string, els: HTMLElement[] | NodeList) => Service[];
+	components: Component[];
+	services: Service[];
+	plugins: Component[];
+	mountedPromises: Promise<void>[];
+	readyPromises: Promise<void>[];
+	on: (name: string, callback: Function) => void;
+	off: (name: string, callback: Function) => void;
+};
+
+type MutatorConstructor = {
+	(): Mutator;
+	new (): Mutator;
+};
 
 type Entry = {
 	type: "component" | "service" | "plugin";
@@ -13,32 +37,31 @@ type Entry = {
 };
 
 function Mutator() {
-	let componentConstructs = [];
-	let serviceConstructs = [];
-	let pluginConstructs = [];
-	this.components = [];
-	this.services = [];
-	this.plugins = [];
-	this.mountedPromises = [];
-	this.readyPromises = [];
+	let componentConstructs: Component[] = [];
+	let serviceConstructs: Service[] = [];
+	let pluginConstructs: Component[] = [];
 
-	const { emit, on, off } = new Emitter();
-	this.on = on;
-	this.off = off;
+	const components: Component[] = [];
+	const services: Service[] = [];
+	const plugins: Component[] = [];
+	const mountedPromises: Promise<void>[] = [];
+	const readyPromises: Promise<void>[] = [];
+
+	const { emit, on, off } = new (Emitter as EmitterConstructor)();
 	const page = useStore("page");
 
-	const onMutate = (mutations) => {
+	const onMutate = (mutations: MutationRecord[]) => {
 		for (const mutation of mutations) {
-			if (mutation.type !== "childList") return null;
-			mutation.addedNodes.forEach((node) => added(node));
-			mutation.removedNodes.forEach((node) => removed(node));
+			if (mutation.type !== "childList") return;
+			mutation.addedNodes.forEach((node) => added(node as HTMLElement));
+			mutation.removedNodes.forEach((node) => removed(node as HTMLElement));
 		}
 	};
 
 	// Instantiate components and services from nodes added to document
 
-	const added = async (node) => {
-		if (node?.nodeType !== 1) return null; // do nothing on text nodes
+	const added = async (node: HTMLElement) => {
+		if (node?.nodeType !== 1) return; // do nothing on text nodes
 
 		// if (document.hidden) {
 		// 	const promise = new Promise((resolve, reject) => {
@@ -51,7 +74,7 @@ function Mutator() {
 		// 		);
 		// 	});
 
-		// 	this.mountedPromises.push(promise);
+		// 	mountedPromises.push(promise);
 		// 	await promise;
 		// }
 
@@ -60,7 +83,7 @@ function Mutator() {
 			if (item.type == "service") {
 				try {
 					const instance = new item.class(item);
-					this.services.push(instance);
+					services.push(instance);
 					result.push(instance);
 				} catch (error) {
 					console.error(`Service: Error creating "${item.name}" \n`, error);
@@ -69,7 +92,7 @@ function Mutator() {
 			if (item.type == "component") {
 				try {
 					const instance = new item.class(item);
-					this.components.push(instance);
+					components.push(instance);
 					result.push(instance);
 				} catch (error) {
 					console.error(`Component: Error creating "${item.name}" \n`, error);
@@ -78,7 +101,7 @@ function Mutator() {
 			if (item.type == "plugin") {
 				try {
 					const instance = new item.class(item);
-					this.plugins.push(instance);
+					plugins.push(instance);
 					result.push(instance);
 				} catch (error) {
 					console.error(`Plugin: Error creating "${item.name}" \n`, error);
@@ -92,20 +115,20 @@ function Mutator() {
 			if (!item) return;
 
 			const promise = item.mount();
-			this.mountedPromises.push(promise);
+			mountedPromises.push(promise);
 			promise.then(() => {
-				const index = this.mountedPromises.indexOf(promise);
+				const index = mountedPromises.indexOf(promise);
 				if (index > -1) {
-					this.mountedPromises.splice(index, 1);
+					mountedPromises.splice(index, 1);
 				}
 			});
 		});
 
 		// Wait for component mount promises
-		await Promise.all(this.mountedPromises);
+		await Promise.all(mountedPromises);
 
 		// All components have loaded
-		if (this.mountedPromises.length == 0) {
+		if (mountedPromises.length == 0) {
 			emit("ready");
 
 			// lazyLoad(items); // load images sequentially
@@ -116,20 +139,20 @@ function Mutator() {
 			if (!item) return;
 
 			const promise = item.ready();
-			this.readyPromises.push(promise);
+			readyPromises.push(promise);
 			promise.then(() => {
-				const index = this.readyPromises.indexOf(promise);
+				const index = readyPromises.indexOf(promise);
 				if (index > -1) {
-					this.readyPromises.splice(index, 1);
+					readyPromises.splice(index, 1);
 				}
 			});
 		});
 
 		// Wait for component mount promises
-		await Promise.all(this.readyPromises);
+		await Promise.all(readyPromises);
 
 		// All components have loaded
-		if (this.readyPromises.length == 0) {
+		if (readyPromises.length == 0) {
 			emit("complete");
 		}
 
@@ -147,44 +170,44 @@ function Mutator() {
 
 		// Call component after ready methods
 		items.forEach((item) => {
-			item.afterReadyCallbacks.forEach((callback) => callback());
+			item.afterReadyCallbacks.forEach((callback: Function) => callback());
 		});
 	};
 
 	// Unmount components and services removed from page
 
-	const removed = (node) => {
-		if (node.nodeType !== 1) return null; // do nothing on text nodes
+	const removed = (node: HTMLElement) => {
+		if (node.nodeType !== 1) return; // do nothing on text nodes
 
 		const items = traverse(node);
 		items.forEach((item: Entry) => {
 			if (item.type == "service") {
-				let i = this.services.length;
+				let i = services.length;
 				while (i--) {
-					if (this.services[i].el == item.el) {
-						this.services[i].destroy(); // call unmount
-						delete this.services[i]; // Delete from memory
-						this.services.splice(i, 1); // Remove index from array
+					if (services[i].el == item.el) {
+						services[i].destroy(); // call unmount
+						delete services[i]; // Delete from memory
+						services.splice(i, 1); // Remove index from array
 					}
 				}
 			}
 			if (item.type == "component") {
-				let i = this.components.length;
+				let i = components.length;
 				while (i--) {
-					if (this.components[i].el == item.el) {
-						this.components[i].destroy(); // call unmount
-						delete this.components[i]; // Delete from memory
-						this.components.splice(i, 1); // Remove index from array
+					if (components[i].el == item.el) {
+						components[i].destroy(); // call unmount
+						delete components[i]; // Delete from memory
+						components.splice(i, 1); // Remove index from array
 					}
 				}
 			}
 			if (item.type == "plugin") {
-				let i = this.plugins.length;
+				let i = plugins.length;
 				while (i--) {
-					if (this.plugins[i].el == item.el) {
-						this.plugins[i].destroy(); // call unmount
-						delete this.plugins[i]; // Delete from memory
-						this.plugins.splice(i, 1); // Remove index from array
+					if (plugins[i].el == item.el) {
+						plugins[i].destroy(); // call unmount
+						delete plugins[i]; // Delete from memory
+						plugins.splice(i, 1); // Remove index from array
 					}
 				}
 			}
@@ -252,7 +275,7 @@ function Mutator() {
 			});
 		};
 
-		const recursive = (node) => {
+		const recursive = (node: HTMLElement) => {
 			Array.from(node.children).forEach((el: any) => {
 				check(el);
 				recursive(el);
@@ -264,19 +287,24 @@ function Mutator() {
 		return found;
 	};
 
-	this.findComponent = (el) => {
-		return this.components.find((item) => item.el == el);
+	const findComponent = (el: HTMLElement) => {
+		return components.find((item: Component) => item.el == el);
 	};
 
-	this.findService = (name, el) => {
-		return this.services.find((item) => item.el == el && item.name == name);
+	const findService = (name: string, el: HTMLElement) => {
+		return services.find((item: Service) => item.el == el && item.name == name);
 	};
 
-	this.findServices = (name, els: HTMLElement[] | NodeList) => {
-		return Array.from(els).map((el) => mutator.findService("anim", el));
+	const findServices = (name: String, els: HTMLElement[] | NodeList) => {
+		return toArray(els).map((el) => mutator.findService("anim", el));
 	};
 
-	this.init = (args: any) => {
+	const init = (args: {
+		el: HTMLElement;
+		components: Component[];
+		services: Service[];
+		plugins: Component[];
+	}) => {
 		// Create nodes from existing nodes
 
 		componentConstructs = args.components ?? [];
@@ -293,15 +321,29 @@ function Mutator() {
 
 		added(args.el);
 	};
+
+	return {
+		init,
+		findComponent,
+		findService,
+		findServices,
+		components,
+		services,
+		plugins,
+		mountedPromises,
+		readyPromises,
+		on,
+		off,
+	};
 }
 
 // Instance
 
-let mutator;
+let mutator: Mutator;
 
 // Composables
 
 export const useMutator = () => {
-	if (!mutator) mutator = new Mutator();
+	if (!mutator) mutator = Mutator();
 	return mutator;
 };

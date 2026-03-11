@@ -2,7 +2,11 @@ import { syncToStore, useEvents, useStore } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { aria, extend, getProps } from "utils";
 
-export function Menu(args) {
+export interface MenuComponent extends Component {
+	el: HTMLElement;
+}
+
+export function Menu(args: Component) {
 	// Extend
 
 	extend(Component, this, args);

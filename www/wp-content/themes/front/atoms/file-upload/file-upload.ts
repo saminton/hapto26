@@ -1,25 +1,25 @@
-import { reactive, ref } from "@vue/reactivity";
+import { reactive } from "@vue/reactivity";
 import { useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
-import { getProps, extend, toArray, attr, aria } from "utils";
+import { aria, extend, getProps } from "utils";
 
-export class CustomFileList implements FileList {
-	[index: number]: File;
-	readonly length: number;
+// export class CustomFileList implements FileList {
+// 	[index: number]: File;
+// 	readonly length: number;
 
-	constructor(files: File[]) {
-		this.length = files.length;
-		for (let i = 0; i < files.length; i++) {
-			this[i] = files[i];
-		}
-	}
+// 	constructor(files: File[]) {
+// 		this.length = files.length;
+// 		for (let i = 0; i < files.length; i++) {
+// 			this[i] = files[i];
+// 		}
+// 	}
 
-	item(index: number): File | null {
-		return this[index];
-	}
-}
+// 	item(index: number): File | null {
+// 		return this[index];
+// 	}
+// }
 
-export function FileUpload(args) {
+export function FileUpload(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -40,7 +40,7 @@ export function FileUpload(args) {
 	const itemsEl = child("items");
 	const buttonEl = child("button");
 	const templateEl = child("template") as HTMLTemplateElement;
-	const files: File[] = reactive(Array.from(inputEl.files));
+	const files: File[] = reactive(Array.from(inputEl?.files ?? []));
 
 	// Hooks
 
@@ -55,18 +55,20 @@ export function FileUpload(args) {
 	// Handles
 
 	const changed = (el: HTMLElement, e?: Event) => {
+		if (!uploadEl) return;
 		// files.length = 0;
 		if (multiple) {
-			files.push(...Array.from(uploadEl.files));
+			files.push(...Array.from(uploadEl.files ?? []));
 		} else {
 			files.length = 0;
-			files.push(uploadEl.files[0]);
+			if (uploadEl.files && uploadEl.files[0]) files.push(uploadEl.files[0]);
 		}
 	};
 
 	// Functions
 
 	const update = () => {
+		if (!itemsEl) return;
 		itemsEl.innerHTML = "";
 
 		// Update input

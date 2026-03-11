@@ -2,7 +2,7 @@ import { useEvents } from "composables";
 import { Component, useReactivity, useRouter, useScope } from "core";
 import { getProps, extend, ajax } from "utils";
 
-export function AdminWidget(args) {
+export function AdminWidget(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -19,7 +19,7 @@ export function AdminWidget(args) {
 	// Vars
 
 	const router = useRouter();
-	const editEl = child("edit");
+	const editEl = child("edit") as HTMLLinkElement;
 
 	// Hooks
 
@@ -42,7 +42,7 @@ export function AdminWidget(args) {
 				url: router.currentRoute.value.fullPath,
 			});
 
-			editEl.href = response.edit;
+			if (editEl) editEl.href = response.edit;
 		},
 	);
 }

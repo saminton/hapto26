@@ -1,6 +1,6 @@
 // Youtube
-declare var YT;
+declare var YT: any;
 
 // Gtag
-declare var dataLayer;
-declare var gtag;
+declare var dataLayer: any;
+declare var gtag: any;

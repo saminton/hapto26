@@ -8,12 +8,12 @@ export const isValidPhoneNumber = (value: string) => {
 	return /^[0-9+\(\)#\.\s\/ext-]+$/.test(value);
 };
 
-export const isValidDate = (value): boolean => {
+export const isValidDate = (value: string): boolean => {
 	const timestamp = Date.parse(value);
 	return !isNaN(timestamp);
 };
 
-export const isValidField = (el, setAria: boolean = false) => {
+export const isValidField = (el: HTMLFormElement, setAria: boolean = false) => {
 	let isValid = true;
 
 	switch (el.type) {
@@ -30,11 +30,11 @@ export const isValidField = (el, setAria: boolean = false) => {
 
 	isValid = isValid && isValidRequired(el);
 
-	if (setAria) aria(el, "invalid", isValid ? null : true);
+	if (setAria) aria(el, "invalid", !isValid);
 	return isValid;
 };
 
-export const isValidRequired = (el) => {
+export const isValidRequired = (el: HTMLFormElement) => {
 	if (!el.hasAttribute("required")) return true; // check if field is required
 	if (el.type === "checkbox") return el.checked;
 

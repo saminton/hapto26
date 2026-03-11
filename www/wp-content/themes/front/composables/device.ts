@@ -5,6 +5,26 @@ import { useStore } from "./store";
 
 // Singleton
 
+export type Device = {
+	init: () => void;
+	isDesktop: boolean;
+	isTablet: boolean;
+	isPhone: boolean;
+	isTouch: boolean;
+	rem: number;
+	vh: number;
+	ratio: number;
+	format: string;
+	browser: string;
+	os: string;
+	orientation: string;
+};
+
+type DeviceConstructor = {
+	(): Device;
+	new (): Device;
+};
+
 function Device() {
 	const store = useStore("device");
 	// const browser = ref("");
@@ -41,7 +61,7 @@ function Device() {
 
 		const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 		store.orientation = isPortrait ? "portrait" : "landscape";
-		store.rem = parseFloat(getComputedStyle(document.documentElement)["font-size"]) / 10;
+		store.rem = parseFloat(getComputedStyle(document.documentElement).fontSize) / 10;
 
 		// const platform = navigator.userAgentData?.platform || navigator.platform.toLowerCase();
 		const platform = navigator.platform.toLowerCase();
@@ -64,11 +84,11 @@ function Device() {
 
 // Instance
 
-let instance;
+let instance: Device;
 
 // Composable
 
 export const useDevice = () => {
-	if (!instance) instance = new Device();
+	if (!instance) instance = new (Device as DeviceConstructor)();
 	return instance;
 };

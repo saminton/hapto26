@@ -1,4 +1,4 @@
-import { Ref, computed, ref, unref } from "@vue/reactivity";
+import { Ref, ref, unref } from "@vue/reactivity";
 import {
 	onBeforeRender,
 	onNodeResized,
@@ -11,16 +11,23 @@ import { useReactivity } from "core";
 import { Bounds } from "types";
 import {
 	aria,
-	attr,
 	clamp,
 	debounce,
 	getBounds,
 	getRelativePosition,
-	getStyles,
 	smooth,
 	toArray,
 	withDefaults,
 } from "utils";
+
+export type CarouselItem = {
+	el: HTMLElement;
+	width: number;
+	x: number;
+	marginLeft: number;
+	marginRight: number;
+	distance: number;
+};
 
 export function useCarousel(props: {
 	el: HTMLElement;
@@ -82,7 +89,7 @@ export function useCarousel(props: {
 	const min = ref(0);
 	const max = ref(0);
 
-	let items = Array.from(node.children).map((el: HTMLElement) => ({
+	let items: CarouselItem[] = toArray(node.children).map((el: HTMLElement) => ({
 		el: el,
 		width: 0,
 		x: 0,
@@ -125,7 +132,7 @@ export function useCarousel(props: {
 	// Functions
 
 	const resize = () => {
-		if (!node) return null;
+		if (!node) return;
 		// Reset transform for correct calculations
 		items.forEach((item) => {
 			item.el.style.transform = "";
@@ -138,7 +145,7 @@ export function useCarousel(props: {
 		else position.value = position.value - 0.1;
 	};
 
-	const getIndex = (pos): number => {
+	const getIndex = (pos: number): number => {
 		// Start values
 		let dist = Infinity;
 		let temp = 0;
@@ -178,17 +185,17 @@ export function useCarousel(props: {
 	const storeItemBounds = () => {
 		// Store bounds of container
 		bounds.value = getBounds(node);
-		const offset = getStyles(node, "margin-left") || 0;
+		const styles = window.getComputedStyle(node);
+		const offset = parseFloat(styles.marginLeft) || 0;
 
 		items.forEach((item) => {
 			// Store each item size and offset relative to container on resize
 			const temp = getBounds(item.el);
 			const { x } = getRelativePosition(temp, bounds.value);
-			const styles = getStyles(node, "margin-left", "margin-right");
 
 			item.width = temp.width;
-			item.marginLeft = styles.marginLeft;
-			item.marginRight = styles.marginRight;
+			item.marginLeft = parseFloat(styles.marginLeft) || 0;
+			item.marginRight = parseFloat(styles.marginRight) || 0;
 			item.x = x + offset;
 		});
 	};
@@ -203,7 +210,7 @@ export function useCarousel(props: {
 
 	const goTo = (i: number, animate: boolean = true, preventSame: boolean = false) => {
 		const total = items.length;
-		if (!total) return null;
+		if (!total) return;
 
 		const dir = i > index.value ? 1 : -1;
 
@@ -233,7 +240,7 @@ export function useCarousel(props: {
 		if (!animate) position.value = calc;
 	};
 
-	const getItemOffset = (item) => {
+	const getItemOffset = (item: CarouselItem) => {
 		if (unref(align) === "center") {
 			// Adjust offset of item centered in container
 			return (
@@ -245,7 +252,7 @@ export function useCarousel(props: {
 		}
 	};
 
-	const limit = (value) => {
+	const limit = (value: number) => {
 		return clamp(value, min.value, max.value);
 	};
 
@@ -269,10 +276,10 @@ export function useCarousel(props: {
 		return last.x + last.width;
 	};
 
-	const onWheel = (el, e) => {
-		if (!unref(canDrag)) return null;
+	const onWheel = (el: HTMLElement, e: WheelEvent) => {
+		if (!unref(canDrag)) return;
 		if (Math.abs(e.deltaX) > Math.abs(e.deltaY) + 5) isScrolling.value = true;
-		if (!isScrolling.value) return null;
+		if (!isScrolling.value) return;
 
 		e.stopPropagation();
 		target.value = limit(target.value + e.deltaX);
@@ -280,7 +287,7 @@ export function useCarousel(props: {
 	};
 
 	const onWheelEnd = debounce(() => {
-		if (!unref(canDrag)) return null;
+		if (!unref(canDrag)) return;
 		isScrolling.value = false;
 		if (unref(snap)) goTo(getIndex(target.value + scrollDelta.value * 10));
 	}, 100);
@@ -306,13 +313,13 @@ export function useCarousel(props: {
 	});
 
 	watch(position, () => {
-		if (!node) return null;
+		if (!node) return;
 		// When position is updated
 		// Translate container
 		node.style.transform = `translate3d(${-position.value}px, 0, 0)`;
 
 		// Calculate index based on current position
-		if (items.length === 0) return null;
+		if (items.length === 0) return;
 
 		index.value = getIndex(position.value);
 		if (max.value != 0) progress.value = position.value / max.value;
@@ -324,7 +331,7 @@ export function useCarousel(props: {
 	watch(
 		() => drag.moved,
 		() => {
-			if (!unref(canDrag)) return null;
+			if (!unref(canDrag)) return;
 			target.value = limit(target.value - drag.deltaX);
 		},
 	);
@@ -332,7 +339,7 @@ export function useCarousel(props: {
 	watch(
 		() => drag.isDown,
 		() => {
-			if (!unref(canDrag)) return null;
+			if (!unref(canDrag)) return;
 			if (!drag.isDown && unref(snap)) goTo(getIndex(target.value - drag.deltaX * 10));
 		},
 	);

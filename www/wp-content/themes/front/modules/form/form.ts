@@ -1,10 +1,9 @@
-import { ref } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
-import { useForm } from "composables/form";
+import { FormState, useForm } from "composables/form";
 import { Component, useReactivity, useScope } from "core";
-import { getProps, extend, aria, ajax } from "utils";
+import { ajax, aria, extend, getProps } from "utils";
 
-export function Form(args) {
+export function Form(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -25,10 +24,6 @@ export function Form(args) {
 	const successEl = child("success");
 	const errorEl = child("error");
 	const popin = useStore("popinForm");
-	// 0: form
-	// 1: error
-	// 2: success
-	const state = ref(0);
 
 	const form = useForm({
 		el: fieldsEl,
@@ -51,9 +46,6 @@ export function Form(args) {
 	// Functions
 
 	const request = async (data: FormData) => {
-		// for (const [key, value] of data.entries()) {
-		// 	console.log(`${key}: ${value}`);
-		// }
 		// Add form type
 		data.append("type", node.id);
 
@@ -61,18 +53,14 @@ export function Form(args) {
 			format: "form",
 		});
 
-		if (res.error) {
-			state.value = 1;
-		} else {
-			state.value = 2;
-		}
+		return data;
 	};
 
 	// Effects
 
 	effect(() => {
-		aria(fieldsEl, "hidden", state.value != 0);
-		aria(errorEl, "hidden", state.value != 1);
-		aria(successEl, "hidden", state.value != 2);
+		aria(fieldsEl, "hidden", form.state.value != FormState.DEFAULT);
+		if (errorEl) aria(errorEl, "hidden", form.state.value != FormState.ERROR);
+		if (successEl) aria(successEl, "hidden", form.state.value != FormState.SENT);
 	});
 }

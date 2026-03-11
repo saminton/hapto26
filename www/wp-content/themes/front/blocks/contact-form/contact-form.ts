@@ -3,11 +3,11 @@ import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend } from "utils";
 
-export interface {{pascalCase name}}Component extends Component {
+export interface ContactFormComponent extends Component {
 	el: HTMLElement;
-};
+}
 
-export function {{pascalCase name}}(args: Component) {
+export function ContactForm(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -19,18 +19,17 @@ export function {{pascalCase name}}(args: Component) {
 	const { child, children } = useScope(this);
 	const { watch, effect, computed } = useReactivity();
 
-	const { } = getProps(node);
+	const {} = getProps(node);
 
 	// Vars
-	
+
 	// Hooks
-	
+
 	onMounted(() => {});
-	
+
 	onUnmounted(() => {});
-	
+
 	// Functions
-	
+
 	// Effects
-	
 }

@@ -3,7 +3,7 @@ import { useDrag, useEvents, useStore } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { aria, clamp, extend, getProps, receive } from "utils";
 
-export function Scrollbar(args) {
+export function Scrollbar(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -38,7 +38,7 @@ export function Scrollbar(args) {
 	// Effects
 
 	effect(() => {
-		barEl.style.transform = `translateY(${position.value}px)`;
+		if (barEl) barEl.style.transform = `translateY(${position.value}px)`;
 	});
 
 	effect(() => {
@@ -46,7 +46,7 @@ export function Scrollbar(args) {
 	});
 
 	effect(() => {
-		barEl.style.height = height.value + "px";
+		if (barEl) barEl.style.height = height.value + "px";
 	});
 
 	watch(
@@ -82,9 +82,9 @@ export function Scrollbar(args) {
 	);
 
 	effect(() => {
-		node.setAttribute(
-			"aria-hidden",
-			!(scroll.isEnabled && scroll.isSmoothed && isActive.value && !device.isTouch.value),
-		);
+		let hidden =
+			scroll.isEnabled && scroll.isSmoothed && isActive.value && !device.isTouch.value;
+		aria(node, "hidden", hidden);
+		aria(node, "grabbed", drag.isDown);
 	});
 }

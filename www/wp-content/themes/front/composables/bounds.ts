@@ -5,7 +5,7 @@ import { Bounds, Scroll } from "types";
 import { useReactivity } from "core";
 import { onBeforeResize } from "composables";
 
-export const useBounds = (node: HTMLElement, scroll: Scroll = null): Bounds => {
+export const useBounds = (node: HTMLElement | null, scroll?: Scroll): Bounds => {
 	const { watch, effect } = useReactivity();
 	if (!scroll) scroll = receive("scroll", node);
 
@@ -23,7 +23,7 @@ export const useBounds = (node: HTMLElement, scroll: Scroll = null): Bounds => {
 	});
 
 	const update = () => {
-		node.style.transform = "";
+		if (node) node.style.transform = "";
 		const temp = getBounds(node, scroll);
 		Object.assign(bounds, temp);
 	};
@@ -31,7 +31,7 @@ export const useBounds = (node: HTMLElement, scroll: Scroll = null): Bounds => {
 	onNodeResized(node, update);
 	onBeforeResize(update);
 	update();
-	if (scroll.size) watch(() => scroll.size, update);
+	if (scroll && scroll.size) watch(() => scroll.size, update);
 
 	return bounds;
 };

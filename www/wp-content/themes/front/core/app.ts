@@ -15,8 +15,13 @@ import { useMutator } from "../composables/mutator";
 import gsap from "gsap";
 import { attr, getProps } from "utils";
 import { effect } from "@vue/reactivity";
+import { Component } from "./component";
 
-export function App(components, services, plugins) {
+export function App(
+	components: Component[],
+	services: Component[],
+	plugins: Component[],
+) {
 	const init = async () => {
 		const device = useDevice();
 		const pointer = usePointer();
@@ -62,7 +67,7 @@ export function App(components, services, plugins) {
 				schema: {
 					prefix: "v-barba",
 				},
-				prevent: ({ event }) => {
+				prevent: ({ event }: { event: Event }) => {
 					if (event.type !== "click") return;
 					if (store.preventClick) {
 						event.preventDefault();
@@ -78,22 +83,22 @@ export function App(components, services, plugins) {
 
 		// If no barba container force reload page
 		// Usefull for plugin pages / woocommerce
-		barba.hooks.afterLeave((data) => {
+		barba.hooks.afterLeave((data: any) => {
 			if (!data.next.html.includes('v-barba="container"'))
 				location.assign(data.next.url.href);
 			// window.location.href = data.next.url.href;
 		});
 
-		barba.hooks.before((data) => {
+		barba.hooks.before((data: any) => {
 			scroll.isEnabled = false;
 		});
 
-		barba.hooks.beforeEnter(async (data) => {
+		barba.hooks.beforeEnter(async (data: any) => {
 			// Wait for components to load
 			await events.once(mutator, "ready");
 		});
 
-		barba.hooks.enter(async (data) => {
+		barba.hooks.enter(async (data: any) => {
 			// Update page info
 			page.el = data.next.container;
 			page.props = getProps(page.el);
@@ -101,7 +106,7 @@ export function App(components, services, plugins) {
 			scroll.isEnabled = false;
 		});
 
-		barba.hooks.after(async (data) => {
+		barba.hooks.after(async (data: any) => {
 			scroll.isEnabled = true;
 		});
 
@@ -127,8 +132,9 @@ export function App(components, services, plugins) {
 	};
 
 	// Prevent focus state on click
-	const blur = (el, event) => {
-		let targetEl = event.target.closest?.("a, button, summary, label");
+	const blur = (el: HTMLElement, event: Event) => {
+		let target = event.target as HTMLElement;
+		let targetEl = target.closest?.("a, button, summary, label") as HTMLElement | null;
 		if (targetEl && targetEl.tagName == "LABEL")
 			targetEl = targetEl.querySelector("input[type='radio'], input[type='checkbox']");
 
@@ -138,7 +144,7 @@ export function App(components, services, plugins) {
 			});
 	};
 
-	const onKeydown = (el, e) => {
+	const onKeydown = (el: HTMLElement, e: KeyboardEvent) => {
 		if (e.key == "g" && e.ctrlKey) document.body.toggleAttribute("grid");
 	};
 

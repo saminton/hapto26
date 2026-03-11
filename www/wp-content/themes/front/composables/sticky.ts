@@ -6,8 +6,8 @@ import { useStore } from "./store";
 import { useBounds } from "composables";
 
 export const useSticky = (props: {
-	el: HTMLElement; //
-	containerEl?: HTMLElement;
+	el: HTMLElement | null; //
+	containerEl?: HTMLElement | null;
 	align?: string;
 	offset?: number | Ref<number>;
 	smoothing?: number | Ref<number>;
@@ -29,7 +29,7 @@ export const useSticky = (props: {
 		containerEl,
 		contain = "both",
 	} = withDefaults(props, {
-		containerEl: node.parentElement,
+		containerEl: node?.parentElement,
 		align: "center",
 		smoothing: 30,
 		isActive: true,
@@ -37,15 +37,15 @@ export const useSticky = (props: {
 		applyTransform: true,
 	}) as typeof props;
 
-	let smoothingTop = unref(smoothing);
-	let smoothingBottom = unref(smoothing);
+	let smoothingTop = unref(smoothing) || 0;
+	let smoothingBottom = unref(smoothing) || 0;
 
 	const scroll = receive("scroll", props.el);
 	const device = useStore("device");
-	const containerIntersect = useIntersect(containerEl);
+	const containerIntersect = useIntersect(containerEl ?? null);
 
 	let bounds = useBounds(node);
-	let containerBounds = useBounds(containerEl);
+	let containerBounds = useBounds(containerEl ?? null);
 
 	const progress = ref(0);
 	const unsmoothedProgress = ref(0);
@@ -69,7 +69,7 @@ export const useSticky = (props: {
 	// Functions
 
 	const update = () => {
-		if (!unref(isActive)) return;
+		if (!unref(isActive) || !node) return;
 
 		//
 
@@ -191,16 +191,18 @@ export const useSticky = (props: {
 	const resize = () => {
 		// Reset
 
+		if (!node) return;
+
 		if (isNative.value) {
 			node.style.position = "sticky";
 			node.style.top = unref(offset) + "px";
 
 			if (align == "center") {
-				node.style.top = (device.height - bounds.height) / 2 + unref(offset) + "px";
+				node.style.top = (device.height - bounds.height) / 2 + unref(offset ?? 0) + "px";
 			}
 
 			if (align == "bottom") {
-				node.style.top = device.height - bounds.height + unref(offset) + "px";
+				node.style.top = device.height - bounds.height + unref(offset ?? 0) + "px";
 			}
 		} else {
 			node.style.position = "";
@@ -209,7 +211,7 @@ export const useSticky = (props: {
 
 		const maxSmoothing = Math.min(
 			(containerBounds.height - bounds.height) / 10,
-			unref(smoothing),
+			unref(smoothing ?? 0),
 		);
 
 		smoothingTop = bounds.top <= 0 ? 0 : maxSmoothing;

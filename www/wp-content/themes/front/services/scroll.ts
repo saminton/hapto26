@@ -1,4 +1,4 @@
-import { computed, isRef, ref, unref } from "@vue/reactivity";
+import { computed, Ref, ref, unref } from "@vue/reactivity";
 import {
 	onBeforeRender,
 	onBeforeResize,
@@ -9,7 +9,7 @@ import {
 	useNodeResizer,
 	useStore,
 } from "composables";
-import { useScope, useReactivity, useRoute } from "core";
+import { useReactivity, useRoute } from "core";
 import { Service } from "core/service";
 import { gsap } from "gsap";
 import {
@@ -21,9 +21,18 @@ import {
 	getRelativeBounds,
 	round,
 	smooth,
+	toArray,
 } from "utils";
 
-export function Scroll(args) {
+export interface ScrollService extends Service {
+	el: HTMLElement;
+	isSmoothed: Ref<boolean>;
+	isEnabled: Ref<boolean>;
+	to: (y: number | HTMLElement, offset: number) => void;
+	set: (pos: number, smooth: boolean) => void;
+}
+
+export function Scroll(args: Service) {
 	// Extend
 
 	extend(Service, this, args);
@@ -31,8 +40,7 @@ export function Scroll(args) {
 
 	// Props
 
-	const { on, once } = useEvents();
-	const { child, children } = useScope(this);
+	const { on } = useEvents();
 	const { watch, effect } = useReactivity();
 
 	const props = getProps(node);
@@ -45,10 +53,10 @@ export function Scroll(args) {
 	const store = useStore("scroll");
 	const emitter = useEmitter();
 	const resizer = useNodeResizer();
-	let mutator;
+	let mutator: MutationObserver;
 
 	const isSmoothed = computed(() => !(device.isTouch || device.isTablet));
-	const childEls = ref([]);
+	const childEls: Ref<HTMLElement[]> = ref([]);
 
 	const position = ref(0);
 	const target = ref(0);
@@ -61,8 +69,8 @@ export function Scroll(args) {
 
 	const ease = easing("1, 0, 1, 1");
 
-	let stopSync;
-	let anim;
+	let stopSync: Function;
+	let anim: GSAPAnimation | null;
 	if (isMain) store.el = node;
 	node.scrollTop = 0; // reset scroll (firefox refresh page bug fix)
 
@@ -70,7 +78,7 @@ export function Scroll(args) {
 
 	onMounted(() => {
 		const el = isMain ? document.body : node;
-		childEls.value = Array.from(node.children);
+		childEls.value = toArray(node.children);
 
 		on(el, "wheel", onWheel);
 		on(el, "wheel", onInputEnd);
@@ -138,7 +146,7 @@ export function Scroll(args) {
 
 	// Functions
 
-	const onWheel = (el, event) => {
+	const onWheel = (el: HTMLElement, event: WheelEvent) => {
 		if (!isEnabled.value || !size.value || !page.isReady) return null;
 		event.stopPropagation();
 
@@ -146,7 +154,7 @@ export function Scroll(args) {
 		isScrolling.value = true;
 	};
 
-	const onScroll = (el, event) => {
+	const onScroll = (el: HTMLElement, event: Event) => {
 		if (!isEnabled.value) return null;
 		event.stopPropagation();
 		if (!isSmoothed.value) {
@@ -155,10 +163,11 @@ export function Scroll(args) {
 		}
 	};
 
-	const onFocus = (el, event) => {
+	const onFocus = (el: HTMLElement, event: Event) => {
 		requestAnimationFrame(() => {
-			if (event.target.closest("[v-scroll]") !== node) return null;
-			const bounds = getRelativeBounds(event.target, node);
+			let target = event.target as HTMLElement;
+			if (target.closest("[v-scroll]") !== node) return null;
+			const bounds = getRelativeBounds(target, node);
 
 			// If below visible section
 			if (bounds.bottom < 0 && bounds.top > node.offsetHeight)
@@ -170,7 +179,7 @@ export function Scroll(args) {
 		});
 	};
 
-	const onKeyDown = (el, event) => {
+	const onKeyDown = (el: HTMLElement, event: KeyboardEvent) => {
 		if (!isEnabled.value || !size.value) return;
 
 		const tagName = document.activeElement?.tagName.toLowerCase();
@@ -208,7 +217,7 @@ export function Scroll(args) {
 
 	// Utils
 
-	const onMutate = (mutations, observer) => {
+	const onMutate = (mutations: MutationRecord[], observer: MutationObserver) => {
 		mutations.forEach((mutation) => {
 			if (mutation.removedNodes) {
 				resizer.unobserve(mutation.removedNodes);
@@ -218,7 +227,7 @@ export function Scroll(args) {
 			}
 		});
 
-		childEls.value = Array.from(node.children);
+		childEls.value = toArray(node.children);
 	};
 
 	const setup = () => {
@@ -303,7 +312,7 @@ export function Scroll(args) {
 		smoothing.value = tempSmooth;
 	};
 
-	const set = (pos, smooth = true) => {
+	const set = (pos: number, smooth: boolean = true) => {
 		const y = limit(pos);
 
 		target.value = y;
@@ -319,7 +328,7 @@ export function Scroll(args) {
 		}
 	});
 
-	watch(position, (value, oldValue) => {
+	watch(position, (value: number, oldValue: number) => {
 		delta.value = value - oldValue;
 		onScrollEnd();
 	});

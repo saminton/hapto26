@@ -1,8 +1,21 @@
 import { watch, isRef, reactive, ref, Ref, WatchStopHandle } from "@vue/reactivity";
 import { stores } from "../theme";
 
+type Store = {
+	get: (name?: string) => any;
+	set: (name: string, values: object) => void;
+	sync: (name: string, values: object) => WatchStopHandle;
+};
+
+type StoreConstructor = {
+	(): void;
+	new (): Store;
+};
+
 function Store() {
-	const items = {};
+	const items: {
+		[key: string]: { [key: string]: any };
+	} = {};
 
 	this.get = (name?: string) => {
 		if (name) return items[name];
@@ -53,7 +66,6 @@ function Store() {
 		});
 
 		const stop = () => {
-			console.log(`stop sync`);
 			handles.forEach((handle) => handle());
 		};
 
@@ -63,7 +75,7 @@ function Store() {
 
 // Instance
 
-const store = new Store();
+const store = new (Store as StoreConstructor)();
 
 Object.entries(stores).forEach((item) => {
 	const key = item[0];
@@ -73,11 +85,11 @@ Object.entries(stores).forEach((item) => {
 
 // Composable
 
-export const useStore = (name) => {
+export const useStore = (name: string) => {
 	return store.get(name);
 };
 
-export const syncToStore = (name?: string, values?: object) => {
+export const syncToStore = (name: string, values: object) => {
 	const stop = store.sync(name, values);
 	onUnmounted(() => {
 		stop();

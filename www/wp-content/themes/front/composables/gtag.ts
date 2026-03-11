@@ -3,6 +3,15 @@
 import { watch } from "@vue/reactivity";
 import { useRoute, useCookie } from "core";
 
+export type Gtag = {
+	init: () => void;
+};
+
+type GtagConstructor = {
+	(): Gtag;
+	new (): Gtag;
+};
+
 function Gtag() {
 	const userPrefs = useCookie("userPrefs");
 	const route = useRoute();
@@ -56,11 +65,11 @@ function Gtag() {
 
 // Instance
 
-let instance;
+let instance: Gtag;
 
 // Composable
 
 export const useGtag = () => {
-	if (!instance) instance = new Gtag();
+	if (!instance) instance = new (Gtag as GtagConstructor)();
 	return instance;
 };

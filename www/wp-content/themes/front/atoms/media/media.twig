@@ -17,6 +17,8 @@
 
 {# Video #}
 {% def autoplay = true %}
+{% def preload = 'auto' %}
+{% def poster = '' %}
 {% def muted = autoplay %}
 {% def loop = true %}
 
@@ -30,13 +32,13 @@
 	{{ attr('preload', preload|bool) }}>
 	{% if type == 'video' %}
 		<video class="video"
-			src="{{ url|upload }}"
-			loading="{{ loading }}"
-			fetchpriority="{{ fetchpriority }}"
+			preload="{{ preload }}"
 			playsinline
+			{{ attr('src', preload == 'none' ? false : url) }}
 			{{ attr('autoplay', autoplay) }}
 			{{ attr('muted', muted) }}
 			{{ attr('loop', loop) }}
+			{{ attr('poster', poster) }}
 			alt=""></video>
 	{% elseif '.svg' in url %}
 		<img class="svg"

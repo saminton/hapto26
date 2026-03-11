@@ -1,12 +1,18 @@
 import { Ref } from "@vue/reactivity";
 import { easing } from "../utils";
 import { gsap } from "gsap";
-import { SplitType, useStore } from "composables";
+import { SplitBy, useStore } from "composables";
+
+export type AnimationNodes = {
+	el: HTMLElement;
+	words: Ref<HTMLElement[]>;
+	lines: Ref<HTMLElement[]>;
+};
 
 export type Animation = {
 	name: string;
 	isActive?: boolean | Ref<Boolean>;
-	split?: SplitType;
+	split?: SplitBy;
 	setup?: Function;
 	timeline?: Function;
 };
@@ -17,8 +23,8 @@ export function getAnimations(): Animation[] {
 
 	animations.push({
 		name: "title",
-		split: SplitType.words,
-		timeline: (data) => {
+		split: SplitBy.WORDS,
+		timeline: (data: AnimationNodes) => {
 			const tl = gsap.timeline();
 			tl.fromTo(
 				data.words.value,
@@ -41,7 +47,7 @@ export function getAnimations(): Animation[] {
 				},
 				{
 					backgroundSize: "100% 1px",
-					ease: easing("ease"),
+					// ease: easing("ease"),
 					stagger: 0.3,
 				},
 			);
@@ -52,19 +58,19 @@ export function getAnimations(): Animation[] {
 
 	animations.push({
 		name: "text",
-		split: SplitType.lines,
-		timeline: (data) => {
-			console.log(`data.lines`, data.lines.value);
+		split: SplitBy.LINES,
+		timeline: (data: AnimationNodes) => {
 			const tl = gsap.timeline();
+			let items = data.lines.value.map((el) => el.children[0]);
 			tl.fromTo(
-				data.lines.value.map((el) => el.children[0]),
+				items,
 				{
 					y: "1.2lh",
 				},
 				{
 					y: "0lh",
 					duration: 0.7,
-					ease: easing("ease"),
+					// ease: easing("ease"),
 					stagger: 0.1,
 					// clearProps: "all",
 				},
@@ -77,7 +83,7 @@ export function getAnimations(): Animation[] {
 				},
 				{
 					backgroundSize: "100% 1px",
-					ease: easing("ease"),
+					// ease: easing("ease"),
 					stagger: 0.3,
 				},
 			);
@@ -88,7 +94,7 @@ export function getAnimations(): Animation[] {
 
 	animations.push({
 		name: "fade-up",
-		timeline: (data) => {
+		timeline: (data: AnimationNodes) => {
 			return gsap.fromTo(
 				data.el,
 				{
@@ -108,7 +114,7 @@ export function getAnimations(): Animation[] {
 
 	animations.push({
 		name: "mask-in",
-		timeline: (data) => {
+		timeline: (data: AnimationNodes) => {
 			return gsap.fromTo(
 				data.el.children[0],
 				{

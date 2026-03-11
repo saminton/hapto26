@@ -1,9 +1,9 @@
 import { Component, useReactivity, useScope } from "core";
 import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
-import { getProps, extend, attr } from "utils";
+import { getProps, extend, attr, aria } from "utils";
 
-export function NavButtons(args) {
+export function NavButtons(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -37,7 +37,7 @@ export function NavButtons(args) {
 
 	// Functions
 
-	const prevent = (el, e) => {
+	const prevent = (el: HTMLElement, e: Event) => {
 		e.stopPropagation();
 		el.blur();
 	};
@@ -45,8 +45,8 @@ export function NavButtons(args) {
 	// Effects
 
 	effect(() => {
-		previousEl.toggleAttribute("disabled", atStart.value);
-		nextEl.toggleAttribute("disabled", atEnd.value);
+		if (previousEl) aria(previousEl, "disabled", atStart.value);
+		if (nextEl) aria(nextEl, "disabled", atEnd.value);
 	});
 
 	defineExpose({

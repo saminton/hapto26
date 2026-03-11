@@ -3,7 +3,7 @@ import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend } from "utils";
 
-export function Example(args) {
+export function Example(args: Component) {
 	// Extend
 
 	extend(Component, this, args);

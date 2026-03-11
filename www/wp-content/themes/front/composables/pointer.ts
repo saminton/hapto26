@@ -3,6 +3,15 @@ import { useEvents } from "./events";
 import { useStore } from "./store";
 import { debounce } from "utils";
 
+export type Pointer = {
+	init: () => void;
+};
+
+type PointerConstructor = {
+	(): Pointer;
+	new (): Pointer;
+};
+
 function Pointer() {
 	const { on, once } = useEvents();
 	const device = useStore("device");
@@ -16,13 +25,13 @@ function Pointer() {
 		on(document.body, ["mouseenter"], onEnter);
 	};
 
-	const onEnter = (el, e) => {
-		const temp = getPosition(event);
+	const onEnter = (el: HTMLElement, e: MouseEvent) => {
+		const temp = getPosition(e);
 		store.x = temp.x;
 		store.y = temp.y;
 	};
 
-	const onPointerMove = (el, e) => {
+	const onPointerMove = (el: HTMLElement, e: MouseEvent) => {
 		if (store.preventMove) e.preventDefault();
 
 		// Temp
@@ -39,7 +48,7 @@ function Pointer() {
 		store.y = temp.y;
 	};
 
-	const onPointerDown = (el, e) => {
+	const onPointerDown = (el: HTMLElement, e: MouseEvent) => {
 		const temp = getPosition(e);
 		store.x = temp.x;
 		store.y = temp.y;
@@ -59,9 +68,24 @@ function Pointer() {
 		store.delta = { x: 0, y: 0 };
 	};
 
-	const getPosition = (event) => {
-		const tx = event.clientX || (event.touches ? event.touches[0].clientX : store.x);
-		const ty = event.clientY || (event.touches ? event.touches[0].clientY : store.y);
+	const getPosition = (event: MouseEvent | TouchEvent) => {
+		let clientX = store.x;
+		let clientY = store.y;
+
+		if ("touches" in event) {
+			// It's a TouchEvent
+			if (event.touches && event.touches[0]) {
+				clientX = event.touches[0].clientX;
+				clientY = event.touches[0].clientY;
+			}
+		} else {
+			// It's a MouseEvent
+			clientX = event.clientX;
+			clientY = event.clientY;
+		}
+
+		const tx = clientX;
+		const ty = clientY;
 
 		return { x: tx, y: ty };
 	};
@@ -69,11 +93,11 @@ function Pointer() {
 
 // Instance
 
-let instance;
+let instance: Pointer;
 
 // Composables
 
 export const usePointer = () => {
-	if (!instance) instance = new Pointer();
+	if (!instance) instance = new (Pointer as PointerConstructor)();
 	return instance;
 };

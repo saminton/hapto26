@@ -1,23 +1,30 @@
+import { Ref, ref } from "@vue/reactivity";
+import { onDisplayChange } from "composables";
+import { useReactivity } from "core";
 import { Bounds } from "types";
 import { getBounds, toArray } from "utils";
-import { ref } from "@vue/reactivity";
 import { useStore } from "./store";
-import { useReactivity } from "core";
-import { onBeforeResize } from "./resizer";
-import { onDisplayChange } from "composables";
 
 type Branch = {
 	el: HTMLElement;
 	children?: any[];
 };
 
-export enum SplitType {
-	letters,
-	words,
-	lines,
+export enum SplitBy {
+	LETTERS,
+	WORDS,
+	LINES,
 }
 
-export const useSplit = function (node: HTMLElement, by?: SplitType) {
+export type Split = {
+	el: HTMLElement;
+	html: Ref<string>;
+	letters: Ref<HTMLElement[]>;
+	words: Ref<HTMLElement[]>;
+	lines: Ref<HTMLElement[]>;
+};
+
+export const useSplit = function (node: HTMLElement, by?: SplitBy) {
 	const emit = defineEmits();
 	const device = useStore("device");
 	const html = ref("");
@@ -26,11 +33,9 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 	const lines = ref([]);
 	let tree: Branch;
 
-	console.log(`by`, by);
-
 	const { watch, effect } = useReactivity();
 
-	let resolve;
+	let resolve: (value?: unknown) => void;
 	const promise = new Promise((res) => {
 		resolve = res;
 	});
@@ -90,7 +95,7 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 
 		// Append tree to page
 
-		tree.children.forEach((item, i) => {
+		tree.children?.forEach((item, i) => {
 			append(item, node, 0);
 		});
 
@@ -98,11 +103,11 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 			requestAnimationFrame(() => resolve());
 		});
 
-		if (by == SplitType.lines) {
+		if (by == SplitBy.LINES) {
 			node.innerHTML = splitLines();
 		}
 
-		if (by == SplitType.letters) {
+		if (by == SplitBy.LETTERS) {
 			splitLetters();
 		}
 
@@ -115,24 +120,27 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 	};
 
 	const createTree = (): Branch => {
-		const store = (el): Branch => {
+		const store = (el: HTMLElement): Branch => {
 			// Do not store children for SVGs or components
 			if (el.tagName == "SVG" || el.hasAttribute("v-component")) return { el: el };
 
 			// Everything else
 
-			const item = {
-				el: el.cloneNode(false),
+			const item: {
+				el: HTMLElement;
+				children: Branch[];
+			} = {
+				el: el.cloneNode(false) as HTMLElement,
 				children: [],
 			};
 
-			let childEl = el.firstChild;
+			let childEl = el.firstChild as HTMLElement;
 			while (childEl) {
 				// Recursive on children
 				if (childEl.tagName) {
 					item.children.push(store(childEl));
 					if (childEl.nextSibling) {
-						const content = childEl.nextSibling.textContent[0];
+						const content = childEl.nextSibling.textContent?.[0];
 						if (content == " " || content == " ") item.children.push(space());
 					}
 				}
@@ -140,23 +148,24 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 				// Split text into words
 				else item.children.push(...splitWords(childEl));
 
-				childEl = childEl.nextSibling;
+				childEl = childEl.nextSibling as HTMLElement;
 			}
 
 			return item;
 		};
 
-		return store(node.cloneNode(true));
+		return store(node.cloneNode(true) as HTMLElement);
 	};
 
 	const splitLetters = () => {
 		Array.from(node.querySelectorAll("[v-word]")).forEach((wordEl) => {
-			wordEl.innerHTML = wordEl
-				.getAttribute("v-word")
-				.split(/(?!$)/u)
+			let text = wordEl
+				?.getAttribute("v-word")
+				?.split(/(?!$)/u)
 				.reduce((prev, curr) => {
 					return prev + "<span v-letter>" + curr + "</span>";
 				}, "");
+			if (text) wordEl.innerHTML = text;
 		});
 	};
 
@@ -176,12 +185,12 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 		return wordEl;
 	};
 
-	const splitWords = (el) => {
+	const splitWords = (el: HTMLElement) => {
 		const words = el.textContent.split(/\s+/g);
 
 		// if (words[words.length - 1] != "") words.push(" ");
 
-		const items = [];
+		const items: Branch[] = [];
 		words.forEach((str, i) => {
 			if (str == "") return null;
 
@@ -201,8 +210,8 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 		return items;
 	};
 
-	const getAttrs = (el) => {
-		const attrs = {};
+	const getAttrs = (el: HTMLElement) => {
+		const attrs: { [key: string]: string | null } = {};
 		el.getAttributeNames().forEach((attr, i) => {
 			attrs[attr] = el.getAttribute(attr);
 		});
@@ -211,10 +220,10 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 
 	const splitLines = () => {
 		const lines = [];
-		let line = [];
+		let line: HTMLElement[] = [];
 		let lastBounds: Bounds;
 		let groupEl: HTMLElement;
-		let groupAttrs: { [key: string]: string };
+		let groupAttrs: { [key: string]: string | null };
 
 		toArray(node.children).forEach((el: HTMLElement, i) => {
 			// Todo: Regroup words with same attributes
@@ -272,7 +281,6 @@ export const useSplit = function (node: HTMLElement, by?: SplitType) {
 			html += "</span></span>";
 		});
 
-		// let html = node.innerHTML;
 		return html;
 	};
 

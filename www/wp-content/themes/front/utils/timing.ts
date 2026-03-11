@@ -21,7 +21,7 @@ export function debounce(
 	limit: number,
 	isImmediate: boolean = false,
 ) {
-	var timeout;
+	var timeout: number;
 	return function () {
 		var context = this,
 			args = arguments;

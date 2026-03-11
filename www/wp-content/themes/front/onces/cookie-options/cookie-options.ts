@@ -2,7 +2,11 @@ import { Component, useScope, useCookie, useReactivity } from "core";
 import { useEvents, useStore } from "composables";
 import { aria, extend, getProps } from "utils";
 
-export function CookieOptions(args) {
+interface CookieOptionsComponent extends Component {
+	el: HTMLElement;
+}
+
+export function CookieOptions(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -39,14 +43,14 @@ export function CookieOptions(args) {
 	// Functions
 
 	const setDefaultValues = () => {
-		if (userPrefs.value) return null;
+		if (userPrefs.value) return;
 		checkboxEls.forEach((el: HTMLInputElement) => {
 			if (el.name) el.checked = userPrefs.value[el.name] ?? false;
 		});
 	};
 
 	const accept = () => {
-		const prefs = {};
+		const prefs: { [key: string]: boolean } = {};
 		checkboxEls.forEach((el: HTMLInputElement) => {
 			if (el.name) prefs[el.name] = el.checked;
 		});
@@ -56,7 +60,7 @@ export function CookieOptions(args) {
 	};
 
 	const refuse = () => {
-		const prefs = {};
+		const prefs: { [key: string]: boolean } = {};
 		checkboxEls.forEach((el: HTMLInputElement) => {
 			if (el.name) prefs[el.name] = false;
 		});
@@ -73,12 +77,12 @@ export function CookieOptions(args) {
 
 	effect(() => {
 		// Show or hide
-		node.dataset.completed = userPrefsSet.value === true;
+		node.dataset.completed = userPrefsSet.value === true ? "true" : "false";
 		aria(node, "hidden", !cookieOptions.isOpen);
 	});
 
 	effect(() => {
-		if (!userPrefs.value) return null;
+		if (!userPrefs.value) return;
 		checkboxEls.forEach((el: HTMLInputElement) => {
 			if (el.name) el.checked = userPrefs.value[el.name];
 		});

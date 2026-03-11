@@ -1,6 +1,13 @@
-import { ref } from "@vue/reactivity";
+import { Ref, ref } from "@vue/reactivity";
 import { useEvents } from "./events";
 import { aria, getFormData, isValidField, isValidForm } from "utils";
+
+export enum FormState {
+	DEFAULT,
+	SENDING,
+	ERROR,
+	SENT,
+}
 
 export const useForm = (props: {
 	el: HTMLFormElement;
@@ -15,9 +22,8 @@ export const useForm = (props: {
 		"input[type='submit'], button:not([type='button'])",
 	);
 
+	const state: Ref<FormState> = ref(FormState.DEFAULT);
 	const isValid = ref(false);
-	const isSending = ref(false);
-	const isSent = ref(false);
 
 	// Hooks
 	onMounted(() => {
@@ -27,45 +33,44 @@ export const useForm = (props: {
 		on(submitEls, "click", onSubmit);
 	});
 
-	const onChange = (el, e) => {
+	const onChange = (el: HTMLFormElement) => {
 		isValid.value = isValidForm(props.el);
 	};
 
-	const onBlur = (el) => {
+	const onBlur = (el: HTMLFormElement) => {
 		isValidField(el, true);
 		isValid.value = isValidForm(props.el);
 	};
 
-	const onFocus = (el) => {
-		aria(el, "invalid", null);
+	const onFocus = (el: HTMLFormElement) => {
+		aria(el, "invalid", false);
 	};
 
-	const onSubmit = async (el, e) => {
+	const onSubmit = async (el: HTMLFormElement, e: Event) => {
 		e.preventDefault();
 
-		if (isSending.value) return;
+		if (state.value == FormState.SENDING) return;
 
 		isValid.value = isValidForm(props.el, true);
+
 		if (!isValid.value) return;
 
-		isSending.value = true;
+		state.value = FormState.SENDING;
 
 		try {
 			const data = getFormData(props.el);
 			const response = await props.onSubmit(data);
 			props.onSent?.(response);
+			state.value = FormState.SENT;
 		} catch (error) {
 			console.warn(error);
 			props.onError?.(error);
+			state.value = FormState.ERROR;
 		}
-
-		isSent.value = true;
-		isSending.value = false;
 	};
 
 	return {
 		isValid,
-		isSending,
-		isSent,
+		state,
 	};
 };

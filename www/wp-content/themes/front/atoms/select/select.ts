@@ -1,9 +1,19 @@
-import { Component, useReactivity, useScope } from "core";
-import { ref, reactive } from "@vue/reactivity";
+import { ref } from "@vue/reactivity";
 import { useEvents, useMutator, useStore } from "composables";
-import { getProps, extend, attr, clamp } from "utils";
+import { Component, useReactivity, useScope } from "core";
+import { attr, clamp, extend, getProps } from "utils";
 
-export function Select(args) {
+export interface SelectComponent extends Component {
+	el: HTMLSelectElement;
+	current: HTMLOptionElement;
+	reset: () => void;
+	open: () => void;
+	close: () => void;
+	toggle: () => void;
+	focus: (i: number) => void;
+}
+
+export function Select(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -51,7 +61,6 @@ export function Select(args) {
 
 	const changed = () => {
 		current.value = areaEl.value;
-		console.log(`'chamge'`, "chamge", areaEl.value);
 		emit("change");
 	};
 
@@ -124,7 +133,7 @@ export function Select(args) {
 
 			const options = Array.from(areaEl.options);
 			const foundEl = options.find((option) => option.value === el.dataset.value);
-			foundEl.selected = true;
+			if (foundEl) foundEl.selected = true;
 
 			changed();
 			close();
@@ -164,20 +173,23 @@ export function Select(args) {
 	// Effects
 
 	effect(() => {
-		if (isOpen.value) {
-			dropdownEl.style.height = optionsEl.offsetHeight + "px";
-			node.focus();
-		} else {
-			dropdownEl.style.height = areaEl.offsetHeight + "px";
-			focusIndex.value = null;
-		}
 		node.toggleAttribute("open", isOpen.value);
 		optionEls.forEach((el) => {
 			attr(el, "tabindex", isOpen.value ? "0" : "-1");
 		});
 
-		node.style.zIndex = isOpen.value ? 10 : "";
+		node.style.zIndex = isOpen.value ? "10" : "";
 		scroll.isEnabled.value = isOpen.value;
+
+		if (!dropdownEl || !optionsEl) return;
+
+		if (isOpen.value) {
+			dropdownEl.style.height = optionsEl.offsetHeight + "px";
+			node.focus();
+		} else {
+			dropdownEl.style.height = areaEl.offsetHeight + "px";
+			focusIndex.value = -1;
+		}
 	});
 
 	defineExpose({

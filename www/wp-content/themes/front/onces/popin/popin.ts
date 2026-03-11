@@ -2,9 +2,19 @@ import { Component, useReactivity, useScope } from "core";
 
 import { syncToStore, useEvents, useMutator, useStore } from "composables";
 import { gsap } from "gsap";
-import { aria, attr, easing, extend, getProps, ajax } from "utils";
+import { ScrollService } from "services";
+import { ajax, aria, easing, extend, getProps } from "utils";
 
-export function Popin(args) {
+export interface PopinComponent extends Component {
+	el: HTMLElement;
+	isOpen: boolean;
+	load: (type: string, data: {}) => void;
+	goTo: (url: string) => void;
+	open: (callback?: CallableFunction) => void;
+	close: () => void;
+}
+
+export function Popin(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -22,7 +32,7 @@ export function Popin(args) {
 
 	const mutator = useMutator();
 	const contentEl = child("content");
-	const contentScroll = service("scroll");
+	const contentScroll = service("scroll") as ScrollService;
 
 	const overlay = useStore("overlay");
 	const closeEl = child("close");
@@ -30,7 +40,7 @@ export function Popin(args) {
 	const scroll = useStore("scroll");
 	const store = useStore("popin");
 	store.el = node;
-	let onClose;
+	let onClose: Function | null;
 
 	// Hooks
 
@@ -50,7 +60,6 @@ export function Popin(args) {
 
 	const load = async (type: string, data: {}) => {
 		const response = await ajax(type, data);
-		// console.log(response);
 
 		let el = document.createElement("div") as Element;
 		el.innerHTML = response.html ?? response;
@@ -61,14 +70,13 @@ export function Popin(args) {
 
 		if (store.isOpen) await close();
 
-		// Clear old content
-		contentEl.innerHTML = "";
-		contentScroll.set(0, false);
-
-		if (!el) {
+		if (!el || !contentEl) {
 			return;
 		}
 
+		// Clear old content
+		contentEl.innerHTML = "";
+		contentScroll.set(0, false);
 		// Set new content
 		contentEl.style.opacity = "0";
 		contentEl.innerHTML = el.innerHTML;

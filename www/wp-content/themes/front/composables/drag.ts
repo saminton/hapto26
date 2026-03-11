@@ -4,7 +4,7 @@ import { debounce } from "utils";
 import { useEvents } from "./events";
 import { useStore } from "./store";
 
-export const useDrag = (node: HTMLElement, direction?: string) => {
+export const useDrag = (node: HTMLElement | null, direction?: string) => {
 	const { on, once } = useEvents();
 	const { watch, effect } = useReactivity();
 
@@ -28,7 +28,7 @@ export const useDrag = (node: HTMLElement, direction?: string) => {
 	onMounted(() => {
 		on(unref(node), ["mousedown", "touchstart"], debounce(onDown, 0));
 		on(window, ["mousemove", "touchmove"], onMoved);
-		node.style.userSelect = "none";
+		if (node) node.style.userSelect = "none";
 	});
 
 	// Handles
@@ -46,7 +46,7 @@ export const useDrag = (node: HTMLElement, direction?: string) => {
 		wasCancelled = false;
 	};
 
-	const onMoved = (x) => {
+	const onMoved = () => {
 		if (!data.isDown) return;
 
 		// Temp

@@ -3,7 +3,7 @@ import { ref, reactive } from "@vue/reactivity";
 import { useBounds, useEvents, useSticky, useStore } from "composables";
 import { getProps, extend, receive, closest, aria } from "utils";
 
-export function Anchors(args) {
+export function Anchors(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -19,7 +19,7 @@ export function Anchors(args) {
 
 	// Vars
 
-	const index = ref(null);
+	const index = ref(-1);
 	const sticky = useSticky({
 		el: node,
 		align: "bottom",
@@ -53,7 +53,7 @@ export function Anchors(args) {
 
 	// Functions
 
-	const clicked = (el, e, i) => {
+	const clicked = (el: HTMLElement, e: Event, i: number) => {
 		const item = items[i];
 		if (item.targetEl) scroll.to(item.targetEl);
 	};

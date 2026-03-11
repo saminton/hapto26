@@ -3,7 +3,18 @@ import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend, ajax } from "utils";
 
-export function ListArticles(args) {
+export interface ListArticlesComponent extends Component {
+	el: HTMLElement;
+	filter: ({
+		search,
+		taxonomies,
+	}: {
+		search: string;
+		taxonomies: any[];
+	}) => Promise<void>;
+}
+
+export function ListArticles(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -68,9 +79,9 @@ export function ListArticles(args) {
 				query,
 			});
 
-			itemsEl.innerHTML = res;
+			if (itemsEl) itemsEl.innerHTML = res;
 		} catch (error) {
-			throw new Error(error);
+			throw new Error(String(error));
 		}
 	};
 

@@ -5,6 +5,15 @@ import { debounce } from "utils";
 
 // Singleton
 
+export type Resizer = {
+	resize: () => void;
+};
+
+type ResizerConstructor = {
+	(): Resizer;
+	new (): Resizer;
+};
+
 function Resizer() {
 	const device = useStore("device");
 	const scroll = useStore("scroll");
@@ -31,26 +40,26 @@ function Resizer() {
 
 // Instance
 
-let resizer;
+let resizer: Resizer;
 
 // Composables
 
 export const useResizer = () => {
-	if (!resizer) resizer = new Resizer();
+	if (!resizer) resizer = new (Resizer as ResizerConstructor)();
 	return resizer;
 };
 
 export const onBeforeResize = (callback: Function) => {
-	if (!resizer) resizer = new Resizer();
+	if (!resizer) resizer = new (Resizer as ResizerConstructor)();
 	onEmitted("beforeResize", callback);
 };
 
 export const onResized = (callback: Function) => {
-	if (!resizer) resizer = new Resizer();
+	if (!resizer) resizer = new (Resizer as ResizerConstructor)();
 	onEmitted("resized", callback);
 };
 
 export const onAfterResize = (callback: Function) => {
-	if (!resizer) resizer = new Resizer();
+	if (!resizer) resizer = new (Resizer as ResizerConstructor)();
 	onEmitted("afterResize", callback);
 };

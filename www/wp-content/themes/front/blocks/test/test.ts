@@ -11,7 +11,7 @@ import {
 } from "composables";
 import { getProps, extend } from "utils";
 
-export function Test(args) {
+export function Test(args: Component) {
 	// Extend
 
 	extend(Component, this, args);

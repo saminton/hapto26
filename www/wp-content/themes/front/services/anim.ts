@@ -2,7 +2,7 @@ import { useAnim } from "../composables";
 import { Service } from "../core";
 import { extend, getProps } from "../utils";
 
-export function Anim(args) {
+export function Anim(args: Service) {
 	// Extend
 
 	extend(Service, this, args);

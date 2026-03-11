@@ -3,7 +3,11 @@ import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend } from "utils";
 
-export function Template(args) {
+export interface TemplateComponent extends Component {
+	el: HTMLElement;
+}
+
+export function Template(args: Component) {
 	// Extend
 
 	extend(Component, this, args);

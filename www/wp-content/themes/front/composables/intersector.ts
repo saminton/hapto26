@@ -1,6 +1,21 @@
 import { Ref, isRef, reactive } from "@vue/reactivity";
 import { toArray } from "../utils";
 
+export type Intersector = {
+	observe: (
+		els: HTMLElement | HTMLElement[] | Ref<HTMLElement> | Ref<HTMLElement[]>,
+		callback: Function,
+	) => void;
+	unobserve: (
+		els: HTMLElement | HTMLElement[] | Ref<HTMLElement> | Ref<HTMLElement[]>,
+	) => void;
+};
+
+type IntersectorConstructor = {
+	(): Intersector;
+	new (): Intersector;
+};
+
 function Intersector(
 	options: {
 		root?: HTMLElement;
@@ -8,9 +23,9 @@ function Intersector(
 		threshold?: number;
 	} = {},
 ) {
-	let storedItems = [];
+	let storedItems: Array<{ el: HTMLElement; callback: Function }> = [];
 
-	const onIntersect = (entries) => {
+	const onIntersect = (entries: IntersectionObserverEntry[]) => {
 		entries.forEach((entry: IntersectionObserverEntry) => {
 			storedItems.forEach((item) => {
 				if (entry.target === item.el) item.callback(entry);
@@ -20,7 +35,10 @@ function Intersector(
 
 	const observer = new IntersectionObserver(onIntersect, options);
 
-	this.observe = (els, callback) => {
+	this.observe = (
+		els: HTMLElement | HTMLElement[] | Ref<HTMLElement> | Ref<HTMLElement[]>,
+		callback: Function,
+	) => {
 		if (isRef(els)) els = els.value;
 		toArray(els).forEach((el) => {
 			storedItems.push({
@@ -31,7 +49,9 @@ function Intersector(
 		});
 	};
 
-	this.unobserve = (els) => {
+	this.unobserve = (
+		els: HTMLElement | HTMLElement[] | Ref<HTMLElement> | Ref<HTMLElement[]>,
+	) => {
 		if (isRef(els)) els = els.value;
 		toArray(els).forEach((el) => {
 			storedItems = storedItems.filter((item) => item.el !== el);
@@ -42,11 +62,11 @@ function Intersector(
 
 // Instance
 
-let intersector = null;
+let intersector: Intersector;
 
 // Composables
 
-export const useIntersect = (node: HTMLElement) => {
+export const useIntersect = (node: HTMLElement | null) => {
 	const item = reactive({
 		bounds: {
 			bottom: 0,
@@ -61,16 +81,17 @@ export const useIntersect = (node: HTMLElement) => {
 		isIntersecting: false,
 	});
 
-	if (!intersector) intersector = new Intersector();
+	if (!intersector) intersector = new (Intersector as IntersectorConstructor)();
 	onReady(() => {
-		intersector.observe(node, (event) => {
-			item.bounds = event.boundingClientRect;
-			item.isIntersecting = event.isIntersecting;
-		});
+		if (node)
+			intersector.observe(node, (event: IntersectionObserverEntry) => {
+				item.bounds = event.boundingClientRect;
+				item.isIntersecting = event.isIntersecting;
+			});
 	});
 
 	onUnmounted(() => {
-		intersector.unobserve(node);
+		if (node) intersector.unobserve(node);
 	});
 
 	return item;

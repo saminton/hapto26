@@ -2,7 +2,16 @@ import { onResized, useEvents, useStore } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { extend, getBounds, getProps } from "utils";
 
-export function Media(args) {
+export interface MediaComponent extends Component {
+	el: HTMLElement;
+	type: string;
+	play: () => void;
+	pause: () => void;
+	seek: (time: number) => void;
+	getDuration: () => number;
+}
+
+export function Media(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -43,32 +52,16 @@ export function Media(args) {
 			imageEl.setAttribute("loading", "eager");
 		}
 		if (videoEl)
-			new Promise<void>(async (resolve, reject) => {
-				// const tempEl = document.createElement("video");
-				// tempEl.src = videoEl.src;
-				// tempEl.play();
-
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET", videoEl.src, true);
-				xhr.responseType = "arraybuffer";
-
-				xhr.onload = function (e) {
-					var blob = new Blob([e.target.response], {
-						type: "video/yourvideosmimmetype",
-					});
-
+			await new Promise<void>(async (resolve, reject) => {
+				try {
+					const response = await fetch(videoEl.src);
+					const arrayBuffer = await response.arrayBuffer();
+					const blob = new Blob([arrayBuffer], { type: "video/yourvideosmimmetype" }); // Assuming a generic video mimetype or it could be determined from response.headers.get('Content-Type')
 					videoEl.src = URL.createObjectURL(blob);
 					resolve();
-				};
-
-				xhr.onprogress = function (e) {
-					if (e.lengthComputable) {
-						var percent = e.loaded / e.total;
-						// do something with this
-					}
-				};
-
-				xhr.send();
+				} catch (error) {
+					reject(error);
+				}
 			});
 	};
 

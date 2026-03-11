@@ -1,9 +1,23 @@
-import { ref } from "@vue/reactivity";
+import { Ref, ref } from "@vue/reactivity";
 import { useEvents, useIntersect, useTick } from "composables";
 import { useReactivity } from "core";
 import { useEmitter } from "./emitter";
 
 // Singleton
+
+export type Renderer = {
+	init: () => void;
+	start: () => void;
+	stop: () => void;
+	delta: Ref<number>;
+	tick: Ref<number>;
+	clock: Ref<number>;
+};
+
+type RendererConstructor = {
+	(): Renderer;
+	new (): Renderer;
+};
 
 export type Tick = {
 	time: number;
@@ -14,7 +28,7 @@ export type Tick = {
 function Renderer() {
 	const events = useEvents();
 
-	let request = null;
+	let request: number;
 	this.delta = ref(0);
 	this.tick = ref(0);
 	this.clock = ref(performance.now());
@@ -64,17 +78,17 @@ function Renderer() {
 
 // Instance
 
-let renderer;
+let renderer: Renderer;
 
 // Composables
 
 export const useRenderer = () => {
-	if (!renderer) renderer = new Renderer();
+	if (!renderer) renderer = new (Renderer as RendererConstructor)();
 	return renderer;
 };
 
-const listen = (node: HTMLElement, callback, timing: string) => {
-	if (!renderer) renderer = new Renderer();
+const listen = (node: HTMLElement, callback: (tick: Tick) => void, timing: string) => {
+	if (!renderer) renderer = new (Renderer as RendererConstructor)();
 	const { watch } = useReactivity();
 	const tick = useTick(timing, callback);
 	const intersect = useIntersect(node);
@@ -94,10 +108,10 @@ export const onBeforeRender = (node: HTMLElement, callback: (tick: Tick) => void
 	listen(node, callback, "beforeRender");
 };
 
-export const onRendered = (node, callback: (tick: Tick) => void) => {
+export const onRendered = (node: HTMLElement, callback: (tick: Tick) => void) => {
 	listen(node, callback, "rendered");
 };
 
-export const onAfterRender = (node, callback: (tick: Tick) => void) => {
+export const onAfterRender = (node: HTMLElement, callback: (tick: Tick) => void) => {
 	listen(node, callback, "afterRender");
 };

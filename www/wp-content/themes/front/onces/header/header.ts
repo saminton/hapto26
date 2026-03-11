@@ -2,7 +2,11 @@ import { useEvents, useStore } from "composables";
 import { Component, useReactivity, useRoute, useScope } from "core";
 import { aria, extend, getProps } from "utils";
 
-export function Header(args) {
+export interface HeaderComponent extends Component {
+	el: HTMLElement;
+}
+
+export function Header(args: Component) {
 	// Extend
 
 	extend(Component, this, args);

@@ -1,17 +1,30 @@
 // Modernized version of
 // https://github.com/scottcorgan/tiny-emitter/blob/master/index.js
 
-export function Emitter() {
-	const events = {};
+export type Emitter = {
+	on: (name: string, callback: Function, context?: any) => void;
+	once: (name: string, callback: Function, context?: any) => Promise<void>;
+	off: (name: string, callback: Function) => void;
+	emit: (name: string, ...args: any[]) => void;
+	destroy: () => void;
+};
 
-	this.on = (name: string, callback: Function, context) => {
+export type EmitterConstructor = {
+	(): Emitter;
+	new (): Emitter;
+};
+
+export function Emitter() {
+	const events: { [key: string]: Array<{ callback: Function; context: string }> } = {};
+
+	this.on = (name: string, callback: Function, context: string) => {
 		(events[name] || (events[name] = [])).push({
 			callback,
 			context,
 		});
 	};
 
-	this.once = (name: string, callback: Function, context) => {
+	this.once = (name: string, callback: Function, context: string) => {
 		return new Promise((resolve) => {
 			const listener = function () {
 				this.off(name, listener);
@@ -30,7 +43,10 @@ export function Emitter() {
 
 		if (!array) return null;
 		for (var i = 0, len = array.length; i < len; i++) {
-			if (array[i].callback !== callback && array[i].callback.handle !== callback) {
+			if (
+				array[i].callback !== callback &&
+				(array[i].callback as any).handle !== callback
+			) {
 				keep.push(array[i]); // Keep event if the callback does not match ones we are trying to remove
 			}
 		}
@@ -58,12 +74,12 @@ export function Emitter() {
 
 // Instance
 
-let emitter;
+let emitter: Emitter;
 
 // Composables
 
 export const useEmitter = () => {
-	if (!emitter) emitter = new Emitter();
+	if (!emitter) emitter = new (Emitter as EmitterConstructor)();
 	return emitter;
 };
 

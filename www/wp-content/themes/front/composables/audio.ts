@@ -1,10 +1,42 @@
-import { ref, watch } from "@vue/reactivity";
+import { Ref, ref, watch } from "@vue/reactivity";
 import { useRoute } from "core";
 import { useEvents } from "./events";
 import { withDefaults } from "utils";
 
+interface AudioManager {
+	el: HTMLElement;
+	isMuted: Ref<boolean>;
+	current: Ref<any>;
+	add: (fileName: string) => void;
+	reset: (fileName: string) => void;
+	play: (
+		fileName: string,
+		options: {
+			loop?: boolean;
+			restart?: boolean;
+			time?: number;
+			multiple?: boolean; // Todo
+		},
+	) => void;
+	pause: (fileName: string) => void;
+}
+
+type AudioManagerConstructor = {
+	(): AudioManager;
+	new (): AudioManager;
+};
+
+type AudioFile = {
+	el: HTMLAudioElement;
+	url: string;
+	fileName: string;
+	loaded: boolean;
+	isPlaying: boolean;
+	progress: Ref<number>;
+};
+
 function AudioManager() {
-	const files = [];
+	const files: AudioFile[] = [];
 
 	const { on, once, off } = useEvents();
 	const route = useRoute();
@@ -65,7 +97,7 @@ function AudioManager() {
 			restart: true,
 		});
 
-		file.loop = options.loop;
+		file.el.loop = options.loop;
 		file.isPlaying = true;
 
 		if (!file.loaded) await once(file.el, "loadeddata");
@@ -92,10 +124,10 @@ function AudioManager() {
 	});
 }
 
-let instance;
+let instance: AudioManager;
 
 export const useAudio = (files?: string[]) => {
-	if (!instance) instance = new AudioManager();
+	if (!instance) instance = new (AudioManager as AudioManagerConstructor)();
 	if (files)
 		files.forEach((file) => {
 			instance.add(file);

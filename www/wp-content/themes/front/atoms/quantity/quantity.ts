@@ -3,7 +3,7 @@ import { useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { clamp, extend, getProps } from "utils";
 
-export function Quantity(args) {
+export function Quantity(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -35,7 +35,7 @@ export function Quantity(args) {
 
 	// Functions
 
-	const add = (value) => {
+	const add = (value: number) => {
 		let total = Number(fieldEL.value) + value;
 		if (min !== undefined) total = Math.max(total, min);
 		if (max !== undefined) total = Math.min(total, max);

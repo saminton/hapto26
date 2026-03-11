@@ -1,10 +1,17 @@
-import { ref, reactive } from "@vue/reactivity";
+import { ref, reactive, Ref } from "@vue/reactivity";
 import { useReactivity } from "core";
 import { aria, closest, receive, withDefaults } from "utils";
 import { useBounds } from "./bounds";
 import { useEvents } from "./events";
-import { Scroll } from "types";
+import { Bounds, Scroll } from "types";
 import { useStore } from "./store";
+
+export type AnchorItem = {
+	el: HTMLElement;
+	id: string;
+	targetEl: HTMLElement;
+	targetBounds: Bounds;
+};
 
 export const useAnchors = (props: {
 	el: HTMLElement;
@@ -24,10 +31,10 @@ export const useAnchors = (props: {
 	const { on, once } = useEvents();
 
 	const device = useStore("device");
-	const index = ref(0);
-	const items = [];
+	const index: Ref<Number> = ref(0);
+	const items: AnchorItem[] = [];
 	itemEls.forEach((el) => {
-		const to = el.getAttribute(attr);
+		const to = attr ? el.getAttribute(attr) : null;
 		if (!to) return;
 		const targetEl = document.getElementById(to.replace("#", ""));
 		if (!targetEl) return;
@@ -52,7 +59,7 @@ export const useAnchors = (props: {
 
 	// Functions
 
-	const clicked = (el, e, i) => {
+	const clicked = (el: HTMLElement, e: Event, i: number) => {
 		e.preventDefault();
 		e.stopPropagation();
 		goTo(i);
@@ -61,14 +68,15 @@ export const useAnchors = (props: {
 	const goTo = (i: number) => {
 		const item = items[i];
 		if (!item) return;
-		scroll.to(item.targetEl);
+		scroll?.to(item.targetEl);
 	};
 
 	// Effects
 
 	watch(
-		() => scroll.position,
+		() => scroll?.position,
 		() => {
+			if (!scroll) return;
 			//
 			const current = closest(
 				items,
@@ -78,7 +86,6 @@ export const useAnchors = (props: {
 			);
 
 			index.value = current.index;
-			console.log(index.value);
 		},
 	);
 

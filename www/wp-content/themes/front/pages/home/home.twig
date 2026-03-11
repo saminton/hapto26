@@ -6,18 +6,15 @@
 		v-scroll="main"
 		data-ancestor="{{ ancestor_id }}"
 		data-id="{{ id }}">
-		{# {% include 'blocks/test' with {
-			title: post.title,
-			pad: 'default',
-			font: 'body_4',
-			gallery: fields.gallery
-		} %} #}
+		<div v-flux="default">
+			<h1 v-font="title_1" v-anim="title">
+				{{ post.title }}
+			</h1>
 
-		<h1 v-font="title_1">
-			{{ post.title }}
-		</h1>
+			<a href="http://hapto26.localhost/politique-de-confidentialite/">Link</a>
+		</div>
 
-		{% include 'blocks/form-fields' with {
+		{% include 'blocks/contact-form' with {
 			margin: 'default'
 		} %}
 

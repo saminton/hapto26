@@ -4,7 +4,7 @@ import { Animation, getAnimations } from "theme";
 import { receive, withDefaults } from "utils";
 import { useBounds } from "./bounds";
 import { useIntersect } from "./intersector";
-import { useSplit } from "./split";
+import { Split, useSplit } from "./split";
 import { useStore } from "./store";
 
 export type AnimData = {
@@ -15,6 +15,14 @@ export type AnimData = {
 	lines?: Ref<HTMLElement[]>;
 };
 
+export type Anim = {
+	play: () => void;
+	end: () => void;
+	reset: () => void;
+	split?: Split;
+	set: (callback: (data: AnimData) => GSAPTimeline) => void;
+};
+
 export const useAnim = (props: {
 	el: HTMLElement; //
 	name?: string; // Todo: Ref
@@ -23,7 +31,7 @@ export const useAnim = (props: {
 	detect?: boolean;
 	setup?: (data: AnimData) => Promise<void>;
 	timeline?: (data: AnimData) => GSAPTimeline;
-}) => {
+}): Anim => {
 	// Base
 
 	const { watch, effect } = useReactivity();
@@ -54,13 +62,13 @@ export const useAnim = (props: {
 	const data = split ?? { el: props.el };
 
 	const intersect = useIntersect(props.el);
-	let timeline;
+	let timeline: GSAPTimeline;
 	let isReady = false;
 
 	// Hooks
 
 	onMounted(async () => {
-		if (!animation) return null;
+		if (!animation) return;
 		await setup();
 	});
 
@@ -104,7 +112,7 @@ export const useAnim = (props: {
 		timeline.totalProgress(0);
 	};
 
-	const set = (callback: (AnimData) => GSAPTimeline) => {
+	const set = (callback: (AnimData: AnimData) => GSAPTimeline) => {
 		timeline = callback(data);
 	};
 

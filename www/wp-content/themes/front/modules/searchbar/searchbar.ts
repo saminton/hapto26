@@ -2,8 +2,9 @@ import { Component, useReactivity, useScope } from "core";
 import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend } from "utils";
+import { InputComponent } from "atoms/input";
 
-export function Searchbar(args) {
+export function Searchbar(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -12,14 +13,14 @@ export function Searchbar(args) {
 	// Props
 
 	const { on, once } = useEvents();
-	const { child, children } = useScope(this);
+	const { child, children, component } = useScope(this);
 	const { watch, effect, computed } = useReactivity();
 
 	const {} = getProps(node);
 
 	// Vars
 
-	const input = child("input", true);
+	const input = component("input") as InputComponent;
 	const submitEl = child("submit");
 	const emit = defineEmits();
 
@@ -28,22 +29,19 @@ export function Searchbar(args) {
 	onMounted(() => {
 		on(submitEl, "click", submit);
 		on(input.el, "keydown", keydown);
-		console.log(`submitEl`, submitEl);
-		console.log(`input.el`, input.el);
 	});
 
 	onUnmounted(() => {});
 
 	// Functions
 
-	const keydown = (el, e) => {
+	const keydown = (el: HTMLElement, e: KeyboardEvent) => {
 		if (e.key == "Enter") {
 			submit();
 		}
 	};
 
 	const submit = () => {
-		console.log(`'submit'`, "submit");
 		emit("submit", input.value);
 	};
 

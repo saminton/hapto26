@@ -57,7 +57,7 @@ export const closest = (
 	check?: (goal: number, value: number, dist: number) => boolean,
 ) => {
 	let dist = Infinity;
-	let index = null;
+	let index: number = -1;
 
 	if (!check)
 		check = (goal, value, dist) => Math.abs(value - goal) < Math.abs(dist - goal);

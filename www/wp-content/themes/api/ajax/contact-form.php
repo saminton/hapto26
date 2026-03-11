@@ -69,16 +69,16 @@ vl_register_ajax("contact-form", function () {
 		"body" => $body
 	];
 
-	$sent = wp_mail(
-		$to, //
-		"Vous avez un nouveau message",
-		$body,
-		$headers
-	);
+	// $sent = wp_mail(
+	// 	$to, //
+	// 	"Vous avez un nouveau message",
+	// 	$body,
+	// 	$headers
+	// );
 
-	if (!$sent) {
-		$data["error"] = true;
-	}
+	// if (!$sent) {
+	// 	$data["error"] = true;
+	// }
 
 	return $data;
 });

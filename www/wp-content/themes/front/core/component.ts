@@ -1,8 +1,8 @@
-import { isReadonly, isRef, reactive, ref } from "@vue/reactivity";
-import { Emitter, useMutator } from "composables";
+import { isReadonly, isRef, ref } from "@vue/reactivity";
+import { Emitter, EmitterConstructor, useMutator } from "composables";
 import { useReactivity } from "./reactivity";
 
-export type Component = {
+export interface Component {
 	el: HTMLElement;
 	name: string;
 	class: string;
@@ -12,9 +12,12 @@ export type Component = {
 	ready: () => Promise<void>;
 	mount: () => Promise<void>;
 	destroy: () => void;
-};
+	on: (name: string, callback: Function) => void;
+	once: (name: string, callback: Function) => Promise<void>;
+	off: (name: string, callback: Function) => void;
+}
 
-export function Component(args) {
+export function Component(args: Component) {
 	this.el = args.el;
 	this.name = args.name;
 	this.uid = args.uid;
@@ -31,6 +34,18 @@ export function Component(args) {
 	this.afterReadyCallbacks = [];
 	this.unmountedCallbacks = [];
 	this.provides = {};
+
+	this.on = (name: string, callback: Function) => {
+		console.warn(`No events exposed for ${this.name}`);
+	};
+
+	this.once = (name: string, callback: Function) => {
+		console.warn(`No events exposed for ${this.name}`);
+	};
+
+	this.off = (name: string, callback: Function) => {
+		console.warn(`No events exposed for ${this.name}`);
+	};
 
 	// Override global functions for current component
 
@@ -51,7 +66,7 @@ export function Component(args) {
 	};
 
 	window.defineEmits = () => {
-		if (!this.emitter) this.emitter = new Emitter();
+		if (!this.emitter) this.emitter = new (Emitter as EmitterConstructor)();
 		// Create emitter
 
 		this.on = this.emitter.on;
@@ -83,7 +98,7 @@ export function Component(args) {
 			while (el.parentElement) {
 				el = el.parentElement;
 				// Find component
-				const component = mutator.components.find((item) => {
+				const component = mutator.components.find((item: Component) => {
 					return item.el == el && Object.keys(item.provides).indexOf(name) != -1;
 				});
 				if (component) {
@@ -111,32 +126,39 @@ export function Component(args) {
 		return refer;
 	};
 
-	const warn = (name) => {
+	const warn = (name: string) => {
 		console.warn(`${this.name} called '${name}' outside of component setup`);
 	};
 
 	this.mount = async () => {
-		if (isMounted) return null;
+		if (isMounted) return;
 
-		// Warn about inproper use
+		// Warn about improper use
 		window.onMounted = () => warn("onMounted");
 		window.onReady = () => warn("onReady");
 		window.afterReady = () => warn("afterReady");
 		window.onUnmounted = () => warn("onUnmounted");
 		window.provide = () => warn("provide");
 		window.inject = () => warn("inject");
-		window.defineEmits = () => warn("defineEmits");
+		window.defineEmits = () => {
+			warn("defineEmits");
+			return () => {};
+		};
 		window.defineExpose = () => warn("defineExpose");
 
-		this.promise = Promise.all(this.mountedCallbacks.map((callback) => callback()));
+		this.promise = Promise.all(
+			this.mountedCallbacks.map((callback: Function) => callback()),
+		);
 		await this.promise;
 		isMounted = true;
 	};
 
 	this.ready = async () => {
-		if (isReady) return null;
+		if (isReady) return;
 
-		this.promise = Promise.all(this.readyCallbacks.map((callback) => callback()));
+		this.promise = Promise.all(
+			this.readyCallbacks.map((callback: Function) => callback()),
+		);
 		await this.promise;
 		isReady = true;
 
@@ -149,8 +171,8 @@ export function Component(args) {
 	this.destroy = () => {
 		isUnmounted = true;
 		// If not yet mounted do nothing
-		if (!isMounted) return null;
-		this.unmountedCallbacks.forEach((callback) => callback());
+		if (!isMounted) return;
+		this.unmountedCallbacks.forEach((callback: Function) => callback());
 	};
 
 	window.defineExpose = (methods) => {

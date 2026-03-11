@@ -15,6 +15,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"@types/md5": "^2.3.6",
 		"@zackad/prettier-plugin-twig": "0.16.3",
 		"browser-sync": "3.0.4",
 		"esbuild-plugin-glsl": "1.4.1",

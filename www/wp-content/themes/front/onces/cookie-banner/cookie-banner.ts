@@ -1,8 +1,12 @@
 import { useEvents, useStore } from "composables";
 import { Component, useCookie, useReactivity, useScope } from "core";
-import { extend, getProps } from "utils";
+import { attr, extend, getProps } from "utils";
 
-export function CookieBanner(args) {
+export interface CookieBannerComponent extends Component {
+	el: HTMLElement;
+}
+
+export function CookieBanner(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -44,7 +48,7 @@ export function CookieBanner(args) {
 
 	const accept = () => {
 		// Save cookies preferences
-		const prefs = {};
+		const prefs: { [key: string]: boolean } = {};
 		Object.keys(userPrefs.value).forEach((key) => {
 			prefs[key] = true;
 		});
@@ -58,7 +62,7 @@ export function CookieBanner(args) {
 
 	const refuse = () => {
 		// Save cookies preferences
-		const prefs = {};
+		const prefs: { [key: string]: boolean } = {};
 		Object.keys(userPrefs.value).forEach((key) => {
 			prefs[key] = false;
 		});
@@ -81,6 +85,6 @@ export function CookieBanner(args) {
 	});
 
 	effect(() => {
-		node.setAttribute("aria-hidden", !store.isOpen);
+		attr(node, "hidden", !store.isOpen);
 	});
 }

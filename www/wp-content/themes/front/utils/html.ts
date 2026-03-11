@@ -3,10 +3,24 @@ import { camelCase } from "./case";
 import { toArray } from "utils";
 
 export function getBounds(
-	el: Element, //
+	el: Element | null, //
 	scroll: Scroll | undefined = undefined,
 ): Bounds {
-	if (!el) console.warn(`Bounds: No HTML element passed`);
+	if (!el) {
+		console.warn(`Bounds: No HTML element passed`);
+		return {
+			x: 0,
+			y: 0,
+			cx: 0,
+			cy: 0,
+			left: 0,
+			top: 0,
+			right: 0,
+			bottom: 0,
+			width: 0,
+			height: 0,
+		};
+	}
 
 	let { left, top, width, height } = el.getBoundingClientRect();
 	if (scroll && scroll.position) {
@@ -52,19 +66,19 @@ export function getRelativePosition(a: Bounds, b: Bounds): Bounds {
 	return { x, y, left, top, right, bottom, width: right - left, height: bottom - top };
 }
 
-export function getStyles(el: HTMLElement, ...names) {
+export function getStyles(el: HTMLElement, ...names: string[]) {
 	const styles = window.getComputedStyle(el);
-	const temp = {};
-	names.forEach((name) => {
-		let value = styles[name] as any;
+	const temp: { [key: string]: string | number } = {};
+	names.forEach((name: string) => {
+		let value: string | number = styles.getPropertyValue(name);
 		if (value.includes("px")) value = parseFloat(value);
 		temp[camelCase(name)] = value;
 	});
 
-	if (names.length === 1) {
-		return temp[names[0]];
-	}
-	return temp as Partial<CSSStyleDeclaration>;
+	// if (names.length === 1) {
+	// 	return temp[names[0]];
+	// }
+	return temp;
 }
 
 export const getTransform = (el: HTMLElement) => {
@@ -95,8 +109,8 @@ export const getTransform = (el: HTMLElement) => {
 	};
 };
 
-let globalStyle;
-export const cssVar = (name: string, node: HTMLElement | undefined) => {
+let globalStyle: CSSStyleDeclaration;
+export const cssVar = (name: string, node?: HTMLElement) => {
 	if (!globalStyle) {
 		globalStyle = getComputedStyle(document.documentElement);
 	}
@@ -107,7 +121,7 @@ export const cssVar = (name: string, node: HTMLElement | undefined) => {
 	}
 };
 
-export const cssVarRGB = (name: string, node: HTMLElement | undefined): number[] => {
+export const cssVarRGB = (name: string, node?: HTMLElement): number[] => {
 	return cssVar(name, node)
 		.split(",")
 		.map((value: string) => Number(value) / 255);
@@ -185,7 +199,7 @@ export function styles(
 export const aria = (
 	els: HTMLElement | HTMLElement[] | NodeList,
 	prop: string,
-	value: boolean | string,
+	value: boolean | string | null,
 ) => {
 	if (!els) return;
 	if (value === true) value = "true";

@@ -15,7 +15,7 @@ export const extend = (constructor: Function, target: any, args: any = null) => 
 };
 
 export const getProps = (node: HTMLElement) => {
-	let props: any = Object.assign({}, node.dataset);
+	let props: { [key: string]: any } = Object.assign({}, node.dataset);
 
 	node.getAttributeNames().forEach((param, i) => {
 		// Ignore classes and services
@@ -53,28 +53,18 @@ export const getProps = (node: HTMLElement) => {
 	return props;
 };
 
-const states = {};
-
-export const useState = (name: string, value: Function) => {
-	if (states[name]) return states[name];
-	else {
-		states[name] = ref(value());
-		return states[name];
-	}
-};
-
 export const receive = (name: string, node: any) => {
 	const data = reactive({});
 	const mutator = useMutator();
 
-	const update = (el) => {
+	const update = (el: HTMLElement) => {
 		if (!el) return null;
 		let service = undefined;
 
 		while (el && !service) {
 			service = mutator.findService(name, el);
 			if (service) Object.assign(data, service.supplying[name]);
-			el = el.parentElement;
+			el = el.parentElement as HTMLElement;
 		}
 	};
 

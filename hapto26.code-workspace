@@ -117,6 +117,12 @@
 			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
 		},
 		"github-actions.workflows.pinned.workflows": [],
+		"[twig]": {
+			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
+		},
+		"[typescript]": {
+			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
+		},
 	},
 	"tasks": {
 		"version": "2.0.0",

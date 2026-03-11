@@ -1,9 +1,16 @@
 import { useEvents, useStore } from "composables";
 import { Component, useReactivity, useScope } from "core";
 import { gsap } from "gsap";
-import { easing, extend, getProps } from "utils";
+import { aria, easing, extend, getProps } from "utils";
 
-export function Loader(args) {
+export interface LoaderComponent extends Component {
+	el: HTMLElement;
+	isOpen: boolean;
+	show: () => void;
+	hide: () => void;
+}
+
+export function Loader(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -65,14 +72,10 @@ export function Loader(args) {
 
 	// Effects
 
-	effect(() => {
-		console.log(`loader is open`, store.isOpen);
-	});
-
 	watch(
 		() => store.isOpen,
 		() => {
-			node.setAttribute("aria-hidden", !store.isOpen);
+			aria(node, "hidden", !store.isOpen);
 		},
 	);
 

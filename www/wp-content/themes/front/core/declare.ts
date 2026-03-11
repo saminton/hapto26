@@ -1,13 +1,13 @@
 // Global functions
 
-declare function onMounted(callback: CallableFunction);
-declare function onUnmounted(callback: CallableFunction);
-declare function onReady(callback: CallableFunction);
-declare function afterReady(callback: CallableFunction);
-declare function provide(name: string, values: any): any;
-declare function inject(name: string, values?: unknown): any;
-declare function supply(name: string, values: any): any;
-declare function defineEmits(name?: string): (name: string) => void;
+declare function onMounted(callback: CallableFunction): void;
+declare function onUnmounted(callback: CallableFunction): void;
+declare function onReady(callback: CallableFunction): void;
+declare function afterReady(callback: CallableFunction): void;
+declare function provide(name: string, values: any): void;
+declare function inject(name: string, values?: unknown): void;
+declare function supply(name: string, values: any): void;
+declare function defineEmits(name?: string): (name: string, value?: any) => void;
 declare function defineExpose(values: object): void;
 
 // Files

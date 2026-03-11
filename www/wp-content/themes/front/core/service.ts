@@ -1,6 +1,6 @@
-import { Emitter } from "composables";
+import { Emitter, EmitterConstructor } from "composables";
 
-export type Service = {
+export interface Service {
 	el: HTMLElement;
 	name: string;
 	class: string;
@@ -9,9 +9,9 @@ export type Service = {
 	ready: () => Promise<void>;
 	mount: () => Promise<void>;
 	destroy: () => void;
-};
+}
 
-export function Service(args) {
+export function Service(args: Service) {
 	this.el = args.el;
 	this.name = args.name;
 	this.promise = null;
@@ -47,7 +47,7 @@ export function Service(args) {
 	};
 
 	window.defineEmits = () => {
-		if (!this.emitter) this.emitter = new Emitter();
+		if (!this.emitter) this.emitter = new (Emitter as EmitterConstructor)();
 		// Create emitter
 
 		this.on = this.emitter.on;
@@ -67,7 +67,7 @@ export function Service(args) {
 		this.supplying[key] = value;
 	};
 
-	const warn = (name) => {
+	const warn = (name: string) => {
 		console.warn(`${this.name} called '${name}' outside of component setup`);
 	};
 
@@ -81,7 +81,9 @@ export function Service(args) {
 		window.onUnmounted = () => warn("onUnmounted");
 		window.supply = () => warn("supply");
 
-		this.promise = Promise.all(this.mountedCallbacks.map((callback) => callback()));
+		this.promise = Promise.all(
+			this.mountedCallbacks.map((callback: Function) => callback()),
+		);
 		await this.promise;
 		isMounted = true;
 	};
@@ -89,7 +91,9 @@ export function Service(args) {
 	this.ready = async () => {
 		if (isReady) return null;
 
-		this.promise = Promise.all(this.readyCallbacks.map((callback) => callback()));
+		this.promise = Promise.all(
+			this.readyCallbacks.map((callback: Function) => callback()),
+		);
 		await this.promise;
 		isReady = true;
 
@@ -101,7 +105,7 @@ export function Service(args) {
 		isUnmounted = true;
 		// If not yet mounted do nothing
 		if (!isUnmounted) return null;
-		this.unmountedCallbacks.forEach((callback) => callback());
+		this.unmountedCallbacks.forEach((callback: Function) => callback());
 	};
 
 	window.defineExpose = (methods) => {
