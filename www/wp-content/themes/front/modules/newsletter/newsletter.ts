@@ -1,8 +1,8 @@
-import { Component, useReactivity, useScope } from "core";
-import { ref, reactive } from "@vue/reactivity";
-import { useEvents, useStore } from "composables";
-import { getProps, extend, ajax, aria } from "utils";
+import { ref } from "@vue/reactivity";
+import { useEvents } from "composables";
 import { FormState, useForm } from "composables/form";
+import { Component, useReactivity, useScope } from "core";
+import { ajax, aria, extend, getProps } from "utils";
 
 export interface NewsletterComponent extends Component {
 	el: HTMLElement;

@@ -1,7 +1,7 @@
+import { ref } from "@vue/reactivity";
+import { useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
-import { ref, reactive } from "@vue/reactivity";
-import { useEvents, useStore } from "composables";
-import { getProps, extend, attr, aria } from "utils";
+import { aria, extend, getProps } from "utils";
 
 export function NavButtons(args: Component) {
 	// Extend

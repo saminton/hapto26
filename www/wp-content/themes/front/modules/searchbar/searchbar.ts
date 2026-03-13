@@ -1,8 +1,7 @@
-import { Component, useReactivity, useScope } from "core";
-import { ref, reactive } from "@vue/reactivity";
-import { useEvents, useStore } from "composables";
-import { getProps, extend } from "utils";
 import { InputComponent } from "atoms/input";
+import { useEvents } from "composables";
+import { Component, useReactivity, useScope } from "core";
+import { extend, getProps } from "utils";
 
 export function Searchbar(args: Component) {
 	// Extend

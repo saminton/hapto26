@@ -111,4 +111,14 @@ $twig->addFunction(
 	)
 );
 
+$twig->addFunction(
+	new TwigFunction(
+		"nonce",
+		function (string $name) {
+			return wp_create_nonce($name . "_nonce");
+		},
+		["is_safe" => ["html"]]
+	)
+);
+
 $twig->addFunction(new TwigFunction("do_action", "do_action", ["is_safe" => ["html"]]));

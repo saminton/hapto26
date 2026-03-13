@@ -14,9 +14,11 @@
 			<a href="http://hapto26.localhost/politique-de-confidentialite/">Link</a>
 		</div>
 
-		{% include 'blocks/contact-form' with {
-			margin: 'default'
-		} %}
+		<div v-flux="default">
+			{% include 'modules/contact-form' with {
+				margin: 'default'
+			} %}
+		</div>
 
 		{% include 'plugins/example' %}
 	</main>

@@ -17,6 +17,11 @@ export interface Component {
 	off: (name: string, callback: Function) => void;
 }
 
+export type ComponentConstructor = {
+	(args: Component): void;
+	class?: string;
+};
+
 export function Component(args: Component) {
 	this.el = args.el;
 	this.name = args.name;
@@ -102,7 +107,7 @@ export function Component(args: Component) {
 					return item.el == el && Object.keys(item.provides).indexOf(name) != -1;
 				});
 				if (component) {
-					found = component.provides[name];
+					found = (component.provides as { [key: string]: any })[name];
 				}
 			}
 

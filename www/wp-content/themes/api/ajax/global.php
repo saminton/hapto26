@@ -8,6 +8,10 @@ vl_register_ajax("query", function ($args) {
 	return vl_query($args);
 });
 
+vl_register_ajax("nonce", function ($args) {
+	return wp_create_nonce($args["name"] . "_nonce");
+});
+
 vl_register_ajax("page", function ($args) {
 	return ["html" => file_get_contents($args["url"])];
 	// return ;

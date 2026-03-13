@@ -123,6 +123,9 @@
 		"[typescript]": {
 			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
 		},
+		"[php]": {
+			"editor.defaultFormatter": "SimonSiefke.prettier-vscode",
+		},
 	},
 	"tasks": {
 		"version": "2.0.0",

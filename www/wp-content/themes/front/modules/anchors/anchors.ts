@@ -1,7 +1,7 @@
+import { ref } from "@vue/reactivity";
+import { useBounds, useEvents, useSticky } from "composables";
 import { Component, useReactivity, useScope } from "core";
-import { ref, reactive } from "@vue/reactivity";
-import { useBounds, useEvents, useSticky, useStore } from "composables";
-import { getProps, extend, receive, closest, aria } from "utils";
+import { aria, closest, extend, getProps, receive } from "utils";
 
 export function Anchors(args: Component) {
 	// Extend

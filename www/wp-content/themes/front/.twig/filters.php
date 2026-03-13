@@ -56,30 +56,6 @@ $twig->addFilter(
 			} else {
 				return $str;
 			}
-
-			// // Check if translation is already added
-
-			// global $api_path;
-			// $file = $api_path . '/theme/translations.php';
-			// $append = '__("' . $str . '", "theme");' . "\n";
-
-			// $handle = fopen($file, 'r');
-
-			// $found = false; // init as false
-			// while (($buffer = fgets($handle)) !== false) {
-			// 	if (strpos($buffer, $append) !== false) {
-			// 		$found = true;
-			// 		break; // Once you find the string, you should break out the loop.
-			// 	}
-			// }
-			// fclose($handle);
-
-			// // If not add new translation
-			// if (!$found) {
-			// 	file_put_contents($file, $append, FILE_APPEND | LOCK_EX);
-			// }
-
-			// return __($str, 'theme');
 		},
 		["is_safe" => ["html"]]
 	)

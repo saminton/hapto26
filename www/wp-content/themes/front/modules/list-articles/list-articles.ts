@@ -1,7 +1,6 @@
+import { useEvents } from "composables";
 import { Component, useReactivity, useScope } from "core";
-import { ref, reactive } from "@vue/reactivity";
-import { useEvents, useStore } from "composables";
-import { getProps, extend, ajax } from "utils";
+import { ajax, extend, getProps } from "utils";
 
 export interface ListArticlesComponent extends Component {
 	el: HTMLElement;

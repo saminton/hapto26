@@ -9,7 +9,7 @@ type Events = {
 	on: (
 		nodes: ElementsOrComponent,
 		names: string | Array<string>,
-		callback: (...args: any[]) => void,
+		callback?: (...args: any[]) => void,
 		props?: Array<any>,
 		options?: any,
 	) => void;
@@ -17,12 +17,12 @@ type Events = {
 	off: (
 		nodes: ElementsOrComponent,
 		names: string | Array<string>,
-		callback: (...args: any[]) => void,
+		callback?: (...args: any[]) => void,
 	) => void;
 	once: (
 		nodes: ElementsOrComponent,
 		names: string | Array<string>,
-		callback: (...args: any[]) => void,
+		callback?: (...args: any[]) => void,
 	) => Promise<any>;
 	destroy: () => void;
 };

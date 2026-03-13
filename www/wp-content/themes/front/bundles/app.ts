@@ -3,7 +3,7 @@
 // import gsap from "gsap";
 // import CustomEase from "gsap/CustomEase";
 
-import { App } from "core";
+import { App, AppConstructor, ComponentConstructor } from "core";
 import { Anim, Parallax, Scroll } from "services";
 import { Header } from "onces/header";
 import { Menu } from "onces/menu";
@@ -13,7 +13,6 @@ import { Scrollbar } from "atoms/scrollbar";
 import { Password } from "atoms/password";
 import { Quantity } from "atoms/quantity";
 import { Textarea } from "atoms/textarea";
-import { Form } from "modules/form";
 import { AdminWidget } from "onces/admin-widget";
 import { Input } from "atoms/input";
 import { Loader } from "onces/loader";
@@ -22,16 +21,17 @@ import { Select } from "atoms/select";
 import { Media } from "atoms/media";
 import { Example } from "plugins/example";
 import { FileUpload } from "atoms/file-upload";
+import { ContactForm } from "modules/contact-form";
 // import { VideoYoutube } from "modules/video-youtube";
 
-const components = [
+const components: ComponentConstructor[] = [
 	AdminWidget, //
 	Media,
 	Input,
 	Password,
 	Quantity,
 	Textarea,
-	Form,
+	ContactForm,
 	Header,
 	CookieBanner,
 	CookieOptions,
@@ -53,4 +53,4 @@ const plugins = [
 	Example, //
 ];
 
-(window as any).app = new App(components, services, plugins);
+(window as any).app = new (App as AppConstructor)(components, services, plugins);

@@ -17,31 +17,31 @@ export type EmitterConstructor = {
 export function Emitter() {
 	const events: { [key: string]: Array<{ callback: Function; context: string }> } = {};
 
-	this.on = (name: string, callback: Function, context: string) => {
+	const on = (name: string, callback: Function, context: string) => {
 		(events[name] || (events[name] = [])).push({
 			callback,
 			context,
 		});
 	};
 
-	this.once = (name: string, callback: Function, context: string) => {
+	const once = (name: string, callback: Function, context: string) => {
 		return new Promise((resolve) => {
 			const listener = function () {
-				this.off(name, listener);
+				off(name, listener);
 				callback.apply(context, arguments);
 				resolve(null);
 			};
 
 			listener.handle = callback;
-			this.on(name, listener);
+			on(name, listener, context);
 		});
 	};
 
-	this.off = (name: string, callback: Function) => {
+	const off = (name: string, callback: Function) => {
 		const array = events[name];
 		const keep = [];
 
-		if (!array) return null;
+		if (!array) return;
 		for (var i = 0, len = array.length; i < len; i++) {
 			if (
 				array[i].callback !== callback &&
@@ -55,7 +55,7 @@ export function Emitter() {
 		else delete events[name];
 	};
 
-	this.emit = function (name: string) {
+	const emit = function (name: string) {
 		const data = [].slice.call(arguments, 1);
 		const array = (events[name] || []).slice();
 		let i = 0;
@@ -65,10 +65,18 @@ export function Emitter() {
 		}
 	};
 
-	this.destroy = () => {
+	const destroy = () => {
 		for (const prop of Object.getOwnPropertyNames(events)) {
 			delete events[prop];
 		}
+	};
+
+	return {
+		on,
+		once,
+		off,
+		emit,
+		destroy,
 	};
 }
 

@@ -11,6 +11,11 @@ export interface Service {
 	destroy: () => void;
 }
 
+export type ServiceConstructor = {
+	(args: Service): void;
+	class?: string;
+};
+
 export function Service(args: Service) {
 	this.el = args.el;
 	this.name = args.name;
@@ -72,7 +77,7 @@ export function Service(args: Service) {
 	};
 
 	this.mount = async () => {
-		if (isMounted) return null;
+		if (isMounted) return;
 
 		// Warn about inproper use
 		window.onMounted = () => warn("onMounted");
@@ -89,7 +94,7 @@ export function Service(args: Service) {
 	};
 
 	this.ready = async () => {
-		if (isReady) return null;
+		if (isReady) return;
 
 		this.promise = Promise.all(
 			this.readyCallbacks.map((callback: Function) => callback()),
@@ -104,7 +109,7 @@ export function Service(args: Service) {
 	this.destroy = () => {
 		isUnmounted = true;
 		// If not yet mounted do nothing
-		if (!isUnmounted) return null;
+		if (!isUnmounted) return;
 		this.unmountedCallbacks.forEach((callback: Function) => callback());
 	};
 

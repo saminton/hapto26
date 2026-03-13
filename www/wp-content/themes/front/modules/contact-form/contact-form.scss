@@ -13,10 +13,23 @@
 @use "../../theme/mixins.scss" as *;
 @use "../../theme/typography.scss" as *;
 
-.form {
-	.fields[aria-hidden="true"],
-	.success[aria-hidden="true"],
-	.error[aria-hidden="true"] {
+.contact_form {
+}
+
+.fields {
+	&[aria-hidden="true"] {
+		display: none;
+	}
+}
+
+.success {
+	&[aria-hidden="true"] {
+		display: none;
+	}
+}
+
+.error {
+	&[aria-hidden="true"] {
 		display: none;
 	}
 }

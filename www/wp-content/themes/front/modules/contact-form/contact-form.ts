@@ -1,9 +1,12 @@
-import { useEvents, useStore } from "composables";
 import { FormState, useForm } from "composables/form";
 import { Component, useReactivity, useScope } from "core";
 import { ajax, aria, extend, getProps } from "utils";
 
-export function Form(args: Component) {
+export interface ContactFormComponent extends Component {
+	el: HTMLElement;
+}
+
+export function ContactForm(args: Component) {
 	// Extend
 
 	extend(Component, this, args);
@@ -11,47 +14,53 @@ export function Form(args: Component) {
 
 	// Props
 
-	const { on, once } = useEvents();
-	const { child, children } = useScope(this);
-	const { watch, effect } = useReactivity();
+	const { child } = useScope(this);
+	const { effect } = useReactivity();
 
 	const {} = getProps(node);
 
 	// Vars
-	const closeEls = children("close");
+
 	const fieldsEl = child("fields") as HTMLFormElement;
-	const buttonEl = child("button");
 	const successEl = child("success");
 	const errorEl = child("error");
-	const popin = useStore("popinForm");
 
 	const form = useForm({
 		el: fieldsEl,
 		onSubmit: (data) => request(data),
 	});
 
+	let nonce: string;
+
 	// Hooks
 
-	onMounted(() => {
-		on(closeEls, "click", closePopin);
+	onMounted(async () => {});
+
+	onReady(async () => {
+		try {
+			const res = await ajax("nonce", { name: "contact_form" }, { format: "json" });
+			nonce = res;
+		} catch (error) {
+			console.error(error);
+		}
 	});
 
 	onUnmounted(() => {});
-
-	// Handles
-	const closePopin = () => {
-		popin.isOpen = false;
-	};
 
 	// Functions
 
 	const request = async (data: FormData) => {
 		// Add form type
 		data.append("type", node.id);
+		data.append("nonce", nonce);
 
-		const res = await ajax("contact-form", data, {
-			format: "form",
-		});
+		try {
+			const res = await ajax("contact-form", data, {
+				format: "form",
+			});
+		} catch (error) {
+			console.error(error);
+		}
 
 		return data;
 	};

@@ -1,12 +1,17 @@
 import { isRef, Ref } from "@vue/reactivity";
 import { debounce, toArray } from "../utils";
 
+type ElementsOrRef =
+	| HTMLElement
+	| HTMLElement[]
+	| NodeList
+	| Ref<HTMLElement>
+	| Ref<HTMLElement[]>
+	| Ref<NodeList>;
+
 type NodeResizer = {
-	observe: (
-		els: HTMLElement | NodeList | Ref<HTMLElement> | Ref<NodeList>,
-		callback: Function,
-	) => void;
-	unobserve: (els: HTMLElement | NodeList | Ref<HTMLElement> | Ref<NodeList>) => void;
+	observe: (els: ElementsOrRef, callback: Function) => void;
+	unobserve: (els: ElementsOrRef) => void;
 };
 
 type NodeResizerConstructor = {
@@ -30,10 +35,7 @@ function NodeResizer() {
 
 	const observer = new ResizeObserver(onResize);
 
-	this.observe = (
-		els: HTMLElement | NodeList | Ref<HTMLElement> | Ref<NodeList>,
-		callback: Function,
-	) => {
+	const observe = (els: ElementsOrRef, callback: Function) => {
 		if (isRef(els)) els = els.value;
 		toArray(els).forEach((el: HTMLElement) => {
 			if (!el || el.nodeType !== 1) return null;
@@ -45,13 +47,18 @@ function NodeResizer() {
 		});
 	};
 
-	this.unobserve = (els: HTMLElement | NodeList | Ref<HTMLElement> | Ref<NodeList>) => {
+	const unobserve = (els: ElementsOrRef) => {
 		if (isRef(els)) els = els.value;
 		toArray(els).forEach((el: HTMLElement) => {
 			if (!el || el.nodeType !== 1) return null;
 			storedItems = storedItems.filter((item) => item.el !== el);
 			observer.unobserve(el);
 		});
+	};
+
+	return {
+		observe,
+		unobserve,
 	};
 }
 

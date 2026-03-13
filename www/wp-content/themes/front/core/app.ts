@@ -1,3 +1,4 @@
+import barba from "@barba/core";
 import {
 	events,
 	useDevice,
@@ -8,19 +9,35 @@ import {
 	useStore,
 } from "composables";
 import "core/declare";
-import "theme/declare";
-import barba from "@barba/core";
-import { getTransitions } from "theme";
-import { useMutator } from "../composables/mutator";
 import gsap from "gsap";
-import { attr, getProps } from "utils";
-import { effect } from "@vue/reactivity";
-import { Component } from "./component";
+import { getTransitions } from "theme";
+import "theme/declare";
+import { getProps } from "utils";
+import { useMutator } from "../composables/mutator";
+import { Component, ComponentConstructor } from "./component";
+import { Service, ServiceConstructor } from "./service";
+
+export type App = {
+	init: () => void;
+};
+
+export type AppConstructor = {
+	(
+		components: ComponentConstructor[], //
+		services: ServiceConstructor[],
+		plugins: ComponentConstructor[],
+	): App;
+	new (
+		components: ComponentConstructor[], //
+		services: ServiceConstructor[],
+		plugins: ComponentConstructor[],
+	): App;
+};
 
 export function App(
-	components: Component[],
-	services: Component[],
-	plugins: Component[],
+	components: ComponentConstructor[], //
+	services: ServiceConstructor[],
+	plugins: ComponentConstructor[],
 ) {
 	const init = async () => {
 		const device = useDevice();

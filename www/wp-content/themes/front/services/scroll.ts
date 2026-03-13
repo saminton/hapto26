@@ -147,7 +147,7 @@ export function Scroll(args: Service) {
 	// Functions
 
 	const onWheel = (el: HTMLElement, event: WheelEvent) => {
-		if (!isEnabled.value || !size.value || !page.isReady) return null;
+		if (!isEnabled.value || !size.value || !page.isReady) return;
 		event.stopPropagation();
 
 		target.value = limit(target.value + event.deltaY);
@@ -155,7 +155,7 @@ export function Scroll(args: Service) {
 	};
 
 	const onScroll = (el: HTMLElement, event: Event) => {
-		if (!isEnabled.value) return null;
+		if (!isEnabled.value) return;
 		event.stopPropagation();
 		if (!isSmoothed.value) {
 			target.value = position.value = node.scrollTop;
@@ -185,7 +185,7 @@ export function Scroll(args: Service) {
 		const tagName = document.activeElement?.tagName.toLowerCase();
 		const ignore = ["input", "button", "a", "textarea"];
 
-		if (!tagName || ignore.indexOf(tagName) != -1) return null;
+		if (!tagName || ignore.indexOf(tagName) != -1) return;
 
 		switch (event.keyCode) {
 			case 40:

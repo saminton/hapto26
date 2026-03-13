@@ -2,14 +2,14 @@ import { watch } from "@vue/reactivity";
 import { Emitter, EmitterConstructor, useStore } from "composables";
 import md5 from "md5";
 import { kebabCase, snakeCase, toArray } from "../utils";
-import { Component, Service } from "core";
+import { Component, ComponentConstructor, Service, ServiceConstructor } from "core";
 
 type Mutator = {
 	init: (args: {
 		el: HTMLElement;
-		components: Component[];
-		services: Service[];
-		plugins: Component[];
+		components: ComponentConstructor[];
+		services: ServiceConstructor[];
+		plugins: ComponentConstructor[];
 	}) => void;
 	findComponent: (el: HTMLElement) => Component | null;
 	findService: (name: string, el: HTMLElement) => Service | null;
@@ -20,12 +20,12 @@ type Mutator = {
 	mountedPromises: Promise<void>[];
 	readyPromises: Promise<void>[];
 	on: (name: string, callback: Function) => void;
+	once: (name: string, callback?: Function) => Promise<void>;
 	off: (name: string, callback: Function) => void;
 };
 
 type MutatorConstructor = {
 	(): Mutator;
-	new (): Mutator;
 };
 
 type Entry = {
@@ -37,9 +37,9 @@ type Entry = {
 };
 
 function Mutator() {
-	let componentConstructs: Component[] = [];
-	let serviceConstructs: Service[] = [];
-	let pluginConstructs: Component[] = [];
+	let componentConstructs: ComponentConstructor[] = [];
+	let serviceConstructs: ServiceConstructor[] = [];
+	let pluginConstructs: ComponentConstructor[] = [];
 
 	const components: Component[] = [];
 	const services: Service[] = [];
@@ -47,7 +47,7 @@ function Mutator() {
 	const mountedPromises: Promise<void>[] = [];
 	const readyPromises: Promise<void>[] = [];
 
-	const { emit, on, off } = new (Emitter as EmitterConstructor)();
+	const { emit, on, once, off } = new (Emitter as EmitterConstructor)();
 	const page = useStore("page");
 
 	const onMutate = (mutations: MutationRecord[]) => {
@@ -232,7 +232,7 @@ function Mutator() {
 		const check = (el: HTMLElement) => {
 			// Components
 
-			componentConstructs.forEach((component: Component) => {
+			componentConstructs.forEach((component: ComponentConstructor) => {
 				const name = snakeCase(component.name);
 				const uid = md5(name).slice(0, 4);
 
@@ -248,7 +248,7 @@ function Mutator() {
 			});
 
 			// Services
-			serviceConstructs.forEach((service: Service) => {
+			serviceConstructs.forEach((service: ServiceConstructor) => {
 				const name = kebabCase(service.name);
 				if (el.hasAttribute("v-" + name))
 					found.unshift({
@@ -261,7 +261,7 @@ function Mutator() {
 
 			// plugins
 
-			pluginConstructs.forEach((plugin: Component) => {
+			pluginConstructs.forEach((plugin: ComponentConstructor) => {
 				const name = snakeCase(plugin.name);
 
 				if (el.classList.contains(name)) {
@@ -301,9 +301,9 @@ function Mutator() {
 
 	const init = (args: {
 		el: HTMLElement;
-		components: Component[];
-		services: Service[];
-		plugins: Component[];
+		components: ComponentConstructor[];
+		services: ServiceConstructor[];
+		plugins: ComponentConstructor[];
 	}) => {
 		// Create nodes from existing nodes
 
@@ -333,6 +333,7 @@ function Mutator() {
 		mountedPromises,
 		readyPromises,
 		on,
+		once,
 		off,
 	};
 }
@@ -344,6 +345,6 @@ let mutator: Mutator;
 // Composables
 
 export const useMutator = () => {
-	if (!mutator) mutator = Mutator();
+	if (!mutator) mutator = (Mutator as MutatorConstructor)();
 	return mutator;
 };
