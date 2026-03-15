@@ -6,11 +6,11 @@
 		v-scroll="main"
 		data-ancestor="{{ ancestor_id }}"
 		data-id="{{ id }}">
-		<div v-flux="medium">
+		<div v-flux="default">
 			<h1 v-font="title_1" v-anim="title">
 				{{ post.title }}
 			</h1>
-			<div v-margin="default_top" v-font="format">
+			<div v-font="format">
 				{{ post.content|autop }}
 			</div>
 		</div>

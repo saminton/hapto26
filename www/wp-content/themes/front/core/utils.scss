@@ -104,7 +104,12 @@
 	}
 }
 
-@mixin underline($width: 100%, $height: 2px, $offset: 1em, $color: currentColor) {
+@mixin underline(
+	$width: 100%,
+	$height: 1px,
+	$offset: calc(1em + 2px),
+	$color: currentColor
+) {
 	background-image: linear-gradient(90deg, $color, $color);
 	background-size: $width $height;
 	background-repeat: no-repeat;

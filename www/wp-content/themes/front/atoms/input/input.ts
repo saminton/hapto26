@@ -75,7 +75,6 @@ export function Input(args: Component) {
 	// Effects
 
 	defineExpose({
-		el: node,
 		value,
 		isFocused,
 		clear,

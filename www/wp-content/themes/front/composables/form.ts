@@ -1,6 +1,7 @@
 import { Ref, ref } from "@vue/reactivity";
 import { useEvents } from "./events";
 import { aria, getFormData, isValidField, isValidForm } from "utils";
+import { useEmitter } from "./emitter";
 
 export enum FormState {
 	DEFAULT,
@@ -23,7 +24,7 @@ export const useForm = (props: {
 	);
 
 	const state: Ref<FormState> = ref(FormState.DEFAULT);
-	const isValid = ref(false);
+	const isValid = ref(true);
 
 	// Hooks
 	onMounted(() => {
@@ -34,12 +35,11 @@ export const useForm = (props: {
 	});
 
 	const onChange = (el: HTMLFormElement) => {
-		isValid.value = isValidForm(props.el);
+		isValidField(el, true);
 	};
 
 	const onBlur = (el: HTMLFormElement) => {
 		isValidField(el, true);
-		isValid.value = isValidForm(props.el);
 	};
 
 	const onFocus = (el: HTMLFormElement) => {

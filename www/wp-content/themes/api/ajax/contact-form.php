@@ -75,7 +75,7 @@ vl_register_ajax("contact-form", function () {
 	// Email sent to host
 
 	$from = $fields["email"];
-	$to = get_field("details_email", vl_get_page_id_from_template("contact"));
+	$to = get_field("form_email", vl_get_page_id_from_template("contact"));
 	$subject = "Vous avez un nouveau message";
 	$headers = ["From: $blog_name <info@$server_name>"];
 	$body = vl_get_template_contents("emails/template", $fields);
@@ -127,5 +127,6 @@ vl_register_ajax("contact-form", function () {
 	];
 
 	remove_filter("wp_mail_content_type", "set_html_content_type");
-	wp_send_json_success($data);
+	wp_send_json_success($data); // Debug purposes only
+	// wp_send_json_success(['message' => 'Message envoyé']);
 });

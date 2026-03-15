@@ -5,7 +5,11 @@
 {# Template #}
 
 <div class="header">
-	{% for item in items %}
-		<a href="{{ item.url }}">{{ item.title }}</a>
-	{% endfor %}
+	<div class="top">
+		<div class="items">
+			{% for item in items %}
+				<a href="{{ item.url }}" class="item">{{ item.title }}</a>
+			{% endfor %}
+		</div>
+	</div>
 </div>

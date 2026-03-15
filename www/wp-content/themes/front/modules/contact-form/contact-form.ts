@@ -1,3 +1,4 @@
+import { ref } from "@vue/reactivity";
 import { FormState, useForm } from "composables/form";
 import { Component, useReactivity, useScope } from "core";
 import { ajax, aria, extend, getProps } from "utils";
@@ -22,15 +23,17 @@ export function ContactForm(args: Component) {
 	// Vars
 
 	const fieldsEl = child("fields") as HTMLFormElement;
-	const successEl = child("success");
-	const errorEl = child("error");
+	const messageEl = child("message");
 
 	const form = useForm({
 		el: fieldsEl,
 		onSubmit: (data) => request(data),
+		onSent: (response) => sent(response),
+		onError: (response) => error(response),
 	});
 
 	let nonce: string;
+	const message = ref("");
 
 	// Hooks
 
@@ -38,8 +41,8 @@ export function ContactForm(args: Component) {
 
 	onReady(async () => {
 		try {
-			const res = await ajax("nonce", { name: "contact_form" }, { format: "json" });
-			nonce = res;
+			const res = await ajax("nonce", { name: "contact_form" });
+			nonce = res.data;
 		} catch (error) {
 			console.error(error);
 		}
@@ -53,23 +56,40 @@ export function ContactForm(args: Component) {
 		// Add form type
 		data.append("type", node.id);
 		data.append("nonce", nonce);
+		let response: object = {};
 
 		try {
-			const res = await ajax("contact-form", data, {
+			response = await ajax("contact-form", data, {
 				format: "form",
 			});
 		} catch (error) {
-			console.error(error);
+			console.error("An error occured retreiving data");
 		}
 
-		return data;
+		return response;
+	};
+
+	const error = (response: any) => {
+		message.value = response.data.message;
+		console.warn(response);
+	};
+
+	const sent = (response: any) => {
+		message.value = response.data.message;
+		console.warn(response);
 	};
 
 	// Effects
 
 	effect(() => {
-		aria(fieldsEl, "hidden", form.state.value != FormState.DEFAULT);
-		if (errorEl) aria(errorEl, "hidden", form.state.value != FormState.ERROR);
-		if (successEl) aria(successEl, "hidden", form.state.value != FormState.SENT);
+		messageEl.inert = form.isValid.value && message.value == "";
 	});
+
+	effect(() => {
+		if (message.value != "") messageEl.textContent = message.value;
+	});
+
+	// effect(() => {
+	// 	fieldsEl.inert = form.state.value != FormState.DEFAULT;
+	// });
 }

@@ -6,20 +6,6 @@
 		v-scroll="main"
 		data-ancestor="{{ ancestor_id }}"
 		data-id="{{ id }}">
-		<div v-flux="default">
-			<h1 v-font="title_1" v-anim="title">
-				{{ post.title }}
-			</h1>
-
-			<a href="http://hapto26.localhost/politique-de-confidentialite/">Link</a>
-		</div>
-
-		<div v-flux="default">
-			{% include 'modules/contact-form' with {
-				margin: 'default'
-			} %}
-		</div>
-
-		{% include 'plugins/example' %}
+		<div v-flux="default"></div>
 	</main>
 {% endblock %}

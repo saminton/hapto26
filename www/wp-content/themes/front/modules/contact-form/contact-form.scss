@@ -17,21 +17,9 @@
 }
 
 .fields {
-	&[aria-hidden="true"] {
-		display: none;
-	}
-}
-
-.success {
-	&[aria-hidden="true"] {
-		display: none;
-	}
-}
-
-.error {
-	&[aria-hidden="true"] {
-		display: none;
-	}
+	// &[inert] {
+	// 	display: none;
+	// }
 }
 
 .fields {
@@ -46,5 +34,18 @@
 
 	& > * {
 		width: 100%;
+	}
+}
+
+.bottom {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	column-gap: 2.4rem;
+}
+
+.message {
+	&[inert] {
+		display: none;
 	}
 }

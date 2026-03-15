@@ -11,15 +11,10 @@
 				{{ post.title|strip }}
 			</h1>
 			<p v-font="body_1">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
-				temporibus ratione dolorem minima animi, unde cumque porro nulla numquam
-				accusantium tempore aliquam maiores nostrum veritatis sed odit mollitia
-				error molestiae!
+				{{ fields.cover.intro|strip }}
 			</p>
 		</div>
 
-		{% include 'modules/contact-form' with {
-			margin: 'default'
-		} %}
+		{% include 'modules/contact-form' with fields.form %}
 	</main>
 {% endblock %}

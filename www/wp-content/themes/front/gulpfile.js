@@ -42,7 +42,6 @@ const folders = [
 	"theme",
 	"utils",
 	"error",
-	"plugins",
 ];
 
 const output = {
@@ -152,7 +151,6 @@ export function styles(complete) {
 		"pages/**/**.scss",
 		"error/**/**.scss",
 		"layouts/**/**.scss",
-		"plugins/**/**.scss",
 	];
 
 	if (!is_build)

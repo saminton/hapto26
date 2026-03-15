@@ -3,7 +3,7 @@
 // import gsap from "gsap";
 // import CustomEase from "gsap/CustomEase";
 
-import { App, AppConstructor, ComponentConstructor } from "core";
+import { App, AppConstructor, ComponentConstructor, ServiceConstructor } from "core";
 import { Anim, Parallax, Scroll } from "services";
 import { Header } from "onces/header";
 import { Menu } from "onces/menu";
@@ -19,7 +19,6 @@ import { Loader } from "onces/loader";
 import { Test } from "blocks/test";
 import { Select } from "atoms/select";
 import { Media } from "atoms/media";
-import { Example } from "plugins/example";
 import { FileUpload } from "atoms/file-upload";
 import { ContactForm } from "modules/contact-form";
 // import { VideoYoutube } from "modules/video-youtube";
@@ -43,14 +42,12 @@ const components: ComponentConstructor[] = [
 	FileUpload,
 ];
 
-const services = [
+const services: ServiceConstructor[] = [
 	Scroll, //
 	Anim,
 	Parallax,
 ];
 
-const plugins = [
-	Example, //
-];
+const plugins: ComponentConstructor[] = [];
 
 (window as any).app = new (App as AppConstructor)(components, services, plugins);

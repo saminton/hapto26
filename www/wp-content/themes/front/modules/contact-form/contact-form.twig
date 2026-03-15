@@ -1,13 +1,14 @@
 {# Vars #}
 
 {% def class = '' %}
-{% set nonce = nonce('contact_form') %}
+{% def rgpd_text = '' %}
+{% def email = '' %}
 
 {# Template #}
 
 <section class="contact_form">
 	<div v-flux="default">
-		<form class="fields" nonce="{{ nonce }}">
+		<form class="fields">
 			<div class="row">
 				{% include 'atoms/input' with {
 					label: 'Entreprise',
@@ -56,26 +57,23 @@
 			<div class="row">
 				{% include 'atoms/checkbox' with {
 					name: 'gdpr',
-					label: 'Text RGPD a rédiger',
+					label: rgpd_text,
 					is_required: true
 				} %}
 			</div>
 			<input type="text" style="display: none;" name="birthdate" />
 
 			<div class="bottom">
+				<div>
+					<span class="message" v-font="body_3" inert>
+						{{ 'Veuillez remplir le champs manquants'|translate }}
+					</span>
+				</div>
 				{% include 'atoms/button' with {
 					title: 'submit',
 					type: 'submit'
 				} %}
 			</div>
 		</form>
-
-		<div class="success">
-			Envoyé
-		</div>
-
-		<div class="error">
-			Erreur
-		</div>
 	</div>
 </section>

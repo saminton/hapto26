@@ -72,7 +72,7 @@
 @mixin body-2($break: breakpoints.$laptop) {
 	// Default font
 	font-family: "Inter", sans-serif;
-	@include responsive.property(font-size, $break, 1.9rem, 1.9rem, 1.5rem);
+	@include responsive.property(font-size, $break, 1.8rem, 1.8rem, 1.5rem);
 	line-height: 1.38;
 	font-weight: 400;
 
@@ -83,7 +83,7 @@
 }
 
 @mixin body-3($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.8rem, 1.8rem, 1.4rem);
+	@include responsive.property(font-size, $break, 1.6rem, 1.6rem, 1.4rem);
 	line-height: 1.38;
 	font-weight: 400;
 
