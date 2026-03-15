@@ -5,7 +5,7 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Content analysis, Readability, Schema
 Tested up to: 6.9
-Stable tag: 26.9
+Stable tag: 27.1.1
 Requires PHP: 7.4
 
 Improve your SEO with real-time feedback, schema, and clear guidance. Upgrade for AI tools, Google Docs integration, and 24/7 support, no hidden fees.
@@ -303,47 +303,56 @@ Your question has most likely been answered on our help center: [yoast.com/help/
 
 == Changelog ==
 
-= 26.9 =
+= 27.1.1 =
 
-Release date: 2026-02-03
-
-Yoast SEO 26.9 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/releases).
-
-#### Other
-
-* Ensures no deprecated props are used for WordPress components `ToggleControl` and `TextControl` for How-to block.
-* Improves performance in large sites with lots of inbound links by adding appropriate database indices.
-* Improves the general security of the plugin via sanitization and escaping.
-* Replaces deprecated standard WordPress components with their modern variants.
-* WooCommerce introduced a [new logic for permalinks in version 10.5](https://developer.woocommerce.com/2026/01/13/product-permalink-changes-coming-in-woocommerce-10-5/). Since this update could result in mismatching Yoast SEO metadata (such as Schema.org data), this version of Yoast SEO temporarily restores the old behavior. Note that for users of Yoast WooCommerce SEO the new permanent link structure will apply.
-* Sets the minimum supported WordPress version to 6.8.
-* Updates the OAuth2 Client library for improved compatibility with PHP 8.5.
-
-= 26.8 =
-
-Release date: 2026-01-20
-
-Yoast SEO 26.8 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/releases).
-
-#### Enhancements
-
-* Adds a schema settings page to allow users more control over the Yoast Schema Framework API.
-* Implements a new, easy-to-use design for the site features settings.
+Release date: 2026-03-03
 
 #### Bugfixes
 
-* Fixes a bug where inserting Yoast blocks via Content blocks collapsible was not possible when editing in `template-locked` mode inside Block Editor.
-* Fixes a bug where the alert for signing up to the newsletter didn't support rtl direction for buttons and inputs in RTL languages.
-* Fixes a bug where the assessments highlighting feature did not work when editing in template-locked mode in the Block Editor.
-* Fixes a bug where the Search and Social appearance modals looked off on WordPress 7.0 or with Gutenberg 22.3.0.
-* Fixes a bug where WordPress link classes were not being recognized when Yoast SEO was active. Props to [benoitchantre](https://github.com/benoitchantre).
+* Fixes a bug where Schema aggregator endpoints were returning a fatal error when trying to access response pages other than the first one by using slash syntax.
+
+= 27.1 =
+
+Release date: 2026-03-03
+
+New: Introducing the Schema Aggregation feature. Futureproof your website for an agentic future. [Read the full release post here](https://yoa.st/55i).
+
+#### Enhancements
+
+* Introduces the Schema aggregation feature. Thanks to Syde for helping us with testing it!
+* Introduces a more robust HTML processing and highlighting approach for the *transition words* assessment.
+
+#### Bugfixes
+
+* Fixes a bug where sentences containing transition words failed to be highlighted in _transition words_ assessment when they contained elements excluded from the analysis such as `<code>`.
+* Fixes a bug where Slovak two-part transition words weren't recognized when running the readability analysis.
+
+= 27.0 =
+
+Release date: 2026-02-17
+
+Yoast SEO 27.0 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/releases).
+
+#### Enhancements
+
+* Introduces an `images` array attribute to FAQ and How-to blocks to allow for explicit image handling.
+* Integrates `html-react-parser` to improve HTML string handling within React components.
+* Migrates FAQ block question and answer fields from arrays to HTML strings to improve compatibility with WordPress components.
+* Migrates How-to block step name and text fields from arrays to HTML strings to improve compatibility with WordPress components.
+* Refines the design of the search appearance mode switcher.
+
+#### Bugfixes
+
+* Fixes a bug where the inline link icon was missing when editing a synced pattern in the Block Editor on WordPress 6.9.
+* Fixes a bug where the AI Optimize buttons remained active even when another button had been pressed.
+* Fixes a bug where the subheading distribution assessment threw an error when the content contained text without subheadings followed by a block that included a subheading (such as a Table of Contents block).
 
 #### Other
 
-* Adds an opt-in notification for the task list feature on the general page.
-* Improves the translatability of some tasks' title in the task list.
-* Replaces Yoast product logos with new designs across the plugin’s interface.
-* Updates the product URL inside the marker presenter for Yoast SEO and Yoast SEO Premium.
+* Updates the design of the `Generate 5 more` button and the preview background within the AI generator.
+* Modernizes plugin translation handling by removing obsolete `load_plugin_textdomain()` calls.
+* Restores the visibility of the suggestions title and the `Generate 5 more` button while suggestions are in the loading state.
+* Renames the Yoast SEO AI+ card on the plans page for better clarity.
 
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).
