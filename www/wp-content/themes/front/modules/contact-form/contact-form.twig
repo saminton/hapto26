@@ -61,14 +61,19 @@
 				} %}
 			</div>
 			<input type="text" style="display: none;" name="birthdate" />
-			{% include 'atoms/button' with {
-				title: 'submit',
-				type: 'submit'
-			} %}
+
+			<div class="bottom">
+				{% include 'atoms/button' with {
+					title: 'submit',
+					type: 'submit'
+				} %}
+			</div>
 		</form>
+
 		<div class="success">
 			Envoyé
 		</div>
+
 		<div class="error">
 			Erreur
 		</div>

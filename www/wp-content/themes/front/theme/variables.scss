@@ -1,17 +1,32 @@
 // Will generate css variables with matching names
 
 $colors: (
-	black: #202020,
-	body: #0f0,
-	text: #202020,
+	black: #000,
+	body: #000,
+	text: #fff,
 	white: #fff,
 	success: #0f0,
-	error: #f00,
-	light_grey: #bbb,
-	grey: #888,
-	dark_grey: #333,
+	error: #e63b3b,
+	grey500: #8c8c8c,
+	grey600: #5c5c5c,
+	grey700: #444444,
+	grey800: #2b2a2a,
+	grey900: #161616,
 	selection: #9db8f7,
 );
+
+// $colors_dark_mode: (
+// 	black: #202020,
+// 	body: #0f0,
+// 	text: #202020,
+// 	white: #fff,
+// 	success: #0f0,
+// 	error: #f00,
+// 	light_grey: #bbb,
+// 	grey: #888,
+// 	dark_grey: #333,
+// 	selection: #9db8f7,
+// );
 
 $gutters: (
 	gutter: 2rem,
@@ -37,7 +52,7 @@ $spacings: (
 );
 
 $fluxs: (
-	flux_default: 120rem,
+	flux_default: 88.8rem,
 	flux_small: 120rem,
 	flux_medium: 120rem,
 	flux_max: 120rem,

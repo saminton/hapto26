@@ -7,7 +7,9 @@
 @mixin input-label {
 	display: flex;
 	margin-bottom: 0.6rem;
-	@include typography.label-1;
+	@include typography.body-2;
+	font-weight: 600;
+	display: none;
 }
 
 @mixin input-field($type: select) {
@@ -25,11 +27,14 @@
 		height: var(--input_height);
 
 		border: var(--input_border_width) solid;
-		border-radius: 4px;
+		border-radius: 6px;
 
 		color: rgb(var(--input_color));
 		background: rgba(var(--input_background));
 		border-color: rgb(var(--input_border));
+
+		@include typography.body-2;
+		font-weight: 600;
 
 		@media (max-width: breakpoints.$phone) {
 			font-size: 1.8rem;
@@ -68,9 +73,8 @@
 		outline: none;
 	}
 
-	.area[aria-invalid="true"] {
-		outline: var(--focus);
-		outline-color: rgb(var(--error));
+	.field:has(input[aria-invalid="true"]) {
+		border-color: rgb(var(--error));
 	}
 
 	&[focused] .field {

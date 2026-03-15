@@ -1,0 +1,25 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="contact"
+		v-barba="container"
+		v-barba-namespace="contact"
+		v-scroll="main"
+		data-ancestor=""
+		data-id="">
+		<div v-flux="default" class="cover">
+			<h1 v-font="title_1" class="title">
+				{{ post.title|strip }}
+			</h1>
+			<p v-font="body_1">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+				temporibus ratione dolorem minima animi, unde cumque porro nulla numquam
+				accusantium tempore aliquam maiores nostrum veritatis sed odit mollitia
+				error molestiae!
+			</p>
+		</div>
+
+		{% include 'modules/contact-form' with {
+			margin: 'default'
+		} %}
+	</main>
+{% endblock %}

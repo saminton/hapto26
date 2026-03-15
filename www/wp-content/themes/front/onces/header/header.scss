@@ -15,8 +15,10 @@
 
 .header {
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 100;
+	left: 2.4rem;
+	top: 7rem;
+	background: rgb(var(--black));
+	bottom: 2.4rem;
+	width: calc(34.4rem - 1px);
+	z-index: 10;
 }

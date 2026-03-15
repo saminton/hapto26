@@ -14,13 +14,3 @@
 // 700 bold
 // 800 extra-bold
 // 900 black
-
-// Examples
-
-$dir: "../assets/fonts/";
-$karla: $dir + "karla/karla";
-
-// Karla
-
-@include utils.font-face("Karla", $karla + "-regular", 400, normal);
-@include utils.font-face("Karla", $karla + "-italic", 400, italic);

@@ -86,38 +86,6 @@ body {
 	color: rgb(var(--text));
 }
 
-/* Yell */
-
-[v-font*="yell_1"] {
-	@if meta.mixin-exists(yell-1) {
-		@include typography.yell-1(null);
-	}
-}
-
-[v-font*="yell_2"] {
-	@if meta.mixin-exists(yell-2) {
-		@include yell-2(null);
-	}
-}
-
-[v-font*="yell_3"] {
-	@if meta.mixin-exists(yell-3) {
-		@include yell-3(null);
-	}
-}
-
-[v-font*="yell_4"] {
-	@if meta.mixin-exists(yell-4) {
-		@include yell-4(null);
-	}
-}
-
-[v-font*="yell_5"] {
-	@if meta.mixin-exists(yell-5) {
-		@include yell-5(null);
-	}
-}
-
 /* Titles */
 
 [v-font*="title_1"] {
@@ -136,32 +104,14 @@ body {
 	@include typography.title-4(null);
 }
 
-// [v-font*="title_5"] {
-// 		@include typography.title-5(null);
-// }
-
 /* Labels */
 
 [v-font*="label_1"] {
 	@include typography.label-1(null);
 }
 
-[v-font*="label_2"] {
-	@include typography.label-2(null);
-}
-
-[v-font*="label_3"] {
-	@if meta.mixin-exists(label-3) {
-		@include typography.label-3(null);
-	}
-}
-
-[v-font*="label_4"] {
-	@include typography.label-4(null);
-}
-
-// [v-font*="label_5"] {
-// 	@include typography.label-5(null);
+// [v-font*="label_2"] {
+// 	@include typography.label-2(null);
 // }
 
 /* Body */
@@ -182,16 +132,8 @@ body {
 	@include typography.body-4(null);
 }
 
-[v-font*="body_5"] {
-	@include typography.body-5(null);
-}
-
-[v-font*="body_6"] {
-	@include typography.body-6(null);
-}
-
-// [v-font*="body_7"] {
-// 	@include body-7(null);
+// [v-font*="body_5"] {
+// 	@include body-5(null);
 // }
 
 /* Fluxs */

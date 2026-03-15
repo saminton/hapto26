@@ -33,3 +33,18 @@
 		display: none;
 	}
 }
+
+.fields {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.6rem;
+}
+
+.row {
+	display: flex;
+	column-gap: 1.6rem;
+
+	& > * {
+		width: 100%;
+	}
+}

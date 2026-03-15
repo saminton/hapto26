@@ -12,18 +12,8 @@
 
 	<body>
 		{% include 'onces/admin-widget' only %}
-
 		{% include 'onces/loader' only %}
-
-		{# {% include 'onces/overlay' only %} #}
-
 		{% include 'onces/header' with menu only %}
-
-		{# {% include 'onces/menu' with menu %} #}
-
-		{# {% include 'onces/cookie-options' with cookie_options only %} #}
-
-		{# {% include 'onces/cookie-banner' with cookie_banner only %} #}
 
 		{% include 'atoms/scrollbar' with {
 			is_main: true
@@ -34,6 +24,8 @@
 				{# Page content #}
 			{% endblock %}
 		</div>
+
+		<div class="frame"></div>
 	</body>
 
 	{% include 'core/foot' with foot|merge({

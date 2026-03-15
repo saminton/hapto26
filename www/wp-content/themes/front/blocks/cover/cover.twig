@@ -9,7 +9,9 @@
 <section class="cover"
 	{{ attr('v-margin', margin) }}
 	{{ attr('v-padding', padding) }}>
-	<h1 v-font="title_1">
-		{{ title|strip }}
-	</h1>
+	<div v-flux="default">
+		<h1 v-font="title_1">
+			{{ title|strip }}
+		</h1>
+	</div>
 </section>

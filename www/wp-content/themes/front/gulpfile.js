@@ -151,6 +151,7 @@ export function styles(complete) {
 		"onces/**/**.scss",
 		"pages/**/**.scss",
 		"error/**/**.scss",
+		"layouts/**/**.scss",
 		"plugins/**/**.scss",
 	];
 

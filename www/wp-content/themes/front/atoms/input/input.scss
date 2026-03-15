@@ -15,13 +15,13 @@
 
 :root {
 	--input_height: 4.8rem;
-	--input_padding: 2rem;
+	--input_padding: 1.6rem;
 	--input_color: var(--text);
-	--input_background: var(--white);
-	--input_border: var(--text);
-	--input_border_width: 2px;
+	--input_background: var(--black);
+	--input_border: var(--grey700);
+	--input_border_width: 1px;
 	--input_hover_color: var(--text);
-	--input_hover_background: var(--white);
+	--input_hover_background: var(--black);
 	--input_hover_border: var(--text);
 }
 

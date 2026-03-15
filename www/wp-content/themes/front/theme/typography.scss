@@ -22,38 +22,30 @@
 * style, weight, size/line-height, font, fallback
 */
 
-// Yell
-
-@mixin yell-1($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 12rem, 8rem, 5rem);
-	line-height: 1.1;
-	font-weight: 400;
-}
-
 // Titles
 
 @mixin title-1($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 12rem, 8rem, 5rem);
-	line-height: 1.1;
-	font-weight: 400;
+	@include responsive.property(font-size, $break, 7.4rem, 7.4rem, 4rem);
+	line-height: 1.11;
+	font-weight: 500;
 }
 
 @mixin title-2($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 8rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
+	@include responsive.property(font-size, $break, 4.6rem, 4.6rem, 2.5rem);
+	line-height: 1.21;
+	font-weight: 500;
 }
 
 @mixin title-3($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 6rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
+	@include responsive.property(font-size, $break, 3.2rem, 3.2rem, 2.2rem);
+	line-height: 1.25;
+	font-weight: 500;
 }
 
 @mixin title-4($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 4rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
+	@include responsive.property(font-size, $break, 2.4rem, 2.4rem, 1.6rem);
+	line-height: 1.33;
+	font-weight: 500;
 }
 
 // Labels
@@ -61,63 +53,53 @@
 @mixin label-1($break: breakpoints.$laptop) {
 	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
 	line-height: 1.1;
-	font-weight: 400;
-}
-
-@mixin label-2($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
-}
-
-@mixin label-3($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
-}
-
-@mixin label-4($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
+	font-weight: 600;
 }
 
 // Body
 
 @mixin body-1($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
+	@include responsive.property(font-size, $break, 2rem, 2rem, 1.4rem);
+	line-height: 1.5;
 	font-weight: 400;
+
+	strong,
+	b {
+		font-weight: 500;
+	}
 }
 
 @mixin body-2($break: breakpoints.$laptop) {
 	// Default font
-	font-family: "Arial", sans-serif;
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
+	font-family: "Inter", sans-serif;
+	@include responsive.property(font-size, $break, 1.9rem, 1.9rem, 1.5rem);
+	line-height: 1.38;
 	font-weight: 400;
+
+	strong,
+	b {
+		font-weight: 500;
+	}
 }
 
 @mixin body-3($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
+	@include responsive.property(font-size, $break, 1.8rem, 1.8rem, 1.4rem);
+	line-height: 1.38;
 	font-weight: 400;
+
+	strong,
+	b {
+		font-weight: 500;
+	}
 }
 
 @mixin body-4($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
+	@include responsive.property(font-size, $break, 1.4rem, 1.4rem, 1.2rem);
+	line-height: 1.28;
 	font-weight: 400;
-}
 
-@mixin body-5($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
-}
-
-@mixin body-6($break: breakpoints.$laptop) {
-	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
-	line-height: 1.1;
-	font-weight: 400;
+	strong,
+	b {
+		font-weight: 500;
+	}
 }
