@@ -1,10 +1,6 @@
 *.ts
 *.scss
 
-node_modules/
-src/
-
-package.json
 package-lock.json
 .npmrc
 .nvmrc
@@ -16,6 +12,4 @@ composer.json
 composer.lock
 tsconfig.json
 
-.git/
-.github/
 .deployignore
