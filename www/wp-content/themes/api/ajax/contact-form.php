@@ -127,6 +127,6 @@ vl_register_ajax("contact-form", function () {
 	];
 
 	remove_filter("wp_mail_content_type", "set_html_content_type");
-	wp_send_json_success($data); // Debug purposes only
-	// wp_send_json_success(['message' => 'Message envoyé']);
+	// wp_send_json_success($data); // Debug purposes only
+	wp_send_json_success(["message" => "Message envoyé"]);
 });
