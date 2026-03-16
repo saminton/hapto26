@@ -29,6 +29,7 @@ main {
 	position: absolute;
 	inset: 0;
 	background: rgba(var(--white));
+	pointer-events: none;
 
 	clip-path: polygon(
 		0% 0%,

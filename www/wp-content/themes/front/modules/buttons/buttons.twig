@@ -1,0 +1,18 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def primary = [] %}
+{% def secondary = [] %}
+
+{# Template #}
+
+<div class="buttons {{ class }}">
+	{% if secondary %}
+		{% include 'atoms/button' with secondary|merge({
+			variant: 'outline'
+		}) %}
+	{% endif %}
+	{% if primary %}
+		{% include 'atoms/button' with primary %}
+	{% endif %}
+</div>

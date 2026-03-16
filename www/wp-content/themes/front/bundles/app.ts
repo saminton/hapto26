@@ -21,6 +21,7 @@ import { Select } from "atoms/select";
 import { Media } from "atoms/media";
 import { FileUpload } from "atoms/file-upload";
 import { ContactForm } from "modules/contact-form";
+import { Logos } from "blocks/logos";
 // import { VideoYoutube } from "modules/video-youtube";
 
 const components: ComponentConstructor[] = [
@@ -32,14 +33,13 @@ const components: ComponentConstructor[] = [
 	Textarea,
 	ContactForm,
 	Header,
-	CookieBanner,
-	CookieOptions,
+	// CookieBanner,
+	// CookieOptions,
 	Loader,
 	Scrollbar,
 	Menu,
 	Select,
-	Test,
-	FileUpload,
+	Logos,
 ];
 
 const services: ServiceConstructor[] = [

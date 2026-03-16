@@ -23,7 +23,7 @@
 	--button_border: var(--white);
 	--button_hover_color: var(--white);
 	--button_hover_background: var(--black);
-	--button_hover_border: var(--black);
+	--button_hover_border: var(--white);
 }
 
 // Styles
@@ -51,12 +51,15 @@
 	}
 
 	&[variant="outline"] {
+		background: transparent;
+		--button_color: var(--white);
+		--button_border: var(--grey700);
 	}
 
 	&:hover {
 		color: rgb(var(--button_hover_color));
 		background: rgba(var(--button_hover_background));
-		// border-color: rgb(vars(--button_hover_border, --dark_grey));
+		border-color: rgb(var(--button_hover_border));
 	}
 
 	&:disabled {

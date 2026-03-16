@@ -1,0 +1,89 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.cards {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.title {
+}
+
+.subtitle {
+	margin-top: var(--spacing_medium);
+	margin-bottom: var(--spacing_medium);
+}
+
+.caption {
+	margin-bottom: 2.4rem;
+}
+
+.items {
+	columns: 2;
+	column-gap: 2.4rem;
+	margin-bottom: -2.4rem;
+}
+
+.complex,
+.simple {
+	position: relative;
+	padding: 4rem;
+	border-radius: 8px;
+	margin-bottom: 2.4rem;
+}
+
+.complex {
+	background: rgb(var(--white));
+	color: rgb(var(--black));
+}
+
+.simple {
+	border: 2px solid rgb(var(--grey600));
+}
+
+.tags {
+	display: flex;
+	gap: 0.4rem;
+	margin-bottom: 0.8rem;
+}
+
+.tag {
+	display: inline-flex;
+	height: 3rem;
+	background: rgb(var(--grey100));
+	color: rgba(var(--grey600));
+	padding: 0.4rem 1.2rem;
+	border-radius: 1.5rem;
+}
+
+.card_title {
+	display: flex;
+}
+
+.card_text {
+	display: flex;
+	margin-top: 4rem;
+	color: rgb(var(--grey600));
+}
+
+.info {
+	position: absolute;
+	top: 1.2rem;
+	right: 1.2rem;
+
+	&:hover {
+		--icon_fill: var(--white);
+	}
+}

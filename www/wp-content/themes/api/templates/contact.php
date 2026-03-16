@@ -13,7 +13,7 @@ function vl_get_data_contact($id) {
 			"content"
 		],
 		"fields" => [
-			"cover", //
+			"hero", //
 			"form"
 		]
 	]);

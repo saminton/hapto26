@@ -4,8 +4,8 @@
     "fields": [
         {
             "key": "field_69b6e80e0efb6",
-            "label": "Cover",
-            "name": "cover",
+            "label": "Hero",
+            "name": "hero",
             "aria-label": "",
             "type": "group",
             "instructions": "",
@@ -122,5 +122,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1773594777
+    "modified": 1773668164
 }

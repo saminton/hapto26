@@ -1,0 +1,49 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def title = '' %}
+{% def subtitle = '' %}
+{% def link = '' %}
+{% def caption = '' %}
+{% def items = [] %}
+
+{# Template #}
+
+<div class="cards">
+	<div v-flux="default" class="flux">
+		<h2 class="title" v-font="title_1">
+			{{ title|strip }}
+		</h2>
+		<h3 class="subtitle" v-font="title_3">
+			{{ subtitle|strip }}
+		</h3>
+
+		<span class="caption">{{ caption|strip }}</span>
+		<div class="items">
+			{% for item in items %}
+				{% if item.style == 'complex' %}
+					<div class="complex">
+						<div class="tags">
+							{% for tag in item.tags %}
+								<span class="tag">{{ tag.text|strip }}</span>
+							{% endfor %}
+						</div>
+						<span v-font="title_2">{{ item.title|strip }}</span>
+						<p class="card_text" v-font="body_1">
+							{{ item.text|strip }}
+						</p>
+					</div>
+				{% else %}
+					<div class="simple">
+						<span v-font="title_3">{{ item.title|strip }}</span>
+						<div class="info">
+							{% include 'atoms/icon' with {
+								icon: 'icons/info'
+							} %}
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>

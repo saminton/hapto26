@@ -15,7 +15,7 @@
 
 :root {
 	--icon_size: 2.4rem;
-	--icon_fill: var(--black);
+	--icon_fill: var(--grey600);
 }
 
 // Styles
@@ -32,14 +32,17 @@
 
 	// Preset
 
-	[v-preset="black"] {
-		--icon_fill: var(--black);
-		--icon_stroke: var(--black);
+	&[v-background] {
+		border-radius: 2px;
+		@include rect(3.2rem);
+	}
+
+	&[v-background="grey800"] {
+		background: rgb(var(--grey800));
 	}
 
 	svg {
-		width: var(--icon_size);
-		height: var(--icon_size);
-		// inset: 0;
+		@include rect(var(--icon_size));
+		// inset: 0;;
 	}
 }

@@ -7,8 +7,10 @@ $data = wp_parse_args($args, $defaults);
 // Data
 
 $fields = [
-	"Prénom" => $data["firstname"],
+	"Entreprise" => $data["company"],
 	"Nom de famille" => $data["lastname"],
+	"Prénom" => $data["firstname"],
+	"Tél" => $data["phone"],
 	"Email" => $data["email"],
 	"Message" => $data["message"]
 ];

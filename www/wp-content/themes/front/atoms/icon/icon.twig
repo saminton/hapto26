@@ -2,10 +2,13 @@
 
 {% def class = '' %}
 {% def icon = 'social/twitter' %}
-{% def preset = false %}
+{% def background = null %}
+{% def fill = null %}
 
 {# Template #}
 
-<div class="icon {{ class }}" {{ style(style) }} {{ attr('v-preset', preset) }}>
+<div class="icon {{ class }}"
+	{{ attr('v-background', background) }}
+	{{ attr('v-fill', fill) }}>
 	{{ svg('assets/svgs/' ~ icon ~ '.svg') }}
 </div>

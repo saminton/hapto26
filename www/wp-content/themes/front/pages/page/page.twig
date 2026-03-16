@@ -6,13 +6,14 @@
 		v-scroll="main"
 		data-ancestor="{{ ancestor_id }}"
 		data-id="{{ id }}">
-		<div v-flux="default">
-			<h1 v-font="title_1" v-anim="title">
-				{{ post.title }}
-			</h1>
-			<div v-font="format">
-				{{ post.content|autop }}
-			</div>
-		</div>
+		{% include 'blocks/hero' with fields.hero|merge({
+			post: post
+		}) %}
+
+		{% for item in fields.flexible_content %}
+			{% include 'blocks/' ~ item.component with item %}
+		{% endfor %}
+
+		{% include 'blocks/footer' %}
 	</main>
 {% endblock %}

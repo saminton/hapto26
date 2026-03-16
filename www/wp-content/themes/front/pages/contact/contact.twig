@@ -11,10 +11,12 @@
 				{{ post.title|strip }}
 			</h1>
 			<p v-font="body_1">
-				{{ fields.cover.intro|strip }}
+				{{ fields.hero.intro|strip }}
 			</p>
 		</div>
 
-		{% include 'modules/contact-form' with fields.form %}
+		<div v-flux="default">
+			{% include 'modules/contact-form' with fields.form %}
+		</div>
 	</main>
 {% endblock %}

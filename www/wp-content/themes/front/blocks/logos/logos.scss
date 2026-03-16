@@ -1,0 +1,35 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.logos {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
+
+.flux {
+	display: flex;
+	justify-content: center;
+}
+
+.items {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 5.6rem;
+}
+
+.item {
+	height: 4rem;
+	min-width: fit-content;
+}

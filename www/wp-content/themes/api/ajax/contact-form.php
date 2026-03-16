@@ -5,6 +5,7 @@ vl_register_ajax("contact-form", function () {
 		!isset($_POST["nonce"]) ||
 		!wp_verify_nonce($_POST["nonce"], "contact_form_nonce")
 	) {
+		error_log("Message not sent: invalid nonce");
 		wp_send_json_error([
 			"nonce" => $_POST["nonce"],
 			"message" => "Invalid request"
@@ -22,8 +23,10 @@ vl_register_ajax("contact-form", function () {
 
 	// Form fields
 	$fields = [
-		"firstname" => sanitize_text_field($_POST["firstname"] ?? ""),
+		"company" => sanitize_text_field($_POST["company"] ?? ""),
 		"lastname" => sanitize_text_field($_POST["lastname"] ?? ""),
+		"firstname" => sanitize_text_field($_POST["firstname"] ?? ""),
+		"phone" => sanitize_text_field($_POST["phone"] ?? ""),
 		"email" => sanitize_email($_POST["email"] ?? ""),
 		"message" => sanitize_textarea_field($_POST["message"] ?? ""),
 		"birthdate" => sanitize_text_field($_POST["birthdate"] ?? "") // Honeypot spam check (fake field)
@@ -38,6 +41,7 @@ vl_register_ajax("contact-form", function () {
 	// Valid email
 	if (strlen($fields["message"]) > 5000) {
 		$data["message"] = "Message trop long";
+		error_log("Message not sent: too long");
 		wp_send_json_error($data);
 	}
 
@@ -99,6 +103,8 @@ vl_register_ajax("contact-form", function () {
 		wp_send_json_error($data);
 	}
 
+	error_log("Message sent from $from to $to");
+
 	// Email sent to client
 
 	$from = "noreply@$server_name";
@@ -106,6 +112,13 @@ vl_register_ajax("contact-form", function () {
 	$subject = "Votre message";
 	$headers = ["From: $blog_name <" . $from . ">"];
 	$body = vl_get_template_contents("emails/template", $fields);
+
+	$data["client"] = [
+		"from" => $from,
+		"to" => $to,
+		"subject" => $subject,
+		"body" => $body
+	];
 
 	$sent = wp_mail(
 		$to, //
@@ -119,14 +132,10 @@ vl_register_ajax("contact-form", function () {
 		wp_send_json_error($data);
 	}
 
-	$data["client"] = [
-		"from" => $from,
-		"to" => $to,
-		"subject" => $subject,
-		"body" => $body
-	];
+	error_log("Message sent from $from to $to");
 
 	remove_filter("wp_mail_content_type", "set_html_content_type");
-	// wp_send_json_success($data); // Debug purposes only
-	wp_send_json_success(["message" => "Message envoyé"]);
+	$data["message"] = "Message envoyé";
+	wp_send_json_success($data); // Debug purposes only
+	// wp_send_json_success(["message" => "Message envoyé"]);
 });

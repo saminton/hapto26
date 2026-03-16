@@ -17,7 +17,8 @@ function vl_get_data_page($id) {
 			"content"
 		],
 		"fields" => [
-			"image" //
+			"hero", //
+			"flexible_content"
 		]
 	]);
 

@@ -1,0 +1,18 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def images = [] %}
+
+{# Template #}
+
+<div class="logos">
+	<div v-flux="default" class="flux">
+		<div class="items">
+			{% for item in images %}
+				{% include 'atoms/image' with item|merge({
+					class: 'item'
+				}) %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
