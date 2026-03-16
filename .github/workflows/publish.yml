@@ -75,6 +75,45 @@ jobs:
             fi
           done
 
+      - name: Prepare prod
+        run: |
+          set -e
+      
+          SRC_ROOT=www
+          DEST_ROOT=/tmp/prod
+      
+          rm -rf $DEST_ROOT
+          mkdir -p $DEST_ROOT
+      
+          echo "Copying full www directory"
+          rsync -a "$SRC_ROOT/" "$DEST_ROOT/"
+      
+          THEMES_DIR="$DEST_ROOT/wp-content/themes"
+      
+          if [ -d "$THEMES_DIR" ]; then
+            for THEME in "$THEMES_DIR"/*; do
+              [ -d "$THEME" ] || continue
+      
+              THEME_NAME=$(basename "$THEME")
+              echo "Pruning theme: $THEME_NAME"
+      
+              if [ -f "$THEME/.deployignore" ]; then
+                TMP_THEME=/tmp/theme-clean
+      
+                rm -rf "$TMP_THEME"
+                mkdir -p "$TMP_THEME"
+      
+                rsync -a \
+                  --exclude-from="$THEME/.deployignore" \
+                  "$THEME/" \
+                  "$TMP_THEME/"
+      
+                rm -rf "$THEME"
+                mv "$TMP_THEME" "$THEME"
+              fi
+            done
+          fi
+
       - name: Publish plugins branch
         run: |
           cd /tmp/plugins
@@ -110,3 +149,15 @@ jobs:
           git commit -m "Update themes (prod)"
           git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push --force origin themes-prod
+
+      - name: Publish prod branch
+        run: |
+          cd /tmp/prod
+          git init
+          git checkout -b prod
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update prod"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push --force origin prod
