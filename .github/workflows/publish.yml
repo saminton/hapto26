@@ -11,8 +11,8 @@ on:
   push:
     branches:
       - master
-    paths:
-      - "www/wp-content/themes/front/build/**"
+    # paths:
+    #   - "www/wp-content/themes/front/build/**"
 
 jobs:
   publish-themes:
