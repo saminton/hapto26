@@ -87,17 +87,17 @@ vl_register_ajax("contact-form", function () {
 		"body" => $body
 	];
 
-	// $sent = wp_mail(
-	// 	$to, //
-	// 	$subject,
-	// 	$body,
-	// 	$headers
-	// );
+	$sent = wp_mail(
+		$to, //
+		$subject,
+		$body,
+		$headers
+	);
 
-	// if(!$sent) {
-	// 	$data["message"] = 'Une erreur est survenue lors de l’envoi du message.';
-	// 	wp_send_json_error($data);
-	// }
+	if (!$sent) {
+		$data["message"] = "Une erreur est survenue lors de l’envoi du message.";
+		wp_send_json_error($data);
+	}
 
 	// Email sent to client
 
@@ -107,17 +107,17 @@ vl_register_ajax("contact-form", function () {
 	$headers = ["From: $blog_name <" . $from . ">"];
 	$body = vl_get_template_contents("emails/template", $fields);
 
-	// $sent = wp_mail(
-	// 	$to, //
-	// 	$subject,
-	// 	$body,
-	// 	$headers
-	// );
+	$sent = wp_mail(
+		$to, //
+		$subject,
+		$body,
+		$headers
+	);
 
-	// if(!$sent) {
-	// 	$data["message"] = 'Une erreur est survenue lors de l’envoi du message.';
-	// 	wp_send_json_error($data);
-	// }
+	if (!$sent) {
+		$data["message"] = "Une erreur est survenue lors de l’envoi du message.";
+		wp_send_json_error($data);
+	}
 
 	$data["client"] = [
 		"from" => $from,
