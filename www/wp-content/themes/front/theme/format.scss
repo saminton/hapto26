@@ -2,12 +2,14 @@
 @use "typography";
 
 [v-font="format"] {
-	@include columns.row-gap(1em); // default spacing
-
 	// Titles
 
 	h1 {
 		@include typography.title-1(null);
+	}
+
+	h4 + * {
+		margin-top: 4rem;
 	}
 
 	* + h1 {
@@ -17,6 +19,10 @@
 		@include typography.title-2(null);
 	}
 
+	h4 + * {
+		margin-top: 4rem;
+	}
+
 	* + h2 {
 	}
 
@@ -24,11 +30,19 @@
 		@include typography.title-3(null);
 	}
 
+	h3 + * {
+		margin-top: 4rem;
+	}
+
 	* + h3 {
 	}
 
 	h4 {
 		@include typography.title-4(null);
+	}
+
+	h4 + * {
+		margin-top: 2.4rem;
 	}
 
 	* + h4 {
@@ -67,8 +81,9 @@
 
 	ul,
 	ol {
-		@include columns.row-gap(0.5em);
+		// @include columns.row-gap(0.5em);
 		counter-reset: list;
+		color: rgb(var(--grey300));
 	}
 
 	ul li,
@@ -102,9 +117,14 @@
 		}
 	}
 
+	p {
+		color: rgb(var(--grey500));
+		@include typography.body-1(null);
+	}
+
 	p + p,
 	p + ol,
 	p + ul {
-		margin-top: 1em;
+		margin-top: 1lh;
 	}
 }

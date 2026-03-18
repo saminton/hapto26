@@ -1,7 +1,8 @@
 import { Component, useReactivity, useScope } from "core";
 import { ref, reactive } from "@vue/reactivity";
-import { useEvents, useStore } from "composables";
+import { onRendered, useEvents, useStore } from "composables";
 import { getProps, extend } from "utils";
+import { useCarousel } from "composables/carousel";
 
 export interface TestimonialsComponent extends Component {
 	el: HTMLElement;
@@ -23,13 +24,40 @@ export function Testimonials(args: Component) {
 
 	// Vars
 
+	const itemsEl = child("items") as HTMLElement;
+	const previousEl = child("previous") as HTMLButtonElement;
+	const nextEl = child("next") as HTMLButtonElement;
+	const gaugeEl = child("gauge") as SVGCircleElement;
+
+	const { index, next } = useCarousel({
+		el: itemsEl,
+		canLoop: true,
+		nextEls: [nextEl],
+		previousEls: [previousEl],
+	});
+
+	let timer = 0;
+	let interval = 6;
+
 	// Hooks
 
 	onMounted(() => {});
 
 	onUnmounted(() => {});
 
+	onRendered(node, (tick) => {
+		timer += tick.deltaTime;
+		if (timer > interval) {
+			next();
+		}
+		gaugeEl.style.strokeDashoffset = String(100 - (timer / interval) * 100);
+	});
+
 	// Functions
+
+	watch(index, () => {
+		timer = 0;
+	});
 
 	// Effects
 }

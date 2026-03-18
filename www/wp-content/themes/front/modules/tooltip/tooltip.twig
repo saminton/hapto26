@@ -1,0 +1,24 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def items = [] %}
+
+{# Template #}
+
+<div class="tooltip">
+	<div class="lip">
+		{{ svg('assets/svgs/icons/tooltip-lip.svg') }}
+	</div>
+	<div class="container">
+		<ul class="items">
+			{% for item in items %}
+				<li>
+					{% include 'atoms/icon' with {
+						icon: 'icons/check-circle'
+					} %}
+					<span class="text" v-font="body_3">{{ item.text|strip }}</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>

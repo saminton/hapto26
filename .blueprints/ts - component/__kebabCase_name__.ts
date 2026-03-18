@@ -3,11 +3,11 @@ import { ref, reactive } from "@vue/reactivity";
 import { useEvents, useStore } from "composables";
 import { getProps, extend } from "utils";
 
-export export interface {pascalCase name}Component extends Component {
+export interface {{pascalCase name}}Component extends Component {
 	el: HTMLElement;
 };
 
-export function {{pascalCase name}: Component}(args) {
+export function {{pascalCase name}}(args: Component) {
 	// Extend
 
 	extend(Component, this, args);

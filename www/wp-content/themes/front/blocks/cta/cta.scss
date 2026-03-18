@@ -25,5 +25,9 @@
 
 .buttons {
 	margin-top: var(--spacing_medium);
-	align-self: flex-end;
+	align-items: flex-start;
+
+	@media (min-width: #{$phone + 1px}) {
+		align-self: flex-end;
+	}
 }

@@ -13,20 +13,30 @@
 @use "../theme/mixins.scss" as *;
 @use "../theme/typography.scss" as *;
 
-$top: 7rem;
-$bottom: 2.4rem;
-$left: 36.8rem;
-$right: 2.4rem;
+:root {
+	--frame_top: 7rem;
+	--frame_bottom: 2.4rem;
+	--frame_left: 36.8rem;
+	--frame_right: 2.4rem;
+
+	@media (max-width: $tablet) {
+		--frame_top: 0.8rem;
+		--frame_bottom: 4.4rem;
+		--frame_left: 0.8rem;
+		--frame_right: 0.8rem;
+	}
+}
 
 .layout {
 }
 
 main {
-	padding: $top $right $bottom $left;
+	padding: var(--frame_top) var(--frame_right) var(--frame_bottom) var(--frame_left);
 }
 
 .frame {
 	position: absolute;
+	z-index: 50;
 	inset: 0;
 	background: rgba(var(--white));
 	pointer-events: none;
@@ -34,12 +44,12 @@ main {
 	clip-path: polygon(
 		0% 0%,
 		0% 100%,
-		$left 100%,
-		$left $top,
-		calc(100% - $right) $top,
-		calc(100% - $right) calc(100% - $bottom),
-		$left calc(100% - $bottom),
-		$left 100%,
+		var(--frame_right) 100%,
+		var(--frame_right) var(--frame_top),
+		calc(100% - var(--frame_right)) var(--frame_top),
+		calc(100% - var(--frame_right)) calc(100% - var(--frame_bottom)),
+		var(--frame_right) calc(100% - var(--frame_bottom)),
+		var(--frame_right) 100%,
 		100% 100%,
 		100% 0%
 	);

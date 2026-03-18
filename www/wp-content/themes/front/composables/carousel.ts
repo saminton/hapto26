@@ -39,8 +39,8 @@ export function useCarousel(props: {
 	canDrag?: boolean | Ref<boolean>;
 	align?: string | Ref<string>;
 	snap?: boolean | Ref<boolean>;
-	previousEls?: HTMLElement | HTMLElement[] | NodeList;
-	nextEls?: HTMLElement | HTMLElement[] | NodeList;
+	previousEls?: HTMLButtonElement | HTMLButtonElement[] | NodeList;
+	nextEls?: HTMLButtonElement | HTMLButtonElement[] | NodeList;
 }) {
 	const { watch, effect } = useReactivity();
 

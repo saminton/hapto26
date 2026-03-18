@@ -1,8 +1,8 @@
 import { Component } from "core";
 import { toArray } from "../utils";
 
-type ElementOrComponent = HTMLElement | Window | Component;
-type ElementsOrComponent = HTMLElement | HTMLElement[] | NodeList | Window | Component;
+type ElementOrComponent = Element | Window | Component;
+type ElementsOrComponent = Element | Element[] | NodeList | Window | Component;
 
 type Events = {
 	create: (name: string) => void;

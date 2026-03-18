@@ -22,18 +22,38 @@
 }
 
 .subtitle {
-	margin-top: var(--spacing_medium);
-	margin-bottom: var(--spacing_medium);
+	margin-top: var(--spacing_small);
+	margin-bottom: var(--spacing_default);
 }
 
 .caption {
+	display: flex;
 	margin-bottom: 2.4rem;
+	width: 500rem;
+	color: rgb(var(--grey500));
 }
 
 .items {
-	columns: 2;
-	column-gap: 2.4rem;
-	margin-bottom: -2.4rem;
+	display: grid;
+	gap: 2.4rem;
+
+	@media (min-width: #{$phone + 1px}) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: $phone) {
+		gap: 0.8rem;
+	}
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+	gap: 2.4rem;
+
+	@media (max-width: $phone) {
+		gap: 0.8rem;
+	}
 }
 
 .complex,
@@ -41,7 +61,10 @@
 	position: relative;
 	padding: 4rem;
 	border-radius: 8px;
-	margin-bottom: 2.4rem;
+
+	@media (max-width: $phone) {
+		padding: 2.4rem;
+	}
 }
 
 .complex {

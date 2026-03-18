@@ -132,14 +132,18 @@ export function Scroll(args: Service) {
 		// position.value = smooth(target.value, position.value, smoothing.value, tick.delta);
 	});
 
-	onRendered(node, (tick) => {
-		if (!isSmoothed.value) return null;
-		childEls.value.forEach((el: HTMLElement) => {
-			if (el.classList.contains("scrollbar")) return;
-			// if (isMain && store.el != node) return;
-			node.scrollTo(0, position.value); // alternative render using native scroll
-			// el.style.transform = `translate3d(0, ${-position.value}px, 0)`; // using transforms
-		});
+	// onRendered(node, (tick) => {
+	// 	if (!isSmoothed.value) return null;
+
+	// 	childEls.value.forEach((el: HTMLElement) => {
+	// 		if (el.classList.contains("scrollbar")) return;
+	// 		if (isMain && store.el != node) return;
+	// 		el.style.transform = `translate3d(0, ${-position.value}px, 0)`; // using transforms
+	// 	});
+	// });
+
+	watch(position, () => {
+		node.scrollTo({ top: position.value, behavior: "instant" });
 	});
 
 	onBeforeResize(() => setLimits());
@@ -235,7 +239,10 @@ export function Scroll(args: Service) {
 		node.style.left = "0";
 		node.style.right = "0";
 		node.style.bottom = "0";
-		node.style.backfaceVisibility = "hidden";
+		// node.style.backfaceVisibility = "hidden";
+		// node.style.willChange = "scroll-position";
+		// node.style.transform = "translateZ(0)";
+		// node.style.overscrollBehavior = "none";
 	};
 
 	const containerSetup = () => {
@@ -317,7 +324,6 @@ export function Scroll(args: Service) {
 
 		target.value = y;
 		if (!smooth) position.value = y;
-		if (!isSmoothed.value) node.scrollTo(0, y);
 	};
 
 	// Effects

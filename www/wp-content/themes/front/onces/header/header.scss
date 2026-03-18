@@ -20,7 +20,12 @@
 	background: rgb(var(--black));
 	bottom: 2.4rem;
 	width: calc(34.4rem - 1px);
-	z-index: 10;
+	z-index: 60;
+	border-right: 1px solid rgb(var(--white));
+
+	@media (max-width: $tablet) {
+		display: none;
+	}
 }
 
 .top {

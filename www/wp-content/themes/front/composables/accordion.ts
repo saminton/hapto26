@@ -97,8 +97,9 @@ export const useAccordion = (props: {
 			else el.removeAttribute("tabindex");
 		});
 
-		aria(summaryEl, "expanded", isOpen.value);
-		aria(contentEl, "hidden", !isOpen.value);
+		aria(summaryEl, "selected", isOpen.value);
+		aria(props.el, "expanded", isOpen.value);
+		contentEl.inert = !isOpen.value;
 	});
 
 	return {

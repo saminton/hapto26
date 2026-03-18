@@ -7,35 +7,35 @@ export const useScope = (target: Component) => {
 	const mutator = useMutator();
 
 	// Implementation
-	function child(query: string): HTMLElement | null {
-		const el = target.el.querySelector(`.${query}-${target.uid}`) as HTMLElement;
+	function child(query: string): Element | null {
+		const el = target.el.querySelector(`.${query}-${target.uid}`) as Element;
 		return el;
 	}
 
 	// Definitions
 	// Implementation
-	function childOf(parent: HTMLElement, query: string): HTMLElement | any {
-		const el = parent.querySelector(`.${query}-${target.uid}`) as HTMLElement;
+	function childOf(parent: Element, query: string): Element | null {
+		const el = parent.querySelector(`.${query}-${target.uid}`) as Element;
 		return el;
 	}
 
 	// Implementation
-	function children(query: string, component?: boolean): HTMLElement[] | any[] {
+	function children(query: string, component?: boolean): Element[] | any[] {
 		const els = Array.from(
 			target.el.querySelectorAll(`.${query}-${target.uid}`),
-		) as HTMLElement[];
+		) as Element[];
 		return els;
 	}
 
 	// Implementation
 	function childrenOf(
-		parent: HTMLElement,
+		parent: Element,
 		query: string,
 		component?: boolean,
-	): HTMLElement[] | any[] {
+	): Element[] | any[] {
 		const els = Array.from(
 			parent.querySelectorAll(`.${query}-${target.uid}`),
-		) as HTMLElement[];
+		) as Element[];
 		return els;
 	}
 
@@ -61,7 +61,7 @@ export const useScope = (target: Component) => {
 		);
 	}
 
-	function createEl(tag: string, className: string, appendTo: HTMLElement) {
+	function createEl(tag: string, className: string, appendTo: Element) {
 		const el = document.createElement(tag);
 		el.classList.add(`.${target.name}-${className}-${target.uid}`);
 		if (appendTo) appendTo.appendChild(el);

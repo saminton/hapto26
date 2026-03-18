@@ -13,9 +13,14 @@
 @use "../../theme/mixins.scss" as *;
 @use "../../theme/typography.scss" as *;
 
-.accordions {
+.text_image {
 	padding-top: var(--spacing_default);
 	padding-bottom: var(--spacing_default);
+}
+
+.flux {
+	display: flex;
+	flex-direction: column;
 }
 
 .top {
@@ -50,17 +55,19 @@
 	}
 }
 
-.items {
-	display: flex;
-	flex-direction: column;
-	gap: 8rem;
+.subtitle {
+	margin-bottom: var(--spacing_default);
 }
 
-.item:not(:first-child) {
-	padding-top: 4rem;
-	border-top: 1px solid rgb(var(--grey800));
-}
+.columns {
+	@media (min-width: #{$phone + 1px}) {
+		@include columns(1 1);
+		align-items: center;
+	}
 
-.item:not(:last-child) {
-	padding-bottom: 4rem;
+	@media (max-width: $phone) {
+		display: flex;
+		flex-direction: column;
+		gap: 2.4rem;
+	}
 }

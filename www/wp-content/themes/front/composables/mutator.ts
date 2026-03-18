@@ -6,14 +6,14 @@ import { Component, ComponentConstructor, Service, ServiceConstructor } from "co
 
 type Mutator = {
 	init: (args: {
-		el: HTMLElement;
+		el: Element;
 		components: ComponentConstructor[];
 		services: ServiceConstructor[];
 		plugins: ComponentConstructor[];
 	}) => void;
-	findComponent: (el: HTMLElement) => Component | null;
-	findService: (name: string, el: HTMLElement) => Service | null;
-	findServices: (name: string, els: HTMLElement[] | NodeList) => Service[];
+	findComponent: (el: Element) => Component | null;
+	findService: (name: string, el: Element) => Service | null;
+	findServices: (name: string, els: Element[] | NodeList) => Service[];
 	components: Component[];
 	services: Service[];
 	plugins: Component[];

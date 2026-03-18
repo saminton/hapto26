@@ -1,11 +1,52 @@
 {# Vars #}
 
 {% def class = '' %}
+{% def items = [] %}
 
 {# Template #}
 
 <div class="testimonials">
-	<pre>
-		{{ dump('testimonials') }}
-	</pre>
+	{% if (items|length) > 1 %}
+		<div v-flux="default">
+			<nav class="nav">
+				<button class="previous" aria-label="{{ 'précédent'|translate }}">
+					{% include 'atoms/icon' with {
+						icon: 'icons/arrow-left'
+					} %}
+				</button>
+				<button class="next" aria-label="{{ 'suivant'|translate }}">
+					<svg class="progress">
+						<circle cx="50%" cy="50%" r="50%" stroke-width="3px" />
+						<circle class="gauge"
+							cx="50%"
+							cy="50%"
+							r="50%"
+							stroke-width="3px"
+							pathLength="100" />
+					</svg>
+					{% include 'atoms/icon' with {
+						icon: 'icons/arrow-right'
+					} %}
+				</button>
+			</nav>
+		</div>
+	{% endif %}
+
+	<div v-flux="default" class="flux">
+		<div class="items">
+			{% for item in items %}
+				<div class="item">
+					<p class="quote" v-font="title_2">
+						{{ '"' ~ (item.quote|strip) ~ '"' }}
+					</p>
+					<div class="info" v-font="title_4">
+						<span class="author">
+							{{ (item.author|strip) ~ (item.company ? ', ' : '') }}
+						</span>
+						<span class="company">{{ item.company|strip }}</span>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 </div>

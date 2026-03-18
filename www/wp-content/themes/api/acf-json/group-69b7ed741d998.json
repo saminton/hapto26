@@ -169,14 +169,14 @@
                 },
                 "layout_69b7ef2b3acb6": {
                     "key": "layout_69b7ef2b3acb6",
-                    "name": "image",
-                    "label": "Image",
+                    "name": "text_image",
+                    "label": "Texte Image",
                     "display": "block",
                     "sub_fields": [
                         {
                             "key": "field_69b7ef303acb9",
-                            "label": "Image",
-                            "name": "image",
+                            "label": "Texte Image",
+                            "name": "text_image",
                             "aria-label": "",
                             "type": "clone",
                             "instructions": "",
@@ -385,5 +385,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1773673716
+    "modified": 1773750433
 }

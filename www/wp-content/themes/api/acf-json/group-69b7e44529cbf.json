@@ -712,7 +712,7 @@
                         {
                             "key": "field_69b81250d3050",
                             "label": "Info-bulle",
-                            "name": "tooltip",
+                            "name": "tooltip_items",
                             "aria-label": "",
                             "type": "repeater",
                             "instructions": "",
@@ -746,7 +746,7 @@
                                 {
                                     "key": "field_69b81269d3051",
                                     "label": "Texte",
-                                    "name": "texte",
+                                    "name": "text",
                                     "aria-label": "",
                                     "type": "text",
                                     "instructions": "",
@@ -774,8 +774,8 @@
         },
         {
             "key": "field_69b7ee291e62c",
-            "label": "Image",
-            "name": "image",
+            "label": "Texte Image",
+            "name": "text_image",
             "aria-label": "",
             "type": "group",
             "instructions": "",
@@ -919,7 +919,7 @@
                     "default_value": "",
                     "allow_in_bindings": 0,
                     "tabs": "visual",
-                    "toolbar": "full",
+                    "toolbar": "basic",
                     "media_upload": 0,
                     "delay": 0
                 }
@@ -1248,5 +1248,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1773677941
+    "modified": 1773750935
 }

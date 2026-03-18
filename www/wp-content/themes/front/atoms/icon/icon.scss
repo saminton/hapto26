@@ -16,6 +16,7 @@
 :root {
 	--icon_size: 2.4rem;
 	--icon_fill: var(--grey600);
+	--icon_stroke: var(--black);
 }
 
 // Styles
@@ -28,7 +29,14 @@
 	vertical-align: middle;
 
 	@include svg-fill(rgb(var(--icon_fill)));
-	@include svg-stroke(rgb(var(--icon_fill)));
+	@include svg-stroke(rgb(var(--icon_stroke)));
+
+	*[fill] {
+		@include transition(var(--timing), var(--ease), fill, stroke);
+	}
+	*[stroke] {
+		@include transition(var(--timing), var(--ease), fill, stroke);
+	}
 
 	// Preset
 

@@ -16,4 +16,8 @@
 .buttons {
 	display: inline-flex;
 	gap: 0.8rem;
+
+	@media (max-width: $phone) {
+		flex-direction: column;
+	}
 }

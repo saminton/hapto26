@@ -9,10 +9,13 @@
 <div class="buttons {{ class }}">
 	{% if secondary %}
 		{% include 'atoms/button' with secondary|merge({
-			variant: 'outline'
+			variant: 'outline',
+			icon: 'icons/arrow-right-up'
 		}) %}
 	{% endif %}
 	{% if primary %}
-		{% include 'atoms/button' with primary %}
+		{% include 'atoms/button' with primary|merge({
+			icon: 'icons/arrow-right-up'
+		}) %}
 	{% endif %}
 </div>
