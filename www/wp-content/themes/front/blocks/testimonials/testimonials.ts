@@ -32,8 +32,8 @@ export function Testimonials(args: Component) {
 	const { index, next } = useCarousel({
 		el: itemsEl,
 		canLoop: true,
-		nextEls: [nextEl],
-		previousEls: [previousEl],
+		nextEl: nextEl,
+		previousEl: previousEl,
 	});
 
 	let timer = 0;
@@ -46,6 +46,7 @@ export function Testimonials(args: Component) {
 	onUnmounted(() => {});
 
 	onRendered(node, (tick) => {
+		if (!gaugeEl) return;
 		timer += tick.deltaTime;
 		if (timer > interval) {
 			next();

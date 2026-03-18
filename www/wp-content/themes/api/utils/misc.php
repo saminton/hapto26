@@ -98,9 +98,6 @@ function vl_get_page_id_from_template(string $name) {
 		"suppress_filters" => false
 	]);
 
-	echo "<pre>";
-	var_dump($pages);
-	echo "</pre>";
 	if (!$pages) {
 		return null;
 	}

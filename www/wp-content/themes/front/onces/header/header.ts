@@ -37,7 +37,7 @@ export function Header(args: Component) {
 	let anchors: {
 		el: HTMLElement; //
 		targetEl: HTMLElement;
-		targetBounds: Bounds;
+		targetTop: Number;
 	}[] = [];
 	const anchorIndex = ref(0);
 
@@ -53,7 +53,8 @@ export function Header(args: Component) {
 
 	const populate = () => {
 		anchors = [];
-		toArray(document.querySelectorAll("[v-anchor]")).forEach((el: HTMLElement) => {
+		anchorsEl.innerHTML = "";
+		toArray(page.el.querySelectorAll("[v-anchor]")).forEach((el: HTMLElement) => {
 			const li = createEl("li", "anchor", anchorsEl);
 			const a = createEl("a", "", li) as HTMLLinkElement;
 			a.href = "#" + el.id;
@@ -66,18 +67,24 @@ export function Header(args: Component) {
 			anchors.push({
 				el: li,
 				targetEl: el,
-				targetBounds: getBounds(el),
+				targetTop: getBounds(el).top,
 			});
 		});
 	};
 
 	onAfterResize(() => {
+		console.log(`resized`);
 		anchors.forEach((anchor) => {
-			anchor.targetBounds = getBounds(anchor.targetEl);
+			anchor.targetTop = getBounds(anchor.targetEl).top + scroll.position;
 		});
 	});
 
 	// Effects
+
+	watch(
+		() => page.el,
+		() => populate(),
+	);
 
 	watch(
 		() => scroll.position,
@@ -85,7 +92,7 @@ export function Header(args: Component) {
 			const current = closest(
 				anchors,
 				scroll.position,
-				(item) => item.targetBounds.top,
+				(item) => item.targetTop,
 				(goal, top) => top - device.height * 0.5 < goal,
 			);
 			anchorIndex.value = current.index;

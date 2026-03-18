@@ -65,8 +65,8 @@ export function Scroll(args: Service) {
 	const size = ref(0);
 	const smoothing = ref(8); // 6
 	const isScrolling = ref(false);
-	const isEnabled = ref(false);
 	const isMain = node.getAttribute("v-scroll") === "main";
+	const isEnabled = ref(!isMain);
 
 	const ease = easing("1, 0, 1, 1");
 

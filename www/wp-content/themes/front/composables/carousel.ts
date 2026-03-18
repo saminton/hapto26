@@ -39,8 +39,8 @@ export function useCarousel(props: {
 	canDrag?: boolean | Ref<boolean>;
 	align?: string | Ref<string>;
 	snap?: boolean | Ref<boolean>;
-	previousEls?: HTMLButtonElement | HTMLButtonElement[] | NodeList;
-	nextEls?: HTMLButtonElement | HTMLButtonElement[] | NodeList;
+	previousEl?: HTMLButtonElement | HTMLButtonElement[] | NodeList;
+	nextEl?: HTMLButtonElement | HTMLButtonElement[] | NodeList;
 }) {
 	const { watch, effect } = useReactivity();
 
@@ -56,8 +56,8 @@ export function useCarousel(props: {
 		canDrag,
 		align,
 		snap,
-		previousEls,
-		nextEls,
+		previousEl,
+		nextEl,
 	} = withDefaults(props, {
 		startIndex: 0,
 		smoothing: 10,
@@ -67,8 +67,8 @@ export function useCarousel(props: {
 		canDrag: true,
 		align: false,
 		snap: true,
-		previousEls: [],
-		nextEls: [],
+		previousEl: [],
+		nextEl: [],
 	}) as typeof props;
 
 	const index = ref(startIndex);
@@ -108,8 +108,8 @@ export function useCarousel(props: {
 		on(node, "wheel", onWheel);
 		on(node, "wheel", onWheelEnd);
 
-		on(nextEls, "click", next);
-		on(previousEls, "click", previous);
+		on(nextEl, "click", next);
+		on(previousEl, "click", previous);
 	});
 
 	onReady(() => {});
@@ -303,12 +303,12 @@ export function useCarousel(props: {
 	});
 
 	effect(() => {
-		toArray(previousEls).forEach((el) => {
-			el.toggleAttribute("disabled", atStart.value);
+		toArray(previousEl).forEach((el) => {
+			if (el) el.toggleAttribute("disabled", atStart.value);
 		});
 
-		toArray(nextEls).forEach((el) => {
-			el.toggleAttribute("disabled", atEnd.value);
+		toArray(nextEl).forEach((el) => {
+			if (el) el.toggleAttribute("disabled", atEnd.value);
 		});
 	});
 
