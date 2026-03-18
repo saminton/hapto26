@@ -97,6 +97,10 @@ function vl_get_page_id_from_template(string $name) {
 		"meta_value" => "templates/" . $name . ".php",
 		"suppress_filters" => false
 	]);
+
+	echo "<pre>";
+	var_dump($pages);
+	echo "</pre>";
 	if (!$pages) {
 		return null;
 	}

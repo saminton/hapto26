@@ -22,6 +22,8 @@
 	width: calc(34.4rem - 1px);
 	z-index: 60;
 	border-right: 1px solid rgb(var(--white));
+	display: flex;
+	flex-direction: column;
 
 	@media (max-width: $tablet) {
 		display: none;
@@ -32,10 +34,38 @@
 	padding: 2.4rem;
 }
 
+.bottom {
+	position: relative;
+	margin-top: 7rem;
+	flex-grow: 1;
+}
+
+.anchors {
+	padding: 2.4rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.anchor {
+	@include label-1(null);
+
+	&:not(:hover):not([aria-current="true"]) {
+		color: rgb(var(--grey600));
+	}
+
+	a {
+		display: flex;
+		padding-top: 0.4rem;
+		padding-bottom: 0.4rem;
+	}
+}
+
 .items {
 	display: flex;
 	flex-direction: column;
 	gap: 1.2rem;
+	margin-bottom: 3.2rem;
 }
 
 .item {

@@ -63,7 +63,7 @@ export const useScope = (target: Component) => {
 
 	function createEl(tag: string, className: string, appendTo: Element) {
 		const el = document.createElement(tag);
-		el.classList.add(`.${target.name}-${className}-${target.uid}`);
+		el.classList.add(`${className}-${target.uid}`);
 		if (appendTo) appendTo.appendChild(el);
 		return el;
 	}

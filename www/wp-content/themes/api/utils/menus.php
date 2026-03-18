@@ -5,8 +5,10 @@
  * @return void
  */
 function vl_get_menu_by_name($name) {
-	$items = wp_get_nav_menu_items($name);
-	$menu = wp_get_nav_menu_object($name);
+	$current_lang = pll_current_language();
+
+	$items = wp_get_nav_menu_items("$name-$current_lang");
+	$menu = wp_get_nav_menu_object("$name-$current_lang");
 	if (!$items) {
 		return null;
 	}

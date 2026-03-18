@@ -11,5 +11,15 @@
 				<a href="{{ item.url }}" class="item">{{ item.title }}</a>
 			{% endfor %}
 		</div>
+
+		{% include 'atoms/button' with urls.contact|merge({
+			icon: 'icons/arrow-right-up'
+		}) %}
+	</div>
+
+	<div class="bottom">
+		<div v-scroll>
+			<ul class="anchors"></ul>
+		</div>
 	</div>
 </div>

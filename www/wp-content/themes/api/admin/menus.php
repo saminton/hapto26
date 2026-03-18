@@ -1,10 +1,5 @@
 <?php
 
-// Menu slugs
-// add_action('admin_init', function () {
-// 	echo '<pre>' . print_r($GLOBALS['menu'], true) . '</pre>';
-// });
-
 function vl_remove_menus() {
 	remove_menu_page("acf-options-blocks"); // hide acf options
 	remove_menu_page("edit-comments.php"); //Comments

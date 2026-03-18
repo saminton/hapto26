@@ -32,6 +32,9 @@ function vl_get_data($post): array {
  */
 function vl_url($input) {
 	// Check if the input is numeric (post ID)
+	if (!$input) {
+		return false;
+	}
 	if (is_numeric($input)) {
 		$post = get_post((int) $input);
 	} else {

@@ -39,6 +39,37 @@
                 "id": ""
             },
             "layouts": {
+                "layout_69b81aba9bc4f": {
+                    "key": "layout_69b81aba9bc4f",
+                    "name": "anchor",
+                    "label": "Ancre",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_69b81ac19bc52",
+                            "label": "Nom",
+                            "name": "name",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_69b7ed7c5ec44": {
                     "key": "layout_69b7ed7c5ec44",
                     "name": "logos",
@@ -326,37 +357,6 @@
                     ],
                     "min": "",
                     "max": ""
-                },
-                "layout_69b81aba9bc4f": {
-                    "key": "layout_69b81aba9bc4f",
-                    "name": "anchor",
-                    "label": "Ancre",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_69b81ac19bc52",
-                            "label": "Nom",
-                            "name": "name",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "maxlength": "",
-                            "allow_in_bindings": 0,
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
                 }
             },
             "min": "",
@@ -385,5 +385,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1773750433
+    "modified": 1773847976
 }
