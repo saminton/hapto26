@@ -42,7 +42,7 @@
 }
 
 .link_bottom {
-	margin-top: 4rem;
+	margin-top: var(--spacing_small);
 	align-self: flex-end;
 
 	@media (min-width: #{$phone + 1px}) {
@@ -59,8 +59,13 @@
 .item:not(:first-child) {
 	padding-top: 4rem;
 	border-top: 1px solid rgb(var(--grey800));
+
+	@media (max-width: $phone) {
+		padding-top: 3.2rem;
+	}
 }
 
 .item:not(:last-child) {
 	padding-bottom: 4rem;
+	padding-bottom: 3.2rem;
 }

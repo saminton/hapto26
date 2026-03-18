@@ -55,7 +55,8 @@ export function Scroll(args: Service) {
 	const resizer = useNodeResizer();
 	let mutator: MutationObserver;
 
-	const isSmoothed = computed(() => !(device.isTouch || device.isTablet));
+	// const isSmoothed = computed(() => !(device.isTouch || device.isTablet));
+	const isSmoothed = ref(false);
 	const childEls: Ref<HTMLElement[]> = ref([]);
 
 	const position = ref(0);

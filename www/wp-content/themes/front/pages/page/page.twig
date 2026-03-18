@@ -6,9 +6,9 @@
 		v-scroll="main"
 		data-ancestor="{{ ancestor_id }}"
 		data-id="{{ id }}">
-		{# {% include 'blocks/hero' with fields.hero|merge({
+		{% include 'blocks/hero' with fields.hero|merge({
 			post: post
-		}) %} #}
+		}) %}
 
 		{% for item in fields.flexible_content %}
 			{% include 'blocks/' ~ item.component with item %}
