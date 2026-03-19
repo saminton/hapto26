@@ -1,0 +1,65 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def card_main = [] %}
+{% def cards_secondary = [] %}
+{% def video = [] %}
+
+{# Template #}
+
+{% if false %}
+	{% block card %}
+		<div class="card">
+			{% if card.tags %}
+				<div class="tags">
+					{% for tag in card.tags %}
+						<span class="tag">{{ tag.text|strip }}</span>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			<span class="title" v-font="title_4">{{ card.title|strip }}</span>
+			<ul class="list">
+				{% for item in card.list %}
+					<li class="list_item">
+						{{ (item.text|strip) ~ ' ' ~ (item.text_secondary|strip) }}
+					</li>
+				{% endfor %}
+			</ul>
+
+			{% if card.button_text %}
+				{% include 'atoms/button' with {
+					class: 'button',
+					title: card.button_text,
+					size: 'small'
+				} %}
+			{% endif %}
+		</div>
+	{% endblock %}
+{% endif %}
+
+<div class="solution_demo {{ class }}">
+	<div v-flux="default" class="flux">
+		{#  #}
+		<div class="cards">
+			<div class="center">
+				{% include 'atoms/media' with video|merge({
+					class: 'media',
+					fit: 'cover'
+				}) %}
+				{% set card = card_main %}
+				<div class="card_main">
+					{{ block('card') }}
+				</div>
+			</div>
+
+			<div class="columns">
+				{% for card in cards_secondary %}
+					<div class="card_secondary">
+						{{ block('card') }}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

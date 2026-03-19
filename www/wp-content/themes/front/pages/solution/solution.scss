@@ -13,13 +13,17 @@
 @use "../../theme/mixins.scss" as *;
 @use "../../theme/typography.scss" as *;
 
-.test {
-	.columns {
-		@include columns(1 1 1, var(--gutter) var(--gutter));
-	}
+.solution {
+}
 
-	.image {
-		@include aspect-ratio(0.75);
-		background: rgb(var(--black));
+.hero {
+	@media (min-width: #{$phone + 1px}) {
+		position: sticky;
+		top: 0;
 	}
+}
+
+.container {
+	height: 200rem;
+	margin-bottom: var(--spacing_default);
 }

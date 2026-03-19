@@ -10,15 +10,15 @@
 
 {# Template #}
 
-<section class="hero">
+<section class="hero {{ class }}">
 	<div v-flux="medium" class="flux">
-		<div class="top">
+		{# <div class="top">
 			{% include 'atoms/icon' with {
 				icon: icon,
 				background: 'grey800'
 			} %}
 			<span v-font="title_4">{{ post.title|strip }}</span>
-		</div>
+		</div> #}
 		<h1 class="title" v-font="title_1">
 			{{ title|strip }}
 		</h1>

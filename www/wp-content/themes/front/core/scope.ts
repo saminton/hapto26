@@ -1,5 +1,4 @@
 import { useMutator } from "composables";
-import md5 from "md5";
 import { Component } from "./component";
 import { Service } from "./service";
 
@@ -40,14 +39,14 @@ export const useScope = (target: Component) => {
 	}
 
 	function component(query: string): Component {
-		const uid = md5(query).slice(0, 4);
-		return mutator.findComponent(target.el.querySelector("." + query + "-" + uid));
+		// const uid = md5(query).slice(0, 4);
+		return mutator.findComponent(target.el.querySelector("." + query + "-" + target.uid));
 	}
 
 	function components(query: string): Component[] {
-		const uid = md5(query).slice(0, 4);
-		return Array.from(target.el.querySelectorAll("." + query + "-" + uid)).map((el) =>
-			mutator.findComponent(el),
+		// const uid = md5(query).slice(0, 4);
+		return Array.from(target.el.querySelectorAll("." + query + "-" + target.uid)).map(
+			(el) => mutator.findComponent(el),
 		);
 	}
 

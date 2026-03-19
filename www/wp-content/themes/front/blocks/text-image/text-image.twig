@@ -25,10 +25,22 @@
 		</div>
 
 		{% if has_text %}
-			<div class="columns">
-				<div>
-					{% include 'atoms/image' with image %}
+			{% if image %}
+				<div class="columns">
+					<div>
+						{% include 'atoms/image' with image %}
+					</div>
+
+					<div v-font="format">
+						<h3>
+							{{ subtitle|strip }}
+						</h3>
+						<div>
+							{{ paragraph|raw }}
+						</div>
+					</div>
 				</div>
+			{% else %}
 				<div v-font="format">
 					<h3>
 						{{ subtitle|strip }}
@@ -37,12 +49,14 @@
 						{{ paragraph|raw }}
 					</div>
 				</div>
-			</div>
+			{% endif %}
 		{% else %}
 			<h3 class="subtitle" v-font="title_3">
 				{{ subtitle|raw }}
 			</h3>
-			{% include 'atoms/image' with image %}
+			{% if image %}
+				{% include 'atoms/image' with image %}
+			{% endif %}
 		{% endif %}
 
 		{% if link %}

@@ -16,13 +16,13 @@
 :root {
 	--button_height: 4rem;
 	--button_padding: 1.6rem;
-	--button_small_height: 3.2rem;
+	--button_small_height: 3.6rem;
 	--button_small_padding: 1.4rem;
 	--button_color: var(--black);
 	--button_background: var(--white);
 	--button_border: var(--white);
 	--button_hover_color: var(--white);
-	--button_hover_background: var(--black);
+	--button_hover_background: var(0, 0, 0, 0);
 	--button_hover_border: var(--white);
 }
 
@@ -48,6 +48,13 @@
 	}
 
 	&[size="small"] {
+		min-height: var(--button_small_height);
+		padding-left: var(--button_small_padding);
+		padding-right: var(--button_small_padding);
+	}
+
+	&[size="small"] .text {
+		font-size: 1.2rem;
 	}
 
 	&[variant="outline"] {
@@ -68,12 +75,6 @@
 
 	&[rel="external"] {
 		// External link
-	}
-
-	&[size="small"] {
-		min-height: var(--button_small_height);
-		padding-left: var(--button_small_padding);
-		padding-right: var(--button_small_padding);
 	}
 
 	.text {

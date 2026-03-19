@@ -23,7 +23,7 @@ export function ContactForm(args: Component) {
 	// Vars
 
 	const fieldsEl = child("fields") as HTMLFormElement;
-	const messageEl = child("message");
+	const messageEl = child("message") as HTMLElement;
 
 	const form = useForm({
 		el: fieldsEl,
@@ -44,7 +44,7 @@ export function ContactForm(args: Component) {
 			const res = await ajax("nonce", { name: "contact_form" });
 			nonce = res.data;
 		} catch (error) {
-			console.error(error);
+			console.error("Error retreiving nonce");
 		}
 	});
 
@@ -63,7 +63,7 @@ export function ContactForm(args: Component) {
 				format: "form",
 			});
 		} catch (error) {
-			console.error("An error occured retreiving data");
+			console.error("Error sending form");
 		}
 
 		return response;
@@ -88,8 +88,4 @@ export function ContactForm(args: Component) {
 	effect(() => {
 		if (message.value != "") messageEl.textContent = message.value;
 	});
-
-	// effect(() => {
-	// 	fieldsEl.inert = form.state.value != FormState.DEFAULT;
-	// });
 }

@@ -55,12 +55,17 @@
 
 <div class="cards">
 	<div v-flux="default" class="flux">
-		<h2 class="title" v-font="title_1">
-			{{ title|strip }}
-		</h2>
-		<h3 class="subtitle" v-font="title_3">
-			{{ subtitle|strip }}
-		</h3>
+		{% if title %}
+			<h2 class="title" v-font="title_1">
+				{{ title|strip }}
+			</h2>
+		{% endif %}
+
+		{% if condition %}
+			<h3 class="subtitle" v-font="title_3">
+				{{ subtitle|strip }}
+			</h3>
+		{% endif %}
 
 		{% if caption %}
 			<span class="caption" v-font="body_1">{{ caption|strip }}</span>

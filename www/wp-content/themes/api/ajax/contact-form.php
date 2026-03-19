@@ -13,8 +13,8 @@ vl_register_ajax("contact-form", function () {
 	}
 
 	$ip = $_SERVER["REMOTE_ADDR"];
-	$files = vl_extract_file_upload_data($_FILES);
-	$uploads = [];
+	// $files = vl_extract_file_upload_data($_FILES);
+	// $uploads = [];
 
 	// Return data
 	$data = [
@@ -62,11 +62,11 @@ vl_register_ajax("contact-form", function () {
 	set_transient($transient_key, true, 10);
 
 	// File uploads
-	if ($files) {
-		foreach ($files as $file):
-			$uploads[] = vl_upload_file($file);
-		endforeach;
-	}
+	// if ($files) {
+	// 	foreach ($files as $file):
+	// 		$uploads[] = vl_upload_file($file);
+	// 	endforeach;
+	// }
 
 	// Email filters
 
@@ -136,6 +136,6 @@ vl_register_ajax("contact-form", function () {
 
 	remove_filter("wp_mail_content_type", "set_html_content_type");
 	$data["message"] = "Message envoyé";
-	wp_send_json_success($data); // Debug purposes only
-	// wp_send_json_success(["message" => "Message envoyé"]);
+	// wp_send_json_success($data); // Debug purposes only
+	wp_send_json_success(["message" => "Message envoyé"]);
 });

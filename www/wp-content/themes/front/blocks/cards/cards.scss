@@ -60,7 +60,7 @@
 .simple {
 	position: relative;
 	padding: 4rem;
-	border-radius: 8px;
+	border-radius: var(--radius_medium);
 
 	@media (max-width: $phone) {
 		padding: 2.4rem;

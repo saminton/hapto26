@@ -10,6 +10,7 @@ import { Select } from "atoms/select";
 import { Textarea } from "atoms/textarea";
 import { Accordions } from "blocks/accordions";
 import { Logos } from "blocks/logos";
+import { SolutionDemo } from "blocks/solution-demo";
 import { Testimonials } from "blocks/testimonials";
 import { App, AppConstructor, ComponentConstructor, ServiceConstructor } from "core";
 import { Accordion } from "modules/accordion";
@@ -19,6 +20,7 @@ import { AdminWidget } from "onces/admin-widget";
 import { Header } from "onces/header";
 import { Loader } from "onces/loader";
 import { Menu } from "onces/menu";
+import { Solution } from "pages/solution";
 import { Anim, Parallax, Scroll } from "services";
 // import { VideoYoutube } from "modules/video-youtube";
 
@@ -40,6 +42,8 @@ const components: ComponentConstructor[] = [
 	Testimonials,
 	Accordion,
 	Accordions,
+	Solution,
+	SolutionDemo,
 ];
 
 const services: ServiceConstructor[] = [

@@ -52,7 +52,7 @@
 .items {
 	background: rgb(var(--grey600));
 	padding: 2.4rem;
-	border-radius: 8px;
+	border-radius: var(--radius_medium);
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
