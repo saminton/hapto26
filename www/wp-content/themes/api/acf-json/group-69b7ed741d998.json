@@ -3,6 +3,24 @@
     "title": "Page",
     "fields": [
         {
+            "key": "field_69bd4878bb84e",
+            "label": "Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
             "key": "field_69b80fec256cd",
             "label": "Hero",
             "name": "hero",
@@ -23,6 +41,24 @@
             "layout": "block",
             "prefix_label": 0,
             "prefix_name": 0
+        },
+        {
+            "key": "field_69bd4880bb84f",
+            "label": "Contenu flexible",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_69bbc6e2c1ded",
@@ -68,5 +104,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1773919353
+    "modified": 1774012576
 }

@@ -1,11 +1,30 @@
 {# Vars #}
 
 {% def class = '' %}
+{% def title = '' %}
+{% def items = '' %}
 
 {# Template #}
 
 <div class="slider">
-	<pre>
-		{{ dump('Slider') }}
-	</pre>
+	<div v-flux="default">
+		<h2 class="title" v-font="title_1">
+			{{ title|strip }}
+		</h2>
+
+		<div class="container">
+			<div class="items">
+				{% for item in items %}
+					<div class="card">
+						<span class="card_title" v-font="title_2">
+							{{ item.title|strip }}
+						</span>
+						<p class="card_text" v-font="body_1">
+							{{ item.text|strip }}
+						</p>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 </div>

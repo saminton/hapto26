@@ -6,17 +6,11 @@
 		v-scroll="main"
 		data-ancestor=""
 		data-id="">
-		<div v-flux="default" class="cover">
-			<h1 v-font="title_1" class="title">
-				{{ post.title|strip }}
-			</h1>
-			<p v-font="body_1">
-				{{ fields.hero.intro|strip }}
-			</p>
-		</div>
-
-		<div v-flux="default">
-			{% include 'modules/contact-form' with fields.form %}
-		</div>
+		{% include 'blocks/title' with {
+			text: post.title
+		} %}
+		{% include 'blocks/contact-form' with {
+			form: fields.form
+		} %}
 	</main>
 {% endblock %}

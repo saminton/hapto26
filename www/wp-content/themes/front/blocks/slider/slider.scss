@@ -14,4 +14,38 @@
 @use "../../theme/typography.scss" as *;
 
 .slider {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.title {
+	margin-bottom: var(--spacing_default);
+}
+
+.items {
+	display: flex;
+	gap: 0.8rem;
+	flex-wrap: nowrap;
+}
+
+.card {
+	border: 1px solid rgb(var(--grey700));
+	border-radius: var(--radius_medium);
+	padding: 4rem;
+	white-space: wrap;
+	min-width: 44rem;
+
+	@media (max-width: $phone) {
+		min-width: 25.7rem;
+		padding: 2.4rem;
+	}
+}
+
+.card_title {
+	display: flex;
+	margin-bottom: var(--spacing_small);
+}
+
+.card_text {
+	color: rgb(var(--grey600));
 }

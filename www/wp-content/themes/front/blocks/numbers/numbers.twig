@@ -1,0 +1,49 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def title = '' %}
+
+{# Template #}
+
+<div class="numbers">
+	<div v-flux="default">
+		<h2 class="title" v-font="title_0" v-anim="title">
+			{{ title|strip }}
+		</h2>
+
+		<div class="items">
+			{% for item in items %}
+				{% set parts = item.text|preg_number %}
+
+				<div class="item" v-anim="fade-up">
+					<div>
+						{% include 'atoms/icon' with {
+							class: 'icon',
+							icon: 'icons/' ~ item.icon
+						} %}
+
+						<div class="text">
+							{% if not parts[0] %}
+								<span>{{ item.text }}</span>
+							{% endif %}
+
+							{% if parts[1] %}
+								<span>{{ parts[1] }}</span>
+							{% endif %}
+							{% if parts[2] %}
+								{% include 'atoms/number' with {
+									value: parts[2]
+								} %}
+							{% endif %}
+							{% if parts[3] %}
+								<span>{{ parts[3] }}</span>
+							{% endif %}
+						</div>
+					</div>
+
+					<span class="caption" v-delay="0.2">{{ item.caption|strip }}</span>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>

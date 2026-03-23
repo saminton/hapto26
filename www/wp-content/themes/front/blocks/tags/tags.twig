@@ -3,18 +3,25 @@
 {% def class = '' %}
 {% def title = '' %}
 {% def items = [] %}
+{% def has_text = false %}
+{% def text = '' %}
 
 {# Template #}
 
 <div class="tags">
 	<div v-flux="default">
-		<h2 class="title" v-font="title_1">
+		<h2 class="title" v-font="title_1" v-anim="text">
 			{{ title|strip }}
 		</h2>
-		<div class="items">
+		<div class="items" v-anim="items">
 			{% for item in items %}
 				<span class="item">{{ item.text }}</span>
 			{% endfor %}
 		</div>
+		{% if has_text %}
+			<p class="text" v-font="body_1">
+				{{ text|strip }}
+			</p>
+		{% endif %}
 	</div>
 </div>

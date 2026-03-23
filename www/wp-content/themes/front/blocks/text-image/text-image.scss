@@ -56,10 +56,11 @@
 }
 
 .subtitle {
-	margin-bottom: var(--spacing_default);
 }
 
 .columns {
+	margin-top: var(--spacing_small);
+
 	@media (min-width: #{$phone + 1px}) {
 		@include columns(1 1);
 		align-items: center;

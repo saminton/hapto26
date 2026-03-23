@@ -24,6 +24,12 @@
 
 // Titles
 
+@mixin title-0($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 11rem, 11rem, 5.2rem);
+	line-height: 1.03;
+	font-weight: 500;
+}
+
 @mixin title-1($break: breakpoints.$laptop) {
 	@include responsive.property(font-size, $break, 7.4rem, 7.4rem, 4rem);
 	line-height: 1.11;

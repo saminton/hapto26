@@ -27,6 +27,7 @@ export function Media(args: Component) {
 
 	// Vars
 
+	const emit = defineEmits();
 	const device = useStore("device");
 	const imageEl = child("image") as HTMLImageElement;
 	const videoEl = child("video") as HTMLVideoElement;
@@ -36,6 +37,7 @@ export function Media(args: Component) {
 	onMounted(async () => {
 		setSize();
 		if (imageEl && imageEl.getAttribute("loading") == "eager") await load();
+		if (videoEl) on(videoEl, "ended", () => emit("ended"));
 	});
 
 	onResized(() => {

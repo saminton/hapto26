@@ -2,7 +2,13 @@ import { Component } from "core";
 import { toArray } from "../utils";
 
 type ElementOrComponent = Element | Window | Component;
-type ElementsOrComponent = Element | Element[] | NodeList | Window | Component;
+type ElementsOrComponent =
+	| Element
+	| Element[]
+	| NodeList
+	| Window
+	| Component
+	| Component[];
 
 type Events = {
 	create: (name: string) => void;

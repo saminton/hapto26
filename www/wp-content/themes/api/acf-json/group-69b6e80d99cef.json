@@ -3,9 +3,9 @@
     "title": "Contact",
     "fields": [
         {
-            "key": "field_69b6e80e0efb6",
-            "label": "Hero",
-            "name": "hero",
+            "key": "field_69b6e8410efb8",
+            "label": "Form",
+            "name": "form",
             "aria-label": "",
             "type": "group",
             "instructions": "",
@@ -38,25 +38,7 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": ""
-                }
-            ]
-        },
-        {
-            "key": "field_69b6e8410efb8",
-            "label": "Form",
-            "name": "form",
-            "aria-label": "",
-            "type": "group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "sub_fields": [
+                },
                 {
                     "key": "field_69b6e8460efb9",
                     "label": "Texte GRPD",
@@ -122,5 +104,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1773668164
+    "modified": 1774005932
 }

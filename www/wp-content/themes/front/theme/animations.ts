@@ -7,6 +7,7 @@ export type AnimationNodes = {
 	el: HTMLElement;
 	words: Ref<HTMLElement[]>;
 	lines: Ref<HTMLElement[]>;
+	letters: Ref<HTMLElement[]>;
 };
 
 export type Animation = {
@@ -22,21 +23,47 @@ export function getAnimations(): Animation[] {
 	const animations = [];
 
 	animations.push({
+		name: "letters",
+		split: SplitBy.LETTERS,
+		timeline: (data: AnimationNodes) => {
+			const tl = gsap.timeline({ paused: true });
+			tl.fromTo(
+				data.letters.value,
+				{
+					opacity: 0,
+					y: ".1em",
+				},
+				{
+					opacity: 1,
+					duration: 0.5,
+					y: "0em",
+					ease: easing("ease_out"),
+					// clearProps: "all",
+					stagger: 0.05,
+				},
+			);
+			return tl;
+		},
+	});
+
+	animations.push({
 		name: "title",
 		split: SplitBy.WORDS,
 		timeline: (data: AnimationNodes) => {
-			const tl = gsap.timeline();
+			const tl = gsap.timeline({ paused: true });
 			tl.fromTo(
 				data.words.value,
 				{
 					opacity: 0,
+					y: ".2em",
 				},
 				{
 					opacity: 1,
-					duration: 0.2,
-					ease: easing("ease"),
+					duration: 0.5,
+					y: "0em",
+					ease: easing("ease_out"),
 					// clearProps: "all",
-					stagger: 0.2,
+					stagger: 0.05,
 				},
 			);
 
@@ -60,19 +87,22 @@ export function getAnimations(): Animation[] {
 		name: "text",
 		split: SplitBy.LINES,
 		timeline: (data: AnimationNodes) => {
-			const tl = gsap.timeline();
+			const tl = gsap.timeline({ paused: true });
 			let items = data.lines.value.map((el) => el.children[0]);
 			tl.fromTo(
 				items,
 				{
-					y: "1.2lh",
+					opacity: 0,
+					y: ".2em",
 				},
 				{
-					y: "0lh",
-					duration: 0.7,
-					// ease: easing("ease"),
-					stagger: 0.1,
+					opacity: 1,
+					duration: 0.5,
+					y: "0em",
+					ease: easing("ease_out"),
 					// clearProps: "all",
+					stagger: 0.1,
+					delay: 0.3,
 				},
 			);
 
@@ -85,6 +115,7 @@ export function getAnimations(): Animation[] {
 					backgroundSize: "100% 1px",
 					// ease: easing("ease"),
 					stagger: 0.3,
+					delay: 0.3,
 				},
 			);
 
@@ -107,6 +138,46 @@ export function getAnimations(): Animation[] {
 					duration: 1,
 					ease: easing("ease_out"),
 					// clearProps: "all",
+				},
+			);
+		},
+	});
+
+	animations.push({
+		name: "fade-in",
+		timeline: (data: AnimationNodes) => {
+			return gsap.fromTo(
+				data.el,
+				{
+					opacity: 0,
+				},
+				{
+					opacity: 1,
+					duration: 1,
+					ease: easing("ease_out"),
+					// clearProps: "all",
+				},
+			);
+		},
+	});
+
+	animations.push({
+		name: "items",
+		timeline: (data: AnimationNodes) => {
+			return gsap.fromTo(
+				data.el.children,
+				{
+					opacity: 0,
+					y: "1rem",
+				},
+				{
+					opacity: 1,
+					y: "0rem",
+					duration: 1,
+					ease: easing("ease_out"),
+					// clearProps: "all",
+					stagger: 0.3,
+					delay: 0.3,
 				},
 			);
 		},

@@ -1,0 +1,51 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.form {
+}
+
+.fields {
+	// &[inert] {
+	// 	display: none;
+	// }
+}
+
+.fields {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.6rem;
+}
+
+.row {
+	display: flex;
+	column-gap: 1.6rem;
+
+	& > * {
+		width: 100%;
+	}
+}
+
+.bottom {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	column-gap: 2.4rem;
+}
+
+.message {
+	&[inert] {
+		display: none;
+	}
+}

@@ -19,10 +19,10 @@
 			} %}
 			<span v-font="title_4">{{ post.title|strip }}</span>
 		</div> #}
-		<h1 class="title" v-font="title_1">
+		<h1 class="title" v-font="title_1" v-anim="text">
 			{{ title|strip }}
 		</h1>
-		<p class="subtitle" v-font="body_1">
+		<p class="subtitle" v-font="body_1" v-anim="fade-in" v-delay=".9">
 			{{ subtitle|strip }}
 		</p>
 
@@ -30,7 +30,8 @@
 			{% include 'modules/buttons' with {
 				class: 'buttons',
 				primary: link_primary,
-				secondary: link_secondary
+				secondary: link_secondary,
+				delay: 1
 			} %}
 		{% endif %}
 	</div>

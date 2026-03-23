@@ -34,6 +34,17 @@ $twig->addFilter(
 );
 
 $twig->addFilter(
+	new TwigFilter(
+		"preg_number",
+		function ($str) {
+			preg_match('/^(.*?)(\d+)(.*)$/', $str, $matches);
+			return $matches;
+		},
+		["is_safe" => ["html"]]
+	)
+);
+
+$twig->addFilter(
 	new TwigFilter("pad", function ($str, $length = 1, $text = "0") {
 		return str_pad($str, $length, $text, STR_PAD_LEFT);
 	})

@@ -4,7 +4,7 @@ import { Animation, getAnimations } from "theme";
 import { receive, withDefaults } from "utils";
 import { useBounds } from "./bounds";
 import { useIntersect } from "./intersector";
-import { Split, useSplit } from "./split";
+import { Split, SplitBy, useSplit } from "./split";
 import { useStore } from "./store";
 
 export type AnimData = {
@@ -29,6 +29,7 @@ export const useAnim = (props: {
 	delay?: number; // Todo: Ref
 	stagger?: number; // Todo: Ref
 	detect?: boolean;
+	split?: SplitBy;
 	setup?: (data: AnimData) => Promise<void>;
 	timeline?: (data: AnimData) => GSAPTimeline;
 }): Anim => {
@@ -58,7 +59,9 @@ export const useAnim = (props: {
 		delay: 0,
 	});
 
-	const split = animation.split ? useSplit(props.el, animation.split) : null;
+	let split = null;
+	if (props.split != null) split = useSplit(props.el, props.split);
+	if (animation.split != null) split = useSplit(props.el, animation.split);
 	const data = split ?? { el: props.el };
 
 	const intersect = useIntersect(props.el);
@@ -150,10 +153,11 @@ export const useAnim = (props: {
 		},
 	);
 
-	if (animation.split)
+	if (split)
 		watch(
 			() => split.html.value,
 			() => {
+				console.log(`split html changed`);
 				setup();
 			},
 		);

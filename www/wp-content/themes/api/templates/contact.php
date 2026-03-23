@@ -12,10 +12,7 @@ function vl_get_data_contact($id) {
 			"title", //
 			"content"
 		],
-		"fields" => [
-			"hero", //
-			"form"
-		]
+		"fields" => ["form"]
 	]);
 
 	return $data;

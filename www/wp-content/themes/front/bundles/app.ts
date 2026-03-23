@@ -5,18 +5,24 @@
 
 import { Input } from "atoms/input";
 import { Media } from "atoms/media";
+import { Number } from "atoms/number";
 import { Scrollbar } from "atoms/scrollbar";
 import { Select } from "atoms/select";
 import { Textarea } from "atoms/textarea";
 import { Accordions } from "blocks/accordions";
+import { DemoPreview } from "blocks/demo-preview";
 import { Logos } from "blocks/logos";
+import { Reader } from "blocks/reader";
+import { Slider } from "blocks/slider";
 import { SolutionDemo } from "blocks/solution-demo";
 import { Testimonials } from "blocks/testimonials";
 import { App, AppConstructor, ComponentConstructor, ServiceConstructor } from "core";
 import { Accordion } from "modules/accordion";
-import { ContactForm } from "modules/contact-form";
+import { Form } from "modules/form";
 import { Tooltip } from "modules/tooltip";
 import { AdminWidget } from "onces/admin-widget";
+import { CookieBanner } from "onces/cookie-banner";
+import { CookieOptions } from "onces/cookie-options";
 import { Header } from "onces/header";
 import { Loader } from "onces/loader";
 import { Menu } from "onces/menu";
@@ -29,10 +35,10 @@ const components: ComponentConstructor[] = [
 	Media,
 	Input,
 	Textarea,
-	ContactForm,
+	Form,
 	Header,
-	// CookieBanner,
-	// CookieOptions,
+	CookieBanner,
+	CookieOptions,
 	Loader,
 	Scrollbar,
 	Menu,
@@ -44,6 +50,10 @@ const components: ComponentConstructor[] = [
 	Accordions,
 	Solution,
 	SolutionDemo,
+	Slider,
+	DemoPreview,
+	Number,
+	Reader,
 ];
 
 const services: ServiceConstructor[] = [

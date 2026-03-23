@@ -88,6 +88,10 @@ body {
 
 /* Titles */
 
+[v-font*="title_0"] {
+	@include typography.title-0(null);
+}
+
 [v-font*="title_1"] {
 	@include typography.title-1(null);
 }

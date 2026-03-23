@@ -25,7 +25,7 @@ export type Split = {
 };
 
 export const useSplit = function (node: HTMLElement, by?: SplitBy) {
-	const emit = defineEmits();
+	// const emit = defineEmits();
 	const device = useStore("device");
 	const html = ref("");
 	const letters = ref([]);
@@ -111,12 +111,12 @@ export const useSplit = function (node: HTMLElement, by?: SplitBy) {
 			splitLetters();
 		}
 
-		lines.value = Array.from(node.querySelectorAll("[v-line]"));
-		words.value = Array.from(node.querySelectorAll("[v-word]"));
-		letters.value = Array.from(node.querySelectorAll("[v-letter]"));
+		lines.value = toArray(node.querySelectorAll("[v-line]"));
+		words.value = toArray(node.querySelectorAll("[v-word]"));
+		letters.value = toArray(node.querySelectorAll("[v-letter]"));
 		html.value = node.innerHTML;
 
-		emit("split");
+		// emit("split");
 	};
 
 	const createTree = (): Branch => {
@@ -158,6 +158,7 @@ export const useSplit = function (node: HTMLElement, by?: SplitBy) {
 	};
 
 	const splitLetters = () => {
+		console.log(`split letters`, node);
 		Array.from(node.querySelectorAll("[v-word]")).forEach((wordEl) => {
 			let text = wordEl
 				?.getAttribute("v-word")
