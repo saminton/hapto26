@@ -1,0 +1,61 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.article_hero {
+	padding-top: 8rem;
+	padding-bottom: 8rem;
+
+	@media (max-width: $phone) {
+		padding-top: 2.4rem;
+		padding-bottom: 2.4rem;
+	}
+}
+
+.columns {
+	display: flex;
+	align-items: center;
+
+	@media (max-width: $phone) {
+		flex-direction: column;
+	}
+}
+
+.thumbnail {
+	aspect-ratio: 1;
+
+	@media (min-width: #{$phone + 1px}) {
+		min-width: 40rem;
+		margin-right: 4rem;
+	}
+
+	@media (max-width: $phone) {
+		width: 100%;
+		margin-bottom: 4.8rem;
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.date {
+	color: rgb(var(--grey400));
+}
+
+.author {
+	margin-top: 2.4rem;
+}

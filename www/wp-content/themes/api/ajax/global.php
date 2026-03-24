@@ -17,16 +17,16 @@ vl_register_ajax("nonce", function ($args) {
 // 	// return ;
 // });
 
-// vl_register_ajax("component", function ($args) {
-// 	if ($args["query"]) {
-// 		$data = vl_query($args["query"]);
-// 		if (isset($args["data"])) {
-// 			$data = array_merge($data, $args["data"]);
-// 		}
-// 	} else {
-// 		$data = $args["data"] ?? [];
-// 	}
-// 	if ($data) {
-// 		return vl_render_twig_component($args["component"], $data);
-// 	}
-// });
+vl_register_ajax("component", function ($args) {
+	if ($args["query"]) {
+		$data = vl_query($args["query"]);
+		if (isset($args["data"])) {
+			$data = array_merge($data, $args["data"]);
+		}
+	} else {
+		$data = $args["data"] ?? [];
+	}
+	if ($data) {
+		return vl_render_twig_component($args["component"], $data);
+	}
+});

@@ -6,12 +6,15 @@
 		v-scroll="main"
 		data-ancestor="{{ ancestor_id }}"
 		data-id="{{ id }}">
-		<h1 v-font="title_1">
-			article
-		</h1>
-		<pre>
-			{{ dump(post) }}
-			{{ dump(fields) }}
-		</pre>
+		{% include 'blocks/article-hero' with {
+			post: post,
+			fields: fields
+		} %}
+
+		{% for item in fields.flexible_content %}
+			{% include 'blocks/' ~ item.component with item %}
+		{% endfor %}
+
+		{% include 'blocks/footer' %}
 	</main>
 {% endblock %}

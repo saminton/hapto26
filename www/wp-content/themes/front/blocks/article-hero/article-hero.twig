@@ -1,0 +1,30 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def post = [] %}
+{% def fields = [] %}
+
+{# Template #}
+
+<div class="article_hero">
+	<div v-flux="default">
+		<div class="columns">
+			{% if post.thumbnail %}
+				{% include 'atoms/media' with post.thumbnail|merge({
+					class: 'thumbnail',
+					fit: 'cover'
+				}) %}
+			{% endif %}
+
+			<div class="content">
+				<span class="date" v-font="body_3">
+					{{ post.date|date_i18n('d F Y') }}
+				</span>
+				<span class="title" v-font="title_2">{{ post.title|strip }}</span>
+				{% if fields.hero.author %}
+					<span class="author" v-font="body_3">{{ fields.hero.author }}</span>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

@@ -59,19 +59,21 @@ function vl_get_data_global() {
 
 	// Polylang
 
-	// $data['langs']['current'] = get_locale();
-	// $langs = pll_languages_list(['fields' => []]);
+	$data["langs"]["current"] = get_locale();
+	$langs = pll_languages_list(["fields" => []]);
 
-	// if ($langs) {
-	// 	foreach ($langs as $lang):
-	// 		$data['langs']['available'][] = [
-	// 			'slug' => $lang->slug,
-	// 			'code' => $lang->locale,
-	// 			'url' => pll_home_url($lang->slug),
-	// 			'is_current' => $lang->locale == get_locale()
-	// 		];
-	// 	endforeach;
-	// }
+	if ($langs) {
+		foreach ($langs as $lang):
+			$data["langs"]["available"][] = [
+				"slug" => $lang->slug,
+				"code" => $lang->locale,
+				"url" => pll_home_url($lang->slug),
+				"is_current" => $lang->locale == get_locale()
+			];
+		endforeach;
+	}
+
+	$data["footer"] = vl_get_menu_by_name("Footer") ?? [];
 
 	return $data;
 }

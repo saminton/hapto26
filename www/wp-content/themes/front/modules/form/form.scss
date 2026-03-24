@@ -30,10 +30,14 @@
 
 .row {
 	display: flex;
-	column-gap: 1.6rem;
+	gap: 1.6rem;
 
 	& > * {
 		width: 100%;
+	}
+
+	@media (max-width: $phone) {
+		flex-direction: column;
 	}
 }
 

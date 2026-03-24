@@ -9,12 +9,12 @@
 	<div class="items">
 		{% for lang in langs.available %}
 			<a class="item"
-				v-font="body_3"
+				v-font="body_4"
 				href="{{ lang.url }}"
 				v-barba-prevent="self"
 				data-wg-notranslate
 				aria-current="{{ lang.is_current|bool }}">
-				{{ lang.code }}
+				{{ lang.code|split('_')|first }}
 			</a>
 		{% endfor %}
 	</div>

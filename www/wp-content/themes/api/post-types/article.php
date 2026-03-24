@@ -23,10 +23,13 @@ function vl_get_data_article($id) {
 		],
 		"post" => [
 			"title", //
-			"content"
+			"content",
+			"thumbnail",
+			"date"
 		],
 		"fields" => [
-			//
+			"hero", //
+			"flexible_content" //
 		]
 	]);
 

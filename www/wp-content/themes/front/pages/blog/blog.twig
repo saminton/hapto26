@@ -1,0 +1,20 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="blog"
+		v-barba="container"
+		v-barba-namespace="blog"
+		v-scroll="main"
+		data-ancestor=""
+		data-id="">
+		{% include 'blocks/title' with {
+			text: post.title
+		} %}
+
+		{% include 'blocks/blog-list' with {
+			items: articles,
+			filters: filters
+		} %}
+
+		{% include 'blocks/footer' %}
+	</main>
+{% endblock %}

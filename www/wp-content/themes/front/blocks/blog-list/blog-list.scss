@@ -1,0 +1,49 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.blog_list {
+	padding-top: var(--spacing_small);
+	padding-bottom: var(--spacing_default);
+}
+
+.filters {
+	display: flex;
+	gap: 2.4rem;
+}
+
+.filter {
+	cursor: pointer;
+	transition: var(--timing_short) var(--ease) color;
+
+	&:not(:has(input:checked)):not(:hover) {
+		color: rgb(var(--grey500));
+	}
+}
+
+.items {
+	display: grid;
+	gap: 2.4rem;
+	margin-top: 4rem;
+
+	@media (min-width: #{$phone + 1px}) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	& > *:first-child {
+		@media (min-width: #{$phone + 1px}) {
+			grid-column: span 3;
+		}
+	}
+}

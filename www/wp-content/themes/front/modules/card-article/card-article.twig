@@ -1,0 +1,33 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def post = [] %}
+{% def fields = [] %}
+{% def taxonomies = [] %}
+{% def index = '' %}
+
+{# Template #}
+
+{% set terms = [] %}
+{% for item in taxonomies.article_type %}
+	{% set terms = terms|merge([item.term.id]) %}
+{% endfor %}
+
+<div class="card_article" data-index="{{ index }}">
+	<a class="link" href="{{ post.url }}" aria-label="{{ post.title }}"></a>
+
+	{% if post.thumbnail %}
+		{% include 'atoms/media' with post.thumbnail|merge({
+			class: 'thumbnail',
+			fit: 'cover'
+		}) %}
+	{% endif %}
+
+	<div class="content">
+		<span class="date" v-font="body_4">{{ post.date|date_i18n('d F Y') }}</span>
+		<span class="title" v-font="title_4">{{ post.title|strip }}</span>
+		{% if fields.hero.author %}
+			<span class="author" v-font="body_4">{{ fields.hero.author }}</span>
+		{% endif %}
+	</div>
+</div>

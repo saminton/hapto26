@@ -10,6 +10,7 @@ import { Scrollbar } from "atoms/scrollbar";
 import { Select } from "atoms/select";
 import { Textarea } from "atoms/textarea";
 import { Accordions } from "blocks/accordions";
+import { BlogList } from "blocks/blog-list";
 import { DemoPreview } from "blocks/demo-preview";
 import { Logos } from "blocks/logos";
 import { Reader } from "blocks/reader";
@@ -54,6 +55,7 @@ const components: ComponentConstructor[] = [
 	DemoPreview,
 	Number,
 	Reader,
+	BlogList,
 ];
 
 const services: ServiceConstructor[] = [
