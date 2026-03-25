@@ -35,3 +35,9 @@ export function debounce(
 		if (callNow) callback.apply(context, args);
 	};
 }
+
+export function nextFrame() {
+	return new Promise<void>((resolve, reject) => {
+		requestAnimationFrame(() => resolve());
+	});
+}

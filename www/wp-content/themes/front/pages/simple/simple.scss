@@ -13,13 +13,14 @@
 @use "../../theme/mixins.scss" as *;
 @use "../../theme/typography.scss" as *;
 
-.link {
-	text-decoration: underline;
-	display: inline-flex;
-	align-items: center;
-	flex-wrap: nowrap;
+.simple {
+}
 
-	.icon {
-		margin-left: 0.8rem;
-	}
+.hero {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.content {
+	padding-bottom: var(--spacing_default);
 }

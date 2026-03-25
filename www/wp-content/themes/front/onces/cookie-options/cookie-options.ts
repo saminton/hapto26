@@ -78,7 +78,7 @@ export function CookieOptions(args: Component) {
 	effect(() => {
 		// Show or hide
 		node.dataset.completed = userPrefsSet.value === true ? "true" : "false";
-		aria(node, "hidden", !cookieOptions.isOpen);
+		node.inert = !cookieOptions.isOpen;
 	});
 
 	effect(() => {

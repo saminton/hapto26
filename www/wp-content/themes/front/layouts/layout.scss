@@ -13,44 +13,9 @@
 @use "../theme/mixins.scss" as *;
 @use "../theme/typography.scss" as *;
 
-:root {
-	--frame_top: 7rem;
-	--frame_bottom: 2.4rem;
-	--frame_left: 36.8rem;
-	--frame_right: 2.4rem;
-
-	@media (max-width: $tablet) {
-		--frame_top: 0.8rem;
-		--frame_bottom: 4.4rem;
-		--frame_left: 0.8rem;
-		--frame_right: 0.8rem;
-	}
-}
-
 .layout {
 }
 
 main {
 	padding: var(--frame_top) var(--frame_right) var(--frame_bottom) var(--frame_left);
-}
-
-.frame {
-	position: absolute;
-	z-index: 50;
-	inset: 0;
-	background: rgba(var(--white));
-	pointer-events: none;
-
-	clip-path: polygon(
-		0% 0%,
-		0% 100%,
-		var(--frame_right) 100%,
-		var(--frame_right) var(--frame_top),
-		calc(100% - var(--frame_right)) var(--frame_top),
-		calc(100% - var(--frame_right)) calc(100% - var(--frame_bottom)),
-		var(--frame_right) calc(100% - var(--frame_bottom)),
-		var(--frame_right) 100%,
-		100% 100%,
-		100% 0%
-	);
 }

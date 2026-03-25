@@ -21,6 +21,15 @@
 .flux {
 	display: flex;
 	flex-direction: column;
+
+	p {
+		color: rgb(var(--grey500));
+	}
+
+	ul,
+	ol {
+		color: rgb(var(--grey300));
+	}
 }
 
 .top {

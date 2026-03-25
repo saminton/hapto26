@@ -1,25 +1,17 @@
 {# Vars #}
 
-{% def items = [] %}
+{% def class = '' %}
 
 {# Template #}
 
 <div class="header">
-	<div class="top">
-		<div class="items">
-			{% for item in items %}
-				<a href="{{ item.url }}" class="item">{{ item.title }}</a>
-			{% endfor %}
-		</div>
-
-		{% include 'atoms/button' with urls.contact|merge({
-			icon: 'icons/arrow-right-up'
-		}) %}
+	<div class="bar">
+		<a href="{{ urls.home.url }}"
+			class="logo"
+			aria-label="{{ urls.home.title }}">
+			{{ svg('assets/svgs/logo.svg') }}
+		</a>
+		<button class="toggle"></button>
 	</div>
-
-	<div class="bottom">
-		<div v-scroll>
-			<ul class="anchors"></ul>
-		</div>
-	</div>
+	<div class="frame"></div>
 </div>

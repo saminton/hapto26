@@ -20,7 +20,7 @@
 
 <div class="blog_list">
 	<div v-flux="default">
-		<div class="filters">
+		<div class="filters" v-anim="fade-in" v-delay="0.2">
 			{% set item = {
 				name: 'Tous'|translate,
 				id: '',
@@ -32,8 +32,6 @@
 				{{ block('filter') }}
 			{% endfor %}
 		</div>
-
-		<div class="spinner"></div>
 
 		<div class="items">
 			{% for item in items %}

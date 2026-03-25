@@ -25,11 +25,11 @@ export function Logos(args: Component) {
 
 	// Vars
 
-	const itemsEl = child("items");
+	const itemsEl = child("items") as HTMLElement;
 
-	const loop = useCarousel({
+	const loop = useLoop({
 		el: itemsEl,
-		align: "center",
+		onlyOnOverflow: true,
 	});
 
 	// Hooks

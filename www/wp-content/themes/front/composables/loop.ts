@@ -2,7 +2,7 @@ import { Ref, reactive, ref, unref } from "@vue/reactivity";
 import { onAfterResize, onBeforeResize } from "composables";
 import { useReactivity } from "core";
 import { Bounds, Vector2 } from "types";
-import { getBounds, receive, toArray } from "utils";
+import { getBounds, nextFrame, receive, toArray } from "utils";
 import { onBeforeRender } from "./renderer";
 
 type Item = {
@@ -17,6 +17,7 @@ export function useLoop(props: {
 	boundsEl?: HTMLElement;
 	speed?: number | Ref<number>;
 	scrollSpeed?: number | Ref<number>;
+	onlyOnOverflow?: boolean;
 }) {
 	//
 
@@ -42,9 +43,13 @@ export function useLoop(props: {
 	const position = reactive({ x: 0, y: 0 });
 	const itemsWidth = ref(0);
 	const isPaused = ref(false);
+	const isActive = ref(false);
 
 	onMounted(() => {
 		setup();
+	});
+
+	onReady(() => {
 		resize();
 	});
 
@@ -52,17 +57,14 @@ export function useLoop(props: {
 		//
 	});
 
-	onBeforeResize(() => {
-		isPaused.value = true;
+	onBeforeResize(() => {});
+
+	onAfterResize(async () => {
 		resize();
 	});
 
-	onAfterResize(() => {
-		isPaused.value = false;
-	});
-
 	onBeforeRender(containerEl, (tick) => {
-		if (isPaused.value) return;
+		if (isPaused.value || !isActive.value) return;
 
 		// Speed
 		let speed = unref(props.speed) ?? -1;
@@ -94,7 +96,7 @@ export function useLoop(props: {
 		node.setAttribute("aria-hidden", "true");
 	};
 
-	const resize = () => {
+	const resize = async () => {
 		position.x = 0;
 		//
 		node.innerHTML = "";
@@ -102,19 +104,32 @@ export function useLoop(props: {
 
 		items = [];
 
+		// First append
 		let appended = append();
 		let first = appended[0];
 		let last = appended[appended.length - 1];
 
-		const margin =
-			parseFloat(getComputedStyle(first.el).marginLeft) +
-			parseFloat(getComputedStyle(last.el).marginRight);
+		// Get overall width
+		const width = last.bounds.right - first.bounds.left;
 
-		itemsWidth.value = last.bounds.right - bounds.x + margin;
+		console.log(`first.el`, first.el);
+		console.log(`firstBounds.left`, first.bounds.left);
+		console.log(`last.el`, last.el);
+		console.log(`lastBounds.right`, last.bounds.right);
+		console.log(`width`, width);
+		console.log(`bounds.width`, bounds.width);
+
+		// If overall width small than container and
+		isActive.value = !(width < bounds.width && props.onlyOnOverflow);
+		if (!isActive.value) return;
+
+		// Second append
+		appended = append();
+		const spacing = appended[0].bounds.x - last.bounds.right;
+		itemsWidth.value = width + spacing;
 
 		let i = 0;
-
-		while (i < 2 || (last.bounds.left < bounds.width && i < 50)) {
+		while (last.bounds.left < bounds.x + bounds.width && i < 50) {
 			const appended = append();
 			last = appended[0];
 			i++;
@@ -126,7 +141,7 @@ export function useLoop(props: {
 
 		children.forEach((child: HTMLElement, i: number) => {
 			const clone = node.appendChild(child.cloneNode(true)) as HTMLElement;
-			const bounds = getBounds(clone);
+			// const bounds = getBounds(clone);
 
 			const tags = ["a", "button", "input", "textarea"];
 			const indexableEls = Array.from(clone.querySelectorAll(tags.join(",")));
@@ -136,7 +151,7 @@ export function useLoop(props: {
 
 			const item: Item = {
 				el: clone,
-				bounds,
+				bounds: null,
 				indexableEls,
 				offset,
 			};
@@ -150,6 +165,12 @@ export function useLoop(props: {
 			});
 		});
 
+		// await nextFrame();
+
+		items.forEach((item) => {
+			item.bounds = getBounds(item.el);
+		});
+
 		return appended;
 	};
 
@@ -159,12 +180,12 @@ export function useLoop(props: {
 		node.style.transform = `translate3d(${position.x}px, 0, 0)`;
 	});
 
-	watch(
-		() => scroll.size,
-		() => {
-			resize();
-		},
-	);
+	// watch(
+	// 	() => scroll.size,
+	// 	() => {
+	// 		resize();
+	// 	}
+	// );
 
 	return { offset: position, bounds };
 }

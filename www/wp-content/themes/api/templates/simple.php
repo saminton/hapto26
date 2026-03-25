@@ -1,8 +1,8 @@
 <?php
 
-// Template name: Privacy
+// Template name: Simple
 
-function vl_get_data_privacy($id) {
+function vl_get_data_simple($id) {
 	$data = vl_query([
 		"query" => "post",
 		"where" => [
@@ -13,7 +13,7 @@ function vl_get_data_privacy($id) {
 			"content"
 		],
 		"fields" => [
-			//
+			"paragraph" //
 		]
 	]);
 

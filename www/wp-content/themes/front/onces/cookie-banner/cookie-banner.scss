@@ -19,25 +19,24 @@
 	z-index: 200;
 	background: rgb(var(--text));
 	color: rgb(var(--body));
-	padding: 1.8rem 4rem;
-
-	@include column-gap(2rem);
-	align-items: center;
 
 	@include transition(var(--timing), var(--ease)-out, transform, visibility);
 
 	@media (min-width: #{$phone + 1px}) {
-		bottom: 3.8rem;
-		left: 3.8rem;
+		left: 4rem;
+		right: 4rem;
+		bottom: 4rem;
+		padding: 2.4rem 3.2rem;
 	}
 
 	@media (max-width: $phone) {
-		width: calc(100% - 4rem);
-		bottom: 2rem;
+		bottom: 5.6rem;
 		left: 2rem;
+		right: 2rem;
+		padding: 2.4rem;
 	}
 
-	&[aria-hidden="true"] {
+	&[hidden] {
 		transform: translateX(-100%) translateX(-5rem);
 		visibility: hidden;
 	}
@@ -45,17 +44,43 @@
 	&[data-pending="true"] {
 		display: none;
 	}
+}
 
-	.content {
-		@include column-gap(2rem);
-	}
+.accept {
+	--button_color: var(--white);
+	--button_background: var(--black);
+	--button_border: var(--black);
+	--button_hover_color: var(--black);
+}
 
-	.buttons {
-		@include column-gap(2rem);
-	}
+.params {
+	--button_color: var(--black);
+	--button_background: 0, 0, 0, 0;
+	--button_border: var(--black);
+	--button_hover_color: var(--black);
+}
 
-	.close {
-		@include rect(3.4rem);
-		background: red;
+.text {
+	max-width: 83.1rem;
+}
+
+.content {
+	display: flex;
+	gap: 2rem;
+	align-items: center;
+	justify-content: space-between;
+
+	@media (max-width: $phone) {
+		flex-direction: column;
 	}
+}
+
+.buttons {
+	display: flex;
+	gap: 2rem;
+}
+
+.close {
+	@include rect(3.4rem);
+	background: red;
 }

@@ -24,12 +24,15 @@
 }
 
 .items {
+	width: 100%;
 	display: flex;
 	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
 	gap: 5.6rem;
 }
 
 .item {
 	height: 4rem;
-	min-width: fit-content;
+	min-width: calc(4rem * var(--ratio));
 }

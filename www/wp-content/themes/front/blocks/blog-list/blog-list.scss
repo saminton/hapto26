@@ -20,12 +20,19 @@
 
 .filters {
 	display: flex;
+	flex-wrap: nowrap;
 	gap: 2.4rem;
+	overflow-x: auto;
+	margin-top: -0.8rem;
+	margin-bottom: -0.8rem;
 }
 
 .filter {
 	cursor: pointer;
 	transition: var(--timing_short) var(--ease) color;
+	flex-shrink: 0;
+	padding-top: 0.8rem;
+	padding-bottom: 0.8rem;
 
 	&:not(:has(input:checked)):not(:hover) {
 		color: rgb(var(--grey500));

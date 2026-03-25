@@ -158,7 +158,6 @@ export const useSplit = function (node: HTMLElement, by?: SplitBy) {
 	};
 
 	const splitLetters = () => {
-		console.log(`split letters`, node);
 		Array.from(node.querySelectorAll("[v-word]")).forEach((wordEl) => {
 			let text = wordEl
 				?.getAttribute("v-word")

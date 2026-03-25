@@ -157,7 +157,6 @@ export const useAnim = (props: {
 		watch(
 			() => split.html.value,
 			() => {
-				console.log(`split html changed`);
 				setup();
 			},
 		);

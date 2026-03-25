@@ -5,7 +5,7 @@
 	// Titles
 
 	h1 {
-		@include typography.title-1(null);
+		@include typography.title-0(null);
 	}
 
 	h4 + * {
@@ -16,14 +16,15 @@
 	}
 
 	h2 {
-		@include typography.title-2(null);
+		@include typography.title-1(null);
 	}
 
-	h4 + * {
+	h2 + * {
 		margin-top: 4rem;
 	}
 
 	* + h2 {
+		margin-top: calc(var(--spacing_default) * 2);
 	}
 
 	h3 {
@@ -35,6 +36,7 @@
 	}
 
 	* + h3 {
+		margin-top: var(--spacing_default);
 	}
 
 	h4 {
@@ -84,7 +86,6 @@
 	ol {
 		// @include columns.row-gap(0.5em);
 		counter-reset: list;
-		color: rgb(var(--grey300));
 
 		display: flex;
 		flex-direction: column;
@@ -123,7 +124,6 @@
 	}
 
 	p {
-		color: rgb(var(--grey500));
 		@include typography.body-1(null);
 	}
 

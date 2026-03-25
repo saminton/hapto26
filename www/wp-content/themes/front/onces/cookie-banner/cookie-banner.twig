@@ -5,14 +5,33 @@
 {# Template #}
 
 <div class="cookie_banner">
-	<button class="close" aria-label="{{ 'Fermer'|translate }}"></button>
+	{# <button class="close" aria-label="{{ 'Fermer'|translate }}"></button> #}
 
 	<div class="content">
-		<span class="text">{{ text }}</span>
+		<span class="text">
+			{{ text }}
+			{% include 'atoms/link' with {
+				url: urls.privacy.url,
+				title: 'En savoir plus'|translate
+			} %}
+		</span>
 		<div class="buttons">
-			<button class="accept">{{ 'Accepter'|translate }}</button>
-			<button class="refuse">{{ 'Refuser'|translate }}</button>
-			<button class="params">{{ 'Paramétrer'|translate }}</button>
+			{# {% include 'atoms/button' with {
+				class: 'refuse',
+				title: 'Refuser'|translate
+			} %} #}
+
+			{% include 'atoms/button' with {
+				class: 'params',
+				title: 'Paramétrer'|translate,
+				icon: 'icons/arrow-right-up'
+			} %}
+
+			{% include 'atoms/button' with {
+				class: 'accept',
+				title: 'Accepter'|translate,
+				icon: 'icons/arrow-right-up'
+			} %}
 		</div>
 	</div>
 </div>

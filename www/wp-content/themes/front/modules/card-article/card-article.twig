@@ -13,7 +13,10 @@
 	{% set terms = terms|merge([item.term.id]) %}
 {% endfor %}
 
-<div class="card_article" data-index="{{ index }}">
+<div class="card_article"
+	data-index="{{ index }}"
+	v-anim="fade-up"
+	v-delay="{{ index == 0 ? 0.2 : 0.4 }}">
 	<a class="link" href="{{ post.url }}" aria-label="{{ post.title }}"></a>
 
 	{% if post.thumbnail %}

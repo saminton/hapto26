@@ -9,7 +9,7 @@
 	<div v-flux="default" class="flux">
 		<div class="items">
 			{% for item in images %}
-				{% include 'atoms/image' with item|merge({
+				{% include 'atoms/media' with item|merge({
 					class: 'item'
 				}) %}
 			{% endfor %}

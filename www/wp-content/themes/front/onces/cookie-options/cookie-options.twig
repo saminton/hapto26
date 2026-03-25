@@ -7,54 +7,66 @@
 
 {# Template #}
 
-<div class="cookie_options">
-	<button class="close" aria-label="{{ 'Fermer'|translate }}"></button>
-
-	<div class="header">
-		<span class="title">{{ title }}</span>
-	</div>
-
-	<div class="choices">
+{% if false %}
+	{% block choice %}
 		<div class="choice">
-			{% include 'atoms/checkbox' with {
-				label: 'Essentiel'|translate,
+			<label class="label">
+				<input type="checkbox"
+					name="{{ choice.name }}"
+					{{ attr('disabled', choice.is_disabled) }}
+					{{ attr('checked', choice.is_checked) }} />
+				<div class="check">
+					{{ svg('assets/svgs/icons/check.svg') }}
+				</div>
+				<span class="title" v-font="title_2">{{ choice.title }}</span>
+			</label>
+			<p v-font="label_3">
+				{{ choice.text|strip }}
+			</p>
+		</div>
+	{% endblock %}
+{% endif %}
+
+<div class="cookie_options" inert>
+	{# <button class="close" aria-label="{{ 'Fermer'|translate }}"></button> #}
+
+	<div v-scroll class="content">
+		<div class="choices">
+			{% set choice = {
+				name: 'essentiel',
+				title: 'Essentiel'|translate,
+				text: essentiel,
 				is_disabled: true,
-				is_checked: true,
-				class: 'checkbox',
-				font: 'body_5'
-			} only %}
-			<p v-font="label_3">
-				{{ essentiel|strip }}
-			</p>
+				is_checked: true
+			} %}
+			{{ block('choice') }}
+
+			{% set choice = {
+				name: 'analytics',
+				title: "Mesure d'audience"|translate,
+				text: analytics
+			} %}
+			{{ block('choice') }}
+
+			{% set choice = {
+				name: 'ads',
+				title: 'Publicité'|translate,
+				text: ads
+			} %}
+			{{ block('choice') }}
 		</div>
 
-		<div class="choice">
-			{% include 'atoms/checkbox' with {
-				label: "Mesure d'audience"|translate,
-				class: 'checkbox',
-				font: 'body_5',
-				name: 'analytics'
-			} only %}
-			<p v-font="label_3">
-				{{ analytics|strip }}
-			</p>
+		<div class="buttons">
+			{% include 'atoms/button' with {
+				class: 'refuse',
+				title: 'Tout refuser'|translate,
+				icon: 'icons/arrow-right-up'
+			} %}
+			{% include 'atoms/button' with {
+				class: 'accept',
+				title: 'Valider ce choix'|translate,
+				icon: 'icons/arrow-right-up'
+			} %}
 		</div>
-
-		<div class="choice">
-			{% include 'atoms/checkbox' with {
-				label: 'Publicité'|translate,
-				class: 'checkbox',
-				font: 'body_5',
-				name: 'ads'
-			} only %}
-			<p v-font="label_3">
-				{{ ads|strip }}
-			</p>
-		</div>
-	</div>
-
-	<div class="buttons">
-		<button class="accept">{{ 'Valider ce choix'|translate }}</button>
-		<button class="refuse">{{ 'Tout refuser'|translate }}</button>
 	</div>
 </div>

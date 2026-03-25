@@ -91,6 +91,15 @@
 		margin-left: 0;
 		margin-right: 0;
 	}
+
+	p {
+		color: rgb(var(--grey500));
+	}
+
+	ul,
+	ol {
+		color: rgb(var(--grey300));
+	}
 }
 
 .text {

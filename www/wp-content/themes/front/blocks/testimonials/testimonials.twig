@@ -9,12 +9,12 @@
 	{% if (items|length) > 1 %}
 		<div v-flux="default">
 			<nav class="nav">
-				<button class="previous" aria-label="{{ 'précédent'|translate }}">
+				<button class="previous" aria-label="{{ 'Précédent'|translate }}">
 					{% include 'atoms/icon' with {
 						icon: 'icons/arrow-left'
 					} %}
 				</button>
-				<button class="next" aria-label="{{ 'suivant'|translate }}">
+				<button class="next" aria-label="{{ 'Suivant'|translate }}">
 					<svg class="progress">
 						<circle cx="50%" cy="50%" r="50%" stroke-width="3px" />
 						<circle class="gauge"

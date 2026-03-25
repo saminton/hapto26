@@ -50,6 +50,9 @@ export const stores: { [key: string]: any } = {
 
 	menu: {
 		isOpen: false,
+		open: () => {},
+		close: () => {},
+		toggle: () => {},
 	},
 
 	overlay: {

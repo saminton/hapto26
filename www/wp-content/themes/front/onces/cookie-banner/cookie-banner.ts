@@ -71,7 +71,7 @@ export function CookieBanner(args: Component) {
 	};
 
 	const setDefaultValues = () => {
-		if (userPrefs.value) return null;
+		if (userPrefs.value) return;
 		userPrefs.value = {};
 	};
 
@@ -85,6 +85,6 @@ export function CookieBanner(args: Component) {
 	});
 
 	effect(() => {
-		attr(node, "hidden", !store.isOpen);
+		node.hidden = !store.isOpen;
 	});
 }

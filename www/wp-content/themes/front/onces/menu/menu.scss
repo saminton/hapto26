@@ -14,5 +14,100 @@
 @use "../../theme/typography.scss" as *;
 
 .menu {
-	padding: 2.4rem;
+	position: absolute;
+	bottom: var(--frame_bottom);
+	z-index: 60;
+	display: flex;
+	flex-direction: column;
+	clip-path: inset(0% 0 0 0);
+	transition: var(--timing) var(--ease) clip-path;
+
+	@media (min-width: #{$phone + 1px}) {
+		left: var(--frame_right);
+		top: var(--frame_top);
+		background: rgb(var(--black));
+		width: calc(34.4rem - 1px);
+	}
+
+	@media (max-width: $phone) {
+		top: 0;
+		left: 0;
+		right: 0;
+		background: rgb(var(--white));
+
+		--button_color: var(--white);
+		--button_background: var(--black);
+		--button_border: var(--black);
+		--button_hover_color: var(--black);
+		--button_hover_background: 0, 0, 0, 0;
+		--button_hover_border: var(--black);
+	}
+
+	&[inert] {
+		clip-path: inset(100% 0 0 0);
+	}
+}
+
+.top,
+.bottom {
+	border-right: 1px solid rgb(var(--white));
+}
+
+.top {
+	padding: 2.4rem 2.4rem 0;
+}
+
+.bottom {
+	position: relative;
+	margin-top: 7rem;
+	flex-grow: 1;
+
+	@media (max-width: $phone) {
+		display: none;
+	}
+}
+
+.anchors {
+	padding: 0rem 2.4rem 2.4rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.anchor {
+	@include label-1(null);
+
+	&:not(:hover):not([aria-current="true"]) {
+		color: rgb(var(--grey600));
+	}
+
+	a {
+		display: flex;
+		padding-top: 0.4rem;
+		padding-bottom: 0.4rem;
+	}
+}
+
+.items {
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+	margin-bottom: 3.2rem;
+}
+
+.item {
+	font-size: 2.4rem;
+	font-weight: 600;
+	color: rgba(var(--grey600));
+
+	@media (max-width: $phone) {
+		font-size: 4rem;
+		color: rgba(var(--grey300));
+	}
+
+	&:hover {
+		@media (min-width: #{$phone + 1px}) {
+			color: rgba(var(--white));
+		}
+	}
 }
