@@ -122,3 +122,10 @@ S'il s'agit d'une migration d'un site existant, effectuez une sauvegarde complè
 
 1.  **Restaurer les fichiers `uploads`** :
     - Transférez la sauvegarde de vos fichiers téléversés (`uploads`) dans le dossier `wp-content/uploads`.
+
+## 6. Protection du serveur avec un mot de passe
+
+### Panel Hostinger
+
+1.  **Activer / desactiver le mot de passe** :
+    - Dans le panneau de contrôle Hostinger, allez dans « Avancé » > « Protéger les répertoires par mot de passe ».
