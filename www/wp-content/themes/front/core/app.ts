@@ -143,7 +143,7 @@ export function App(
 		// Wait for components to load
 		await events.once(mutator, "complete");
 
-		loader.hide();
+		// loader.hide();
 		page.isReady = true;
 		scroll.isEnabled = true;
 	};

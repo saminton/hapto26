@@ -79,6 +79,7 @@ export function useLoop(props: {
 		if (calc > 0) calc -= itemsWidth.value;
 
 		// Set
+		// Todo: subtract left offset from container on value
 		if (calc) position.x = calc;
 	});
 
@@ -111,13 +112,6 @@ export function useLoop(props: {
 
 		// Get overall width
 		const width = last.bounds.right - first.bounds.left;
-
-		console.log(`first.el`, first.el);
-		console.log(`firstBounds.left`, first.bounds.left);
-		console.log(`last.el`, last.el);
-		console.log(`lastBounds.right`, last.bounds.right);
-		console.log(`width`, width);
-		console.log(`bounds.width`, bounds.width);
 
 		// If overall width small than container and
 		isActive.value = !(width < bounds.width && props.onlyOnOverflow);

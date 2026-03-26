@@ -22,7 +22,7 @@ export function Scrollbar(args: Component) {
 	const isMain = "main" in props;
 	const scroll = isMain ? useStore("scroll") : receive("scroll", node);
 	const device = useStore("device");
-	const barEl = child("bar");
+	const barEl = child("bar") as HTMLElement;
 
 	const drag = useDrag(barEl);
 	const height = ref(0);
@@ -64,7 +64,10 @@ export function Scrollbar(args: Component) {
 				(node.offsetHeight / scroll.size) * node.offsetHeight,
 				node.offsetHeight * 0.9,
 			);
+
 			isActive.value = scroll.size > 0;
+			console.log(`scroll.size`, scroll.size);
+			console.log(`isActive.value`, isActive.value);
 		},
 	);
 
@@ -82,8 +85,12 @@ export function Scrollbar(args: Component) {
 	);
 
 	effect(() => {
-		let hidden =
-			scroll.isEnabled && scroll.isSmoothed && isActive.value && !device.isTouch.value;
+		let hidden = !(
+			scroll.isEnabled &&
+			scroll.isSmoothed &&
+			isActive.value &&
+			!device.isTouch.value
+		);
 		aria(node, "hidden", hidden);
 		aria(node, "grabbed", drag.isDown);
 	});

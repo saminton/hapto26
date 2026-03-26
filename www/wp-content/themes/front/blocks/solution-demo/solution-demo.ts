@@ -3,6 +3,7 @@ import { ref, reactive, Ref } from "@vue/reactivity";
 import { onResized, useEvents, useStore } from "composables";
 import { getProps, extend, getRelativeBounds, getBounds } from "utils";
 import { gsap } from "gsap";
+import { MediaComponent } from "atoms/media";
 
 export interface SolutionDemoComponent extends Component {
 	el: HTMLElement;
@@ -18,7 +19,7 @@ export function SolutionDemo(args: Component) {
 	// Props
 
 	const { on, once } = useEvents();
-	const { child, children } = useScope(this);
+	const { child, children, component } = useScope(this);
 	const { watch, effect, computed } = useReactivity();
 
 	const {} = getProps(node);
@@ -26,10 +27,11 @@ export function SolutionDemo(args: Component) {
 	// Vars
 
 	const cardMainEl = child("card_main") as HTMLElement;
-	const mediaEl = child("media") as HTMLElement;
+	const media = component("media") as MediaComponent;
 	const cardSecondaryEls = children("card_secondary") as HTMLElement[];
 
 	const progress = ref(0);
+	const isPlaying = ref(false);
 	const device = useStore("device");
 	let timeline: GSAPTimeline;
 
@@ -85,7 +87,7 @@ export function SolutionDemo(args: Component) {
 			0.5,
 		);
 
-		const mediaBounds = getBounds(mediaEl);
+		const mediaBounds = getBounds(media.el);
 		const rel = getRelativeBounds(
 			cardMainEl.firstElementChild as HTMLElement,
 			mediaBounds,
@@ -95,7 +97,7 @@ export function SolutionDemo(args: Component) {
 		const clip = (mediaBounds.height - targetHeight) / 2;
 
 		timeline.fromTo(
-			mediaEl,
+			media.el,
 			{
 				clipPath: `inset(${rel.top}px ${rel.right}px ${rel.bottom}px ${rel.left}px round .8rem)`,
 			},
@@ -107,7 +109,7 @@ export function SolutionDemo(args: Component) {
 		);
 
 		timeline.fromTo(
-			mediaEl.firstElementChild,
+			media.el.firstElementChild,
 			{
 				opacity: 0,
 			},
@@ -123,6 +125,17 @@ export function SolutionDemo(args: Component) {
 
 	watch(progress, () => {
 		timeline?.progress(progress.value);
+		isPlaying.value = progress.value > 0.75;
+	});
+
+	watch(isPlaying, () => {
+		if (isPlaying.value) {
+			media.seek(0);
+			media.play();
+		} else {
+			media.seek(0);
+			media.pause();
+		}
 	});
 
 	defineExpose({

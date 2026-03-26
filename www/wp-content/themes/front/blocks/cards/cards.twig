@@ -24,7 +24,7 @@
 {% if false %}
 	{% block card %}
 		{% if item.style == 'complex' %}
-			<div class="complex">
+			<div class="complex" v-anim="fade-up" v-delay="{{ delay }}">
 				<div class="tags">
 					{% for tag in item.tags %}
 						<span class="tag">{{ tag.text|strip }}</span>
@@ -36,7 +36,7 @@
 				</p>
 			</div>
 		{% else %}
-			<div class="simple">
+			<div class="simple" v-anim="fade-up" v-delay="{{ delay }}">
 				<span v-font="title_3">{{ item.title|strip }}</span>
 				{% if item.has_tooltip %}
 					<div class="info">
@@ -56,7 +56,7 @@
 <div class="cards">
 	<div v-flux="default" class="flux">
 		{% if title %}
-			<h2 class="title" v-font="title_1" v-anim="title">
+			<h2 class="title" v-font="title_1" v-anim="text">
 				{{ title|strip }}
 			</h2>
 		{% endif %}
@@ -74,11 +74,13 @@
 		<div class="items">
 			<div class="column">
 				{% for item in column1 %}
+					{% set delay = 0 %}
 					{{ block('card') }}
 				{% endfor %}
 			</div>
 			<div class="column">
 				{% for item in column2 %}
+					{% set delay = 0.3 %}
 					{{ block('card') }}
 				{% endfor %}
 			</div>
