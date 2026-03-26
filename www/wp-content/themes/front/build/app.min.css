@@ -236,7 +236,7 @@ main {
 	--spacing_large: 15rem;
 	--flux_default: 88.8rem;
 	--flux_small: 120rem;
-	--flux_medium: 64.8rem;
+	--flux_medium: 68rem;
 	--flux_max: 120rem;
 	--timing: 0.5s;
 	--timing_short: 0.2s;
@@ -1391,7 +1391,8 @@ main {
 	top: 0;
 	right: 0;
 	height: 100%;
-	width: 12px;
+	width: var(--frame_right);
+	max-width: 1.2rem;
 	z-index: 100;
 	overflow: hidden;
 }
@@ -2306,6 +2307,11 @@ main {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
+@media (min-width: 769px) {
+	.complex-492e {
+		flex-grow: 1;
+	}
+}
 @media (max-width: 430px) {
 	.items-492e {
 		gap: 0.8rem;
@@ -2564,6 +2570,11 @@ main {
 }
 .button-8974 {
 	align-self: flex-end;
+}
+@media (min-width: 431px) and (max-width: 768px) {
+	.title-8974 {
+		font-size: 20rem;
+	}
 }
 @media (max-width: 430px) {
 	.title-8974 {
@@ -3084,17 +3095,17 @@ main {
 }
 @media (min-width: 431px) {
 	.cookie_banner-9bb0 {
-		left: 4rem;
-		right: 4rem;
-		bottom: 4rem;
+		left: calc(var(--frame_right) + 1.6rem);
+		right: calc(var(--frame_right) + 1.6rem);
+		bottom: calc(var(--frame_bottom) + 1.6rem);
 		padding: 2.4rem 3.2rem;
 	}
 }
 @media (max-width: 430px) {
 	.cookie_banner-9bb0 {
-		bottom: 5.6rem;
-		left: 2rem;
-		right: 2rem;
+		left: calc(var(--frame_right) + 0.8rem);
+		right: calc(var(--frame_right) + 0.8rem);
+		bottom: calc(var(--frame_bottom) + 0.8rem);
 		padding: 2.4rem;
 	}
 	.content-9bb0 {
@@ -3103,13 +3114,12 @@ main {
 }
 .cookie_options-292e {
 	position: absolute;
-	z-index: 200;
+	z-index: 100;
 	background: rgb(var(--text));
 	color: rgb(var(--body));
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 1.8rem 1.8rem 2.4rem 1.8rem;
 	transition: none var(--timing) var(--ease) -out;
 	transition-property: transform, visibility;
 	will-change: transform, visibility;
@@ -3177,23 +3187,26 @@ input:disabled + .check-292e {
 	--button_border: var(--black);
 	--button_hover_color: var(--black);
 }
-@media (min-width: 431px) {
+@media (min-width: 769px) {
 	.cookie_options-292e {
-		bottom: 4rem;
-		left: 4rem;
-		right: 4rem;
+		left: calc(var(--frame_right) + 1.6rem);
+		right: calc(var(--frame_right) + 1.6rem);
+		bottom: calc(var(--frame_bottom) + 1.6rem);
+	}
+	.content-292e {
+		padding: 1.8rem 1.8rem 2.4rem 1.8rem;
 	}
 	.choices-292e {
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 8rem;
 	}
 }
-@media (max-width: 430px) {
+@media (max-width: 768px) {
 	.cookie_options-292e {
-		bottom: 5.6rem;
-		left: 2rem;
-		right: 2rem;
-		height: calc(100% - 5.6rem - 2rem);
+		left: calc(var(--frame_right) + 0.8rem);
+		right: calc(var(--frame_right) + 0.8rem);
+		bottom: calc(var(--frame_bottom) + 0.8rem);
+		max-height: calc(100% - var(--frame_bottom) - var(--frame_top) - 1.6rem);
 	}
 	.content-292e {
 		padding: 2.4rem;
@@ -3261,7 +3274,7 @@ input:disabled + .check-292e {
 		100% 0%
 	);
 }
-@media (min-width: 431px) {
+@media (min-width: 769px) {
 	.bar-099f {
 		top: 0;
 		height: var(--frame_top);
@@ -3269,8 +3282,6 @@ input:disabled + .check-292e {
 	.logo-099f {
 		width: 11.3rem;
 	}
-}
-@media (min-width: 769px) {
 	.toggle-099f {
 		display: none;
 	}
@@ -3282,8 +3293,6 @@ input:disabled + .check-292e {
 		--frame_left: 0.8rem;
 		--frame_right: 0.8rem;
 	}
-}
-@media (max-width: 430px) {
 	.bar-099f {
 		bottom: 0;
 		height: var(--frame_bottom);
@@ -3396,7 +3405,12 @@ input:disabled + .check-292e {
 	font-weight: 600;
 	color: rgba(var(--grey600));
 }
-@media (min-width: 431px) {
+@media (min-width: 431px) and (max-width: 768px) {
+	.anchor-8d6a {
+		font-size: 1.7rem;
+	}
+}
+@media (min-width: 769px) {
 	.menu-8d6a {
 		left: var(--frame_right);
 		top: var(--frame_top);
@@ -3407,13 +3421,9 @@ input:disabled + .check-292e {
 		color: rgba(var(--white));
 	}
 }
-@media (min-width: 431px) and (max-width: 768px) {
-	.anchor-8d6a {
-		font-size: 1.7rem;
-	}
-}
-@media (max-width: 430px) {
+@media (max-width: 768px) {
 	.menu-8d6a {
+		z-index: 120;
 		top: 0;
 		left: 0;
 		right: 0;
@@ -3428,12 +3438,14 @@ input:disabled + .check-292e {
 	.bottom-8d6a {
 		display: none;
 	}
-	.anchor-8d6a {
-		font-size: 1.7rem;
-	}
 	.item-8d6a {
 		font-size: 4rem;
 		color: rgba(var(--grey300));
+	}
+}
+@media (max-width: 430px) {
+	.anchor-8d6a {
+		font-size: 1.7rem;
 	}
 }
 .overlay-380e {
