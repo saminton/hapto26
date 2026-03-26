@@ -28,6 +28,10 @@
 	font-weight: 500;
 	margin-bottom: 12.8rem;
 
+	@media (min-width: #{$phone + 1px}) and (max-width: $tablet) {
+		font-size: 20rem;
+	}
+
 	@media (max-width: $phone) {
 		font-size: 11rem;
 		margin-bottom: 2.4rem;

@@ -22,7 +22,8 @@
 	top: 0;
 	right: 0;
 	height: 100%;
-	width: 12px;
+	width: var(--frame_right);
+	max-width: 1.2rem;
 	z-index: 100;
 	overflow: hidden;
 

@@ -15,7 +15,7 @@
 
 .cookie_options {
 	position: absolute;
-	z-index: 200;
+	z-index: 100;
 
 	background: rgb(var(--text));
 	color: rgb(var(--body));
@@ -23,20 +23,19 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 1.8rem 1.8rem 2.4rem 1.8rem;
 	@include transition(var(--timing), var(--ease)-out, transform, visibility);
 
-	@media (min-width: #{$phone + 1px}) {
-		bottom: 4rem;
-		left: 4rem;
-		right: 4rem;
+	@media (min-width: #{$tablet + 1px}) {
+		left: calc(var(--frame_right) + 1.6rem);
+		right: calc(var(--frame_right) + 1.6rem);
+		bottom: calc(var(--frame_bottom) + 1.6rem);
 	}
 
-	@media (max-width: $phone) {
-		bottom: 5.6rem;
-		left: 2rem;
-		right: 2rem;
-		height: calc(100% - 5.6rem - 2rem);
+	@media (max-width: $tablet) {
+		left: calc(var(--frame_right) + 0.8rem);
+		right: calc(var(--frame_right) + 0.8rem);
+		bottom: calc(var(--frame_bottom) + 0.8rem);
+		max-height: calc(100% - var(--frame_bottom) - var(--frame_top) - 1.6rem);
 	}
 
 	// &[data-completed="true"] {
@@ -50,7 +49,10 @@
 }
 
 .content {
-	@media (max-width: $phone) {
+	@media (min-width: #{$tablet + 1px}) {
+		padding: 1.8rem 1.8rem 2.4rem 1.8rem;
+	}
+	@media (max-width: $tablet) {
 		padding: 2.4rem;
 	}
 }
@@ -58,12 +60,12 @@
 .choices {
 	display: grid;
 
-	@media (min-width: #{$phone + 1px}) {
+	@media (min-width: #{$tablet + 1px}) {
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 8rem;
 	}
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
 		gap: 2.4rem;
 	}
 }
@@ -117,7 +119,7 @@ input:disabled + .check {
 	align-self: flex-end;
 	flex-wrap: wrap;
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
 		margin-top: 4rem;
 	}
 }

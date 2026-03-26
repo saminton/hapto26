@@ -23,16 +23,16 @@
 	@include transition(var(--timing), var(--ease)-out, transform, visibility);
 
 	@media (min-width: #{$phone + 1px}) {
-		left: 4rem;
-		right: 4rem;
-		bottom: 4rem;
+		left: calc(var(--frame_right) + 1.6rem);
+		right: calc(var(--frame_right) + 1.6rem);
+		bottom: calc(var(--frame_bottom) + 1.6rem);
 		padding: 2.4rem 3.2rem;
 	}
 
 	@media (max-width: $phone) {
-		bottom: 5.6rem;
-		left: 2rem;
-		right: 2rem;
+		left: calc(var(--frame_right) + 0.8rem);
+		right: calc(var(--frame_right) + 0.8rem);
+		bottom: calc(var(--frame_bottom) + 0.8rem);
 		padding: 2.4rem;
 	}
 

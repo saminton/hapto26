@@ -1,6 +1,7 @@
 import { Component, useScope, useCookie, useReactivity } from "core";
-import { useEvents, useStore } from "composables";
+import { onAfterResize, useEvents, useStore } from "composables";
 import { aria, extend, getProps } from "utils";
+import { ScrollService } from "services";
 
 interface CookieOptionsComponent extends Component {
 	el: HTMLElement;
@@ -15,7 +16,7 @@ export function CookieOptions(args: Component) {
 	// Props
 
 	const { on, once } = useEvents();
-	const { child, children } = useScope(this);
+	const { child, children, service } = useScope(this);
 	const { watch, effect } = useReactivity();
 
 	const props = getProps(node);
@@ -30,6 +31,7 @@ export function CookieOptions(args: Component) {
 	const acceptEl = child("accept");
 	const refuseEl = child("refuse");
 	const checkboxEls = children("checkbox input");
+	const content = service("scroll") as ScrollService;
 
 	// Hooks
 
@@ -86,5 +88,9 @@ export function CookieOptions(args: Component) {
 		checkboxEls.forEach((el: HTMLInputElement) => {
 			if (el.name) el.checked = userPrefs.value[el.name];
 		});
+	});
+
+	watch(content.size, () => {
+		node.style.height = content.el.scrollHeight + "px";
 	});
 }

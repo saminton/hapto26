@@ -66,8 +66,8 @@ export function Scrollbar(args: Component) {
 			);
 
 			isActive.value = scroll.size > 0;
-			console.log(`scroll.size`, scroll.size);
-			console.log(`isActive.value`, isActive.value);
+			// console.log(`scroll.size`, scroll.size);
+			// console.log(`isActive.value`, isActive.value);
 		},
 	);
 

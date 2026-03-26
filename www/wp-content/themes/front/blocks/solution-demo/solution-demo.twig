@@ -42,7 +42,7 @@
 	<div v-flux="default" class="flux">
 		{#  #}
 		<div class="cards">
-			<div class="center">
+			<div class="center" v-anim="fade-up">
 				{% include 'atoms/media' with video|merge({
 					class: 'media',
 					fit: 'cover'
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 
-			<div class="columns">
+			<div class="columns" v-anim="fade-up" v-delay=".5">
 				{% for card in cards_secondary %}
 					<div class="card_secondary">
 						{{ block('card') }}

@@ -40,23 +40,23 @@
 	justify-content: space-between;
 	align-items: center;
 
-	@media (min-width: #{$phone + 1px}) {
+	@media (min-width: #{$tablet + 1px}) {
 		top: 0;
 		height: var(--frame_top);
 	}
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
 		bottom: 0;
 		height: var(--frame_bottom);
 	}
 }
 
 .logo {
-	@media (min-width: #{$phone + 1px}) {
+	@media (min-width: #{$tablet + 1px}) {
 		width: 11.3rem;
 	}
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
 		width: 7.5rem;
 	}
 }

@@ -71,6 +71,9 @@
 .complex {
 	background: rgb(var(--white));
 	color: rgb(var(--black));
+	@media (min-width: #{$tablet + 1px}) {
+		flex-grow: 1;
+	}
 }
 
 .simple {

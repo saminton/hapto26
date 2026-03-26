@@ -22,14 +22,15 @@
 	clip-path: inset(0% 0 0 0);
 	transition: var(--timing) var(--ease) clip-path;
 
-	@media (min-width: #{$phone + 1px}) {
+	@media (min-width: #{$tablet + 1px}) {
 		left: var(--frame_right);
 		top: var(--frame_top);
 		background: rgb(var(--black));
 		width: calc(34.4rem - 1px);
 	}
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
+		z-index: 120;
 		top: 0;
 		left: 0;
 		right: 0;
@@ -62,7 +63,7 @@
 	margin-top: 7rem;
 	flex-grow: 1;
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
 		display: none;
 	}
 }
@@ -100,13 +101,13 @@
 	font-weight: 600;
 	color: rgba(var(--grey600));
 
-	@media (max-width: $phone) {
+	@media (max-width: $tablet) {
 		font-size: 4rem;
 		color: rgba(var(--grey300));
 	}
 
 	&:hover {
-		@media (min-width: #{$phone + 1px}) {
+		@media (min-width: #{$tablet + 1px}) {
 			color: rgba(var(--white));
 		}
 	}

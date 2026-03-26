@@ -26,6 +26,12 @@ import {
 
 export interface ScrollService extends Service {
 	el: HTMLElement;
+	position: Ref<number>;
+	target: Ref<number>;
+	delta: Ref<number>;
+	size: Ref<number>;
+	smoothing: Ref<number>;
+	isScrolling: Ref<boolean>;
 	isSmoothed: Ref<boolean>;
 	isEnabled: Ref<boolean>;
 	to: (y: number | HTMLElement, offset: number) => void;
