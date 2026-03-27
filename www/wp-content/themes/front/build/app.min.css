@@ -3404,6 +3404,10 @@ input:disabled + .check-292e {
 	font-size: 2.4rem;
 	font-weight: 600;
 	color: rgba(var(--grey600));
+	transition: var(--timing_short) var(--ease) color;
+}
+.item-8d6a[aria-current="true"] {
+	color: rgba(var(--white));
 }
 @media (min-width: 431px) and (max-width: 768px) {
 	.anchor-8d6a {
