@@ -73,12 +73,19 @@ export function useLoop(props: {
 		scrollSpeed *= speed >= 0 ? 1 : -1;
 		if (scroll.delta) speed += scroll.delta * scrollSpeed;
 
+		let offset = 0;
+		if (items.length > 0) {
+			offset = items[0].bounds.left - bounds.left;
+			// console.log(`offset`, offset);
+		}
+
 		// Position
 		let calc = (position.x + speed * tick.delta) % itemsWidth.value;
 		calc = Math.round(calc * 10) / 10;
-		if (calc > 0) calc -= itemsWidth.value;
+		if (calc > -offset) calc -= itemsWidth.value;
 
 		// Set
+
 		// Todo: subtract left offset from container on value
 		if (calc) position.x = calc;
 	});

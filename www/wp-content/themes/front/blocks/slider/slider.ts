@@ -32,6 +32,7 @@ export function Slider(args: Component) {
 	const {} = useLoop({
 		el: itemsEl,
 		speed,
+		boundsEl: node,
 	});
 
 	let anim: GSAPAnimation;

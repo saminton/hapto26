@@ -25,8 +25,7 @@ export function Menu(args: Component) {
 	// Vars
 
 	const route = useRoute();
-	const toggleEl = child("toggle");
-	const itemsEls = children("items") as HTMLLinkElement[];
+	const itemEls = children("item") as HTMLLinkElement[];
 	const page = useStore("page");
 	const anchorsEl = child("anchors");
 
@@ -124,7 +123,7 @@ export function Menu(args: Component) {
 	});
 
 	effect(() => {
-		itemsEls.forEach((el) => {
+		itemEls.forEach((el) => {
 			aria(el, "current", el.href == route.fullPath);
 		});
 	});

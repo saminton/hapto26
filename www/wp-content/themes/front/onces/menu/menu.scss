@@ -100,6 +100,11 @@
 	font-size: 2.4rem;
 	font-weight: 600;
 	color: rgba(var(--grey600));
+	transition: var(--timing_short) var(--ease) color;
+
+	&[aria-current="true"] {
+		color: rgba(var(--white));
+	}
 
 	@media (max-width: $tablet) {
 		font-size: 4rem;
