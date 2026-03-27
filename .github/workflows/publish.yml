@@ -13,6 +13,7 @@ on:
       - master
     paths:
       - "www/wp-content/themes/front/build/**"
+  workflow_dispatch:
 
 jobs:
   publish-themes:
