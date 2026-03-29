@@ -1,0 +1,56 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+:root {
+	--icon_size: 2.4rem;
+	--icon_fill: var(--grey600);
+	--icon_stroke: var(--black);
+}
+
+// Styles
+
+.icon {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+
+	@include svg-fill(rgb(var(--icon_fill)));
+	@include svg-stroke(rgb(var(--icon_stroke)));
+
+	*[fill] {
+		@include transition(var(--timing), var(--ease), fill, stroke);
+	}
+	*[stroke] {
+		@include transition(var(--timing), var(--ease), fill, stroke);
+	}
+
+	// Preset
+
+	&[v-background] {
+		border-radius: 2px;
+		@include rect(3.2rem);
+	}
+
+	&[v-background="grey800"] {
+		background: rgb(var(--grey800));
+	}
+
+	svg {
+		@include rect(var(--icon_size));
+		// inset: 0;;
+	}
+}

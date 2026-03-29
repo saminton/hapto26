@@ -1,0 +1,32 @@
+// Core
+
+@use "../core/responsive.scss" as *;
+@use "../core/flux.scss" as *;
+@use "../core/columns.scss" as *;
+@use "../core/spacings.scss" as *;
+@use "../core/utils.scss" as *;
+
+// Theme
+
+@use "../theme/breakpoints.scss" as *;
+@use "../theme/variables.scss" as *;
+@use "../theme/mixins.scss" as *;
+@use "../theme/typography.scss" as *;
+
+.error {
+}
+
+.flux {
+	padding-top: var(--spacing_default);
+}
+
+.title {
+	margin-top: 2rem;
+	font-size: 29.6rem;
+	line-height: 0.81;
+	font-weight: 500;
+
+	@media (max-width: $phone) {
+		font-size: 11rem;
+	}
+}

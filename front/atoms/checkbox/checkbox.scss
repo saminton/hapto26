@@ -1,0 +1,90 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+:root {
+	--checkbox_color: var(--black);
+	--checkbox_background: var(--black);
+	--checkbox_border: var(--grey500);
+	--checkbox_checked_color: var(--white);
+	--checkbox_checked_background: var(--white);
+	--checkbox_checked_border: var(--grey500);
+}
+
+// Styles
+
+.checkbox {
+	display: flex;
+
+	// Presets
+
+	input {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	input:checked + .tick {
+		color: rgb(var(--checkbox_checked_color));
+		background: rgb(var(--checkbox_checked_background));
+		border-color: rgb(var(--checkbox_checked_border));
+	}
+
+	input:disabled + * {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+
+	input:focus {
+		outline: none;
+	}
+
+	input:focus + .tick {
+		outline: var(--focus);
+	}
+
+	input[aria-invalid="true"] + .tick {
+		border-color: rgb(var(--error));
+	}
+}
+
+.label {
+	margin-left: 1rem;
+	display: flex;
+	flex-direction: column;
+	color: rgba(var(--grey500));
+
+	a {
+		@include underline;
+	}
+
+	a:hover {
+		color: rgba(var(--white));
+	}
+}
+
+.tick {
+	position: relative;
+	display: block;
+	margin-top: calc((1lh - 1.6rem) / 2);
+	@include rect(1.6rem);
+	border: var(--input_border_width) solid;
+	border-radius: 3px;
+
+	color: rgb(var(--checkbox_color));
+	background: rgb(var(--checkbox_background));
+	border-color: rgb(var(--checkbox_border));
+}

@@ -1,0 +1,22 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def primary = [] %}
+{% def secondary = [] %}
+{% def delay = 0 %}
+
+{# Template #}
+
+<div class="buttons {{ class }}" v-anim="items" v-delay="{{ delay }}">
+	{% if secondary %}
+		{% include 'atoms/button' with secondary|merge({
+			variant: 'outline',
+			icon: 'icons/arrow-right-up'
+		}) %}
+	{% endif %}
+	{% if primary %}
+		{% include 'atoms/button' with primary|merge({
+			icon: 'icons/arrow-right-up'
+		}) %}
+	{% endif %}
+</div>

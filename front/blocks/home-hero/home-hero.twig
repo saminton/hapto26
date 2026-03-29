@@ -1,0 +1,24 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def text = '' %}
+{% def link = [] %}
+
+{# Template #}
+
+<div class="home_hero">
+	<div v-flux="default" class="flux">
+		<h1 class="title" v-anim="letters">
+			Hapto
+		</h1>
+		<p class="text" v-font="title_2" v-anim="text" v-delay=".2">
+			{{ text|strip }}
+		</p>
+
+		{% include 'atoms/button' with link|merge({
+			class: 'button',
+			anim: 'fade-up',
+			delay: '.9'
+		}) %}
+	</div>
+</div>

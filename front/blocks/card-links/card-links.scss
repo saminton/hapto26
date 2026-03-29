@@ -1,0 +1,61 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.card_links {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.items {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2.4rem;
+
+	@media (max-width: $phone) {
+		grid-template-columns: 1fr;
+		gap: 1.8rem;
+	}
+}
+
+.card {
+	border: 1px solid rgb(var(--grey700));
+	padding: 4rem;
+	border-radius: var(--radius_medium);
+	transition: border-color var(--timing) var(--ease);
+
+	@media (max-width: $phone) {
+		padding: 2.4rem;
+	}
+}
+
+.card:hover {
+	--icon_fill: var(--white);
+	border-color: rgb(var(--white));
+}
+
+.card_top {
+	margin-bottom: 2.4rem;
+	display: flex;
+	align-items: flex-start;
+	gap: 2.4rem;
+	--icon_size: 3.2rem;
+}
+
+.text ul {
+	color: rgb(var(--grey500));
+	li::before {
+		clip-path: inset(calc(50% - 1px) 0);
+	}
+}

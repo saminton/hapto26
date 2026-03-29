@@ -1,0 +1,29 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.solution {
+}
+
+.hero {
+	@media (min-width: #{$phone + 1px}) {
+		position: sticky;
+		top: 0;
+	}
+}
+
+.container {
+	height: 200rem;
+	margin-bottom: var(--spacing_default);
+}

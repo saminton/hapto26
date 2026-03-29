@@ -1,0 +1,64 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.numbers {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.title {
+	margin-bottom: var(--spacing_default);
+}
+
+.item {
+	display: flex;
+	flex-direction: column;
+
+	&:not(:last-child) {
+		margin-bottom: 2.4rem;
+	}
+
+	&:not(:first-child) {
+		padding-top: 2.4rem;
+		border-top: 1px solid rgb(var(--grey800));
+	}
+}
+
+.icon {
+	float: left;
+	--icon_fill: var(--white);
+	--icon_size: 10rem;
+	margin-left: -2rem;
+	margin-right: 2rem;
+
+	@media (max-width: $phone) {
+		--icon_size: 5.8rem;
+		margin-left: -1rem;
+		margin-right: 1rem;
+	}
+}
+
+.caption {
+	color: rgb(var(--grey500));
+	grid-column: 1/3;
+}
+
+.text {
+	font-size: 0;
+
+	span {
+		@include title-0(null);
+	}
+}

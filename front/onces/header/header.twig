@@ -1,0 +1,17 @@
+{# Vars #}
+
+{% def class = '' %}
+
+{# Template #}
+
+<div class="header">
+	<div class="bar">
+		<a href="{{ urls.home.url }}"
+			class="logo"
+			aria-label="{{ urls.home.title }}">
+			{{ svg('assets/svgs/logo.svg') }}
+		</a>
+		<button class="toggle"></button>
+	</div>
+	<div class="frame"></div>
+</div>

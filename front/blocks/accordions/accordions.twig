@@ -1,0 +1,41 @@
+{# Vars #}
+
+{% def class = '' %}
+
+{# Template #}
+
+<div class="accordions">
+	<div v-flux="default">
+		<div class="top">
+			<h2 class="title" v-font="title_1" v-anim="text">
+				{{ title|strip }}
+			</h2>
+			{% if link %}
+				{% include 'atoms/button' with link|merge({
+					class: 'link_top',
+					icon: 'icons/arrow-right-up'
+				}) %}
+			{% endif %}
+		</div>
+
+		<div class="items">
+			<div class="item">
+				{% set i = 1 %}
+				{% for item in items %}
+					{% include 'modules/accordion' with item|merge({
+						index: i,
+						class: 'item'
+					}) %}
+					{% set i = i + 1 %}
+				{% endfor %}
+			</div>
+		</div>
+
+		{% if link %}
+			{% include 'atoms/button' with link|merge({
+				class: 'link_bottom',
+				icon: 'icons/arrow-right-up'
+			}) %}
+		{% endif %}
+	</div>
+</div>

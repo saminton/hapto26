@@ -1,0 +1,15 @@
+*.ts
+*.scss
+
+package-lock.json
+.npmrc
+.nvmrc
+.env.*
+
+gulpfile.js
+
+composer.json
+composer.lock
+tsconfig.json
+
+.deployignore

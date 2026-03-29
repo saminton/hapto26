@@ -1,0 +1,99 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.card_article {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	transition: var(--timing) var(--ease) color;
+}
+
+.link {
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+}
+
+.card_article[data-index="0"] {
+	flex-direction: row;
+	background: rgb(var(--white));
+	color: rgb(var(--black));
+	padding: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	@media (max-width: $phone) {
+		padding: 2.4rem;
+		flex-direction: column;
+	}
+}
+
+.thumbnail {
+	object-fit: cover;
+	width: 100%;
+	aspect-ratio: 1;
+	margin-bottom: 0.8rem;
+}
+
+.card_article[data-index="0"] .thumbnail {
+	@media (min-width: #{$phone + 1px}) {
+		min-width: 40rem;
+		height: 40rem;
+		margin-right: 4rem;
+		margin-bottom: 0;
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+}
+
+.card_article[data-index="0"] .content {
+	align-items: center;
+	text-align: center;
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+
+	@media (max-width: $phone) {
+		padding-top: 2.4rem;
+		padding-bottom: 2.4rem;
+	}
+}
+
+.title {
+	margin-top: 0.8rem;
+	margin-bottom: 0.8rem;
+}
+
+.card_article[data-index="0"] .title {
+	font-size: 4.6rem;
+	margin-top: 0;
+	margin-bottom: 2.4rem;
+	max-width: 72.8rem;
+
+	@media (max-width: $phone) {
+		font-size: 2.5rem;
+	}
+}
+
+.card_article:not([data-index="0"]):not(:hover) {
+	color: rgb(var(--grey500));
+}
+
+.author {
+	font-weight: 500;
+}

@@ -1,0 +1,48 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.tags {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.items {
+	padding-top: var(--spacing_default);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	@include title-3(null);
+	white-space: nowrap;
+	padding: 1rem 2.4rem 1.4rem;
+	height: 6.4rem;
+	border: 1px solid rgb(var(--grey700));
+	border-radius: 3.2rem;
+
+	@media (max-width: $phone) {
+		height: 4.4rem;
+		border-radius: 2.2rem;
+		padding: 0.6rem 1.8rem 0.6rem;
+	}
+}
+
+.text {
+	margin-top: var(--spacing_small);
+	color: rgb(var(--grey500));
+}

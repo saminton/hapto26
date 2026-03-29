@@ -1,0 +1,67 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.loader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 200;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+.logo {
+	position: absolute;
+	z-index: 4;
+	width: 30rem;
+	@include svg-fill(rgb(var(--white)));
+
+	svg {
+		animation: pulse 1s infinite;
+	}
+}
+
+.frame {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	background: rgb(var(--white));
+	clip-path: inset(50%);
+}
+
+.background {
+	position: absolute;
+	inset: 0;
+	background: rgb(var(--black));
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 0.4;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.4;
+	}
+}

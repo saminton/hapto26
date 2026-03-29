@@ -1,0 +1,135 @@
+@use "../core/columns";
+@use "typography";
+
+[v-font="format"] {
+	// Titles
+
+	h1 {
+		@include typography.title-0(null);
+	}
+
+	h4 + * {
+		margin-top: 4rem;
+	}
+
+	* + h1 {
+	}
+
+	h2 {
+		@include typography.title-1(null);
+	}
+
+	h2 + * {
+		margin-top: 4rem;
+	}
+
+	* + h2 {
+		margin-top: calc(var(--spacing_default) * 2);
+	}
+
+	h3 {
+		@include typography.title-3(null);
+	}
+
+	h3 + * {
+		margin-top: 4rem;
+	}
+
+	* + h3 {
+		margin-top: var(--spacing_default);
+	}
+
+	h4 {
+		@include typography.title-4(null);
+	}
+
+	h4 + * {
+		margin-top: 2.4rem;
+	}
+
+	* + h4 {
+	}
+
+	h5 {
+		// @include title-5(null);
+	}
+
+	* + h5 {
+	}
+
+	h6 {
+		// @include title-6(null);
+	}
+
+	* + h6 {
+	}
+
+	// Text decorations
+
+	a {
+		text-decoration: underline;
+	}
+
+	b,
+	strong {
+		// font-weight: 700;
+		color: rgb(var(--white));
+	}
+
+	i {
+		font-style: italic;
+	}
+
+	// Lists
+
+	ul,
+	ol {
+		// @include columns.row-gap(0.5em);
+		counter-reset: list;
+
+		display: flex;
+		flex-direction: column;
+		gap: 0.3em;
+	}
+
+	ul li,
+	ol li {
+		position: relative;
+		padding-left: 1em;
+	}
+
+	ul li {
+		&::before {
+			content: "•";
+			position: absolute;
+			left: 0;
+			// Adjust folling to taste
+			background: currentColor;
+			width: 0.5em;
+			clip-path: circle(15%);
+		}
+	}
+
+	ol li {
+		position: relative;
+		counter-increment: list;
+		padding-left: 1em;
+
+		&::before {
+			content: counter(list);
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+
+	p {
+		@include typography.body-1(null);
+	}
+
+	p + p,
+	p + ol,
+	p + ul {
+		margin-top: 1lh;
+	}
+}

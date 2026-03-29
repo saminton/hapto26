@@ -1,0 +1,112 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+:root {
+	--frame_top: 7rem;
+	--frame_bottom: 2.4rem;
+	--frame_left: 36.8rem;
+	--frame_right: 2.4rem;
+
+	@media (max-width: $tablet) {
+		--frame_top: 0.8rem;
+		--frame_bottom: 4.4rem;
+		--frame_left: 0.8rem;
+		--frame_right: 0.8rem;
+	}
+}
+
+.header {
+}
+
+.bar {
+	position: absolute;
+	z-index: 55;
+	width: 100%;
+	padding-left: var(--frame_right);
+	padding-right: var(--frame_right);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	@media (min-width: #{$tablet + 1px}) {
+		top: 0;
+		height: var(--frame_top);
+	}
+
+	@media (max-width: $tablet) {
+		bottom: 0;
+		height: var(--frame_bottom);
+	}
+}
+
+.logo {
+	@media (min-width: #{$tablet + 1px}) {
+		width: 11.3rem;
+	}
+
+	@media (max-width: $tablet) {
+		width: 7.5rem;
+	}
+}
+
+.toggle {
+	width: 4.8rem;
+	aspect-ratio: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	@media (min-width: #{$tablet + 1px}) {
+		display: none;
+	}
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		width: 2.4rem;
+		height: 2px;
+		background: rgb(var(--black));
+	}
+
+	&::before {
+		transform: translateY(0.3rem);
+	}
+
+	&::after {
+		transform: translateY(-0.3rem);
+	}
+}
+
+.frame {
+	position: absolute;
+	z-index: 50;
+	inset: 0;
+	background: rgba(var(--white));
+	pointer-events: none;
+
+	clip-path: polygon(
+		0% 0%,
+		0% 100%,
+		var(--frame_right) 100%,
+		var(--frame_right) var(--frame_top),
+		calc(100% - var(--frame_right)) var(--frame_top),
+		calc(100% - var(--frame_right)) calc(100% - var(--frame_bottom)),
+		var(--frame_right) calc(100% - var(--frame_bottom)),
+		var(--frame_right) 100%,
+		100% 100%,
+		100% 0%
+	);
+}

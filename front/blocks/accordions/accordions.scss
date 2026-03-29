@@ -1,0 +1,71 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.accordions {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.top {
+	display: flex;
+	margin-bottom: var(--spacing_small);
+
+	@media (min-width: #{$phone + 1px}) {
+		justify-content: space-between;
+		align-items: flex-end;
+	}
+
+	@media (max-width: $phone) {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+
+.link_top {
+	margin-bottom: 1rem;
+
+	@media (max-width: $phone) {
+		display: none;
+	}
+}
+
+.link_bottom {
+	margin-top: var(--spacing_small);
+	align-self: flex-end;
+
+	@media (min-width: #{$phone + 1px}) {
+		display: none;
+	}
+}
+
+.items {
+	display: flex;
+	flex-direction: column;
+	gap: 8rem;
+}
+
+.item:not(:first-child) {
+	padding-top: 4rem;
+	border-top: 1px solid rgb(var(--grey800));
+
+	@media (max-width: $phone) {
+		padding-top: 3.2rem;
+	}
+}
+
+.item:not(:last-child) {
+	padding-bottom: 4rem;
+	padding-bottom: 3.2rem;
+}

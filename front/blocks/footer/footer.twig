@@ -1,0 +1,51 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def margin = '' %}
+{% def padding = '' %}
+
+{# Template #}
+
+<section class="footer">
+	<div v-flux="default">
+		<div class="top">
+			<div class="columns">
+				{% for column in footer.items %}
+					<div class="column">
+						<span v-font="body_4" class="column_title">{{ column.title }}</span>
+						<ul>
+							{% for child in column.children %}
+								<li>
+									<a class="link" href="{{ child.url }}" v-font="body_4">
+										{{ child.title }}
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="right">
+				{% include 'atoms/langs' with {
+					class: 'langs_mobile'
+				} %}
+				<button v-font="body_4" class="scroll_top">
+					<span>{{ 'Haut de page'|translate }}</span>
+					{% include 'atoms/icon' with {
+						icon: 'icons/arrow-right-up'
+					} %}
+				</button>
+			</div>
+		</div>
+
+		<div class="bottom">
+			<span v-font="body_4" class="copyright">
+				© {{ 'now'|date('Y') }} HAPTO, Sopra Steria
+			</span>
+			{% include 'atoms/langs' with {
+				class: 'langs'
+			} %}
+		</div>
+	</div>
+</section>

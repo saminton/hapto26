@@ -1,0 +1,11 @@
+[v-line] {
+	clip-path: inset(-20%);
+
+	& > span {
+		display: block;
+	}
+}
+
+[v-word] {
+	display: inline-block;
+}

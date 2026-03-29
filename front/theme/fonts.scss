@@ -1,0 +1,30 @@
+@use "../core/utils";
+
+// convert fonts
+// https://transfonter.org/
+
+// Weight guide
+
+// 100 thin
+// 200 extra-light
+// 300 light
+// 400 regular
+// 500 medium
+// 600 semi-bold
+// 700 bold
+// 800 extra-bold
+// 900 black
+
+// Examples
+
+$dir: "../assets/fonts/";
+$base: $dir + "inter/inter24pt";
+
+// Karla
+
+@include utils.font-face("Inter", $base + "-regular", 400, normal);
+@include utils.font-face("Inter", $base + "-italic", 400, italic);
+@include utils.font-face("Inter", $base + "-medium", 500, normal);
+@include utils.font-face("Inter", $base + "-medium", 600, normal);
+@include utils.font-face("Inter", $base + "-semibolditalic", 500, italic);
+@include utils.font-face("Inter", $base + "-semibolditalic", 600, italic);

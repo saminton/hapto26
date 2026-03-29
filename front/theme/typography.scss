@@ -1,0 +1,106 @@
+@use "../core/responsive";
+@use "breakpoints";
+
+// No CSS output!
+// SCSS Mixins only
+
+/* Text sizes */
+/* 
+* Weight guide
+*
+* 100 thin
+* 200 extra-light
+* 300 light
+* 400 regular
+* 500 medium
+* 600 semi-bold
+* 700 bold
+* 800 extra-bold
+* 900 black
+* 
+* Font shorthand: https://www.w3schools.com/css/css_font_shorthand.asp
+* style, weight, size/line-height, font, fallback
+*/
+
+// Titles
+
+@mixin title-0($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 11rem, 11rem, 5.2rem);
+	line-height: 1.03;
+	font-weight: 500;
+}
+
+@mixin title-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 7.4rem, 7.4rem, 4rem);
+	line-height: 1.11;
+	font-weight: 500;
+}
+
+@mixin title-2($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 4.6rem, 4.6rem, 2.5rem);
+	line-height: 1.21;
+	font-weight: 500;
+}
+
+@mixin title-3($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 3.2rem, 3.2rem, 2.2rem);
+	line-height: 1.25;
+	font-weight: 500;
+}
+
+@mixin title-4($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 2.4rem, 2.4rem, 1.6rem);
+	line-height: 1.33;
+	font-weight: 500;
+}
+
+// Labels
+
+@mixin label-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.7rem, 1.7rem, 1.7rem);
+	line-height: 1.1;
+	font-weight: 600;
+}
+
+// Body
+
+@mixin body-1($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 2rem, 2rem, 1.4rem);
+	line-height: 1.5;
+	font-weight: 500;
+}
+
+@mixin body-2($break: breakpoints.$laptop) {
+	// Default font
+	font-family: "Inter", sans-serif;
+	@include responsive.property(font-size, $break, 1.8rem, 1.8rem, 1.5rem);
+	line-height: 1.38;
+	font-weight: 400;
+
+	strong,
+	b {
+		font-weight: 500;
+	}
+}
+
+@mixin body-3($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.6rem, 1.6rem, 1.4rem);
+	line-height: 1.38;
+	font-weight: 400;
+
+	strong,
+	b {
+		font-weight: 500;
+	}
+}
+
+@mixin body-4($break: breakpoints.$laptop) {
+	@include responsive.property(font-size, $break, 1.4rem, 1.4rem, 1.2rem);
+	line-height: 1.28;
+	font-weight: 400;
+
+	strong,
+	b {
+		font-weight: 500;
+	}
+}

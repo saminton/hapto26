@@ -1,0 +1,70 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.tooltip {
+	position: absolute;
+	top: 0;
+	z-index: 40;
+	padding-top: 3rem;
+	width: 100%;
+	height: 100%;
+	@include transition;
+}
+
+.tooltip[inert] {
+	opacity: 0;
+	transform: translateY(0.5rem);
+}
+
+.lip {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	display: flex;
+	justify-content: center;
+	width: 0;
+
+	svg {
+		width: 3.2rem;
+		height: 1.9rem;
+	}
+}
+
+.container {
+	position: absolute;
+	top: calc(100% + 1.8rem - 1px);
+	width: 43.2rem;
+	max-width: calc(100vw - 2 * (var(--gutter) + var(--frame_right)));
+}
+
+.items {
+	background: rgb(var(--grey600));
+	padding: 2.4rem;
+	border-radius: var(--radius_medium);
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	--icon_fill: var(--white);
+	@include transition;
+	transform-origin: top;
+}
+
+.tooltip[inert] .items {
+	transform: scale(0.95);
+}
+
+.text {
+	font-weight: 500;
+}

@@ -1,0 +1,123 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.footer {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+}
+
+.top {
+	display: flex;
+	gap: 4rem;
+
+	@media (max-width: $phone) {
+		flex-direction: column-reverse;
+		gap: 2.4rem;
+	}
+}
+
+.columns {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 4rem;
+
+	@media (max-width: $phone) {
+		grid-template-columns: 1fr;
+		gap: 2.4rem;
+	}
+}
+
+.right {
+	flex-shrink: 0;
+	display: flex;
+
+	@media (max-width: $phone) {
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid rgb(var(--grey800));
+		padding-bottom: 2.4rem;
+	}
+}
+
+.column_title {
+	color: rgb(var(--grey600));
+	margin-bottom: 1.6rem;
+	font-weight: 500;
+
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	height: 2.4rem;
+}
+
+.scroll_top {
+	color: rgb(var(--grey600));
+	font-weight: 500;
+
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	height: 2.4rem;
+	transition: var(--timing_short) var(--ease) color;
+	&:hover {
+		color: rgb(var(--white));
+	}
+}
+
+.link {
+	display: flex;
+	padding-top: 0.6rem;
+	padding-bottom: 0.6rem;
+	color: rgb(var(--grey500));
+	font-weight: 500;
+	transition: var(--timing_short) var(--ease) color;
+
+	&:hover {
+		color: rgb(var(--white));
+	}
+}
+
+.scroll_top {
+}
+
+.bottom {
+	margin-top: 8rem;
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid rgb(var(--grey800));
+	padding-top: 1.6rem;
+
+	@media (max-width: $phone) {
+		margin-top: 2.4rem;
+		padding-top: 2.4rem;
+		justify-content: center;
+	}
+}
+
+.copyright {
+	color: rgb(var(--grey600));
+}
+
+.langs {
+	@media (max-width: $phone) {
+		display: none;
+	}
+}
+
+.langs_mobile {
+	@media (min-width: #{$phone + 1px}) {
+		display: none;
+	}
+}

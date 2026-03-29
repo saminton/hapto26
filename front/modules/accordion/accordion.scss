@@ -1,0 +1,107 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.accordion {
+	transition: color var(--timing) var(--ease);
+	&[aria-expanded="false"]:not(:hover) {
+		color: rgb(var(--grey600));
+	}
+}
+
+.summary {
+	display: flex;
+}
+
+.index {
+	min-width: 7.2rem;
+	margin-right: 2.4rem;
+
+	@media (max-width: $phone) {
+		display: none;
+	}
+}
+
+.icon {
+	min-width: 4.8rem;
+	margin-left: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	@include transition;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		background: currentColor;
+	}
+
+	&::before {
+		width: 3rem;
+		height: 0.4rem;
+
+		@media (max-width: $phone) {
+			width: 2rem;
+			height: 0.3rem;
+		}
+	}
+
+	&::after {
+		width: 0.4rem;
+		height: 3rem;
+		@include transition;
+
+		@media (max-width: $phone) {
+			width: 0.3rem;
+			height: 2rem;
+		}
+	}
+}
+
+.accordion[aria-expanded="true"] .icon::after {
+	transform: scaleY(0);
+}
+
+.accordion:hover .icon {
+	transform: rotate(180deg);
+}
+
+.title {
+	text-align: left;
+}
+
+.content {
+	margin-left: 7.2rem + 2.4rem;
+	margin-right: 8.8rem;
+	transition: height var(--timing) var(--ease);
+
+	@media (max-width: $phone) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	p {
+		color: rgb(var(--grey500));
+	}
+
+	ul,
+	ol {
+		color: rgb(var(--grey300));
+	}
+}
+
+.text {
+	padding-top: 2.4rem;
+}

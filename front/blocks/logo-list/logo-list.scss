@@ -1,0 +1,45 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.logo_list {
+	padding-top: var(--spacing_default);
+	padding-bottom: var(--spacing_default);
+}
+
+.title {
+	margin-bottom: var(--spacing_default);
+}
+
+.items {
+	display: grid;
+	gap: 2.4rem;
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.item {
+	position: relative;
+	aspect-ratio: 1;
+	background: rgb(var(--white));
+	border-radius: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.image {
+	position: absolute;
+	inset: 15%;
+}

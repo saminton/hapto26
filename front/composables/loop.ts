@@ -1,0 +1,192 @@
+import { Ref, reactive, ref, unref } from "@vue/reactivity";
+import { onAfterResize, onBeforeResize } from "composables";
+import { useReactivity } from "core";
+import { Bounds, Vector2 } from "types";
+import { getBounds, nextFrame, receive, toArray } from "utils";
+import { onBeforeRender } from "./renderer";
+
+type Item = {
+	el: HTMLElement;
+	bounds: Bounds;
+	offset: Vector2;
+	indexableEls?: Element[];
+};
+
+export function useLoop(props: {
+	el: HTMLElement;
+	boundsEl?: HTMLElement;
+	speed?: number | Ref<number>;
+	scrollSpeed?: number | Ref<number>;
+	onlyOnOverflow?: boolean;
+}) {
+	//
+
+	const { watch, effect } = useReactivity();
+
+	const node = unref(props.el);
+	const containerEl = props.boundsEl ?? node.parentElement;
+	const scroll = receive("scroll", node);
+	const children = toArray(node.children) as HTMLElement[];
+
+	let items: Item[] = [];
+	const bounds: Bounds = reactive({
+		x: 0, //
+		y: 0,
+		width: 0,
+		height: 0,
+		left: 0,
+		top: 0,
+		bottom: 0,
+		right: 0,
+	});
+
+	const position = reactive({ x: 0, y: 0 });
+	const itemsWidth = ref(0);
+	const isPaused = ref(false);
+	const isActive = ref(false);
+
+	onMounted(() => {
+		setup();
+	});
+
+	onReady(() => {
+		resize();
+	});
+
+	onUnmounted(() => {
+		//
+	});
+
+	onBeforeResize(() => {});
+
+	onAfterResize(async () => {
+		resize();
+	});
+
+	onBeforeRender(containerEl, (tick) => {
+		if (isPaused.value || !isActive.value) return;
+
+		// Speed
+		let speed = unref(props.speed) ?? -1;
+		let scrollSpeed = unref(props.scrollSpeed) ? unref(props.scrollSpeed) * 0.2 : 0;
+
+		scrollSpeed *= speed >= 0 ? 1 : -1;
+		if (scroll.delta) speed += scroll.delta * scrollSpeed;
+
+		let offset = 0;
+		if (items.length > 0) {
+			offset = items[0].bounds.left - bounds.left;
+			// console.log(`offset`, offset);
+		}
+
+		// Position
+		let calc = (position.x + speed * tick.delta) % itemsWidth.value;
+		calc = Math.round(calc * 10) / 10;
+		if (calc > -offset) calc -= itemsWidth.value;
+
+		// Set
+
+		// Todo: subtract left offset from container on value
+		if (calc) position.x = calc;
+	});
+
+	// Functions
+
+	const setup = () => {
+		node.style.display = "flex";
+		node.style.maxWidth = "100%";
+		node.style.flexWrap = "nowrap";
+		node.style.whiteSpace = "nowrap";
+		node.style.userSelect = "none";
+		node.style.willChange = "transform";
+
+		// Prevent screen reader
+		node.setAttribute("aria-hidden", "true");
+	};
+
+	const resize = async () => {
+		position.x = 0;
+		//
+		node.innerHTML = "";
+		Object.assign(bounds, getBounds(containerEl));
+
+		items = [];
+
+		// First append
+		let appended = append();
+		let first = appended[0];
+		let last = appended[appended.length - 1];
+
+		// Get overall width
+		const width = last.bounds.right - first.bounds.left;
+
+		// If overall width small than container and
+		isActive.value = !(width < bounds.width && props.onlyOnOverflow);
+		if (!isActive.value) return;
+
+		// Second append
+		appended = append();
+		const spacing = appended[0].bounds.x - last.bounds.right;
+		itemsWidth.value = width + spacing;
+
+		let i = 0;
+		while (last.bounds.left < bounds.x + bounds.width && i < 50) {
+			const appended = append();
+			last = appended[0];
+			i++;
+		}
+	};
+
+	const append = () => {
+		let appended: Item[] = [];
+
+		children.forEach((child: HTMLElement, i: number) => {
+			const clone = node.appendChild(child.cloneNode(true)) as HTMLElement;
+			// const bounds = getBounds(clone);
+
+			const tags = ["a", "button", "input", "textarea"];
+			const indexableEls = Array.from(clone.querySelectorAll(tags.join(",")));
+			if (tags.includes(clone.tagName.toLowerCase())) indexableEls.push(clone);
+
+			const offset = reactive({ x: 0, y: 0 });
+
+			const item: Item = {
+				el: clone,
+				bounds: null,
+				indexableEls,
+				offset,
+			};
+
+			items.push(item);
+			appended.push(item);
+
+			// Remove tab indexing from elements
+			indexableEls.forEach((el: Element) => {
+				el.setAttribute("tabindex", "-1");
+			});
+		});
+
+		// await nextFrame();
+
+		items.forEach((item) => {
+			item.bounds = getBounds(item.el);
+		});
+
+		return appended;
+	};
+
+	// Handles
+
+	watch(position, () => {
+		node.style.transform = `translate3d(${position.x}px, 0, 0)`;
+	});
+
+	// watch(
+	// 	() => scroll.size,
+	// 	() => {
+	// 		resize();
+	// 	}
+	// );
+
+	return { offset: position, bounds };
+}

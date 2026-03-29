@@ -1,0 +1,39 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def items = [] %}
+
+{# Template #}
+
+{% if false %}
+	{% block card_content %}
+		<div class="card_top">
+			<span class="title" v-font="title_2">{{ item.title|strip }}</span>
+			{% if item.link %}
+				{% include 'atoms/icon' with {
+					icon: 'icons/arrow-right-up',
+					class: 'icon'
+				} %}
+			{% endif %}
+		</div>
+		<div class="text" v-font="format">
+			{{ item.text|strip }}
+		</div>
+	{% endblock %}
+{% endif %}
+
+<div class="card_links">
+	<div v-flux="default">
+		<div class="items">
+			{% for item in items %}
+				{% if item.link %}
+					<a class="card" href="{{ item.url }}">{{ block('card_content') }}</a>
+				{% else %}
+					<div class="card">
+						{{ block('card_content') }}
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>

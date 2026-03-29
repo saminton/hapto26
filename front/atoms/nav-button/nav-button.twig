@@ -1,0 +1,13 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def orientation = 'left' %}
+
+{# Template #}
+
+<button class="nav_button {{ class }}" orientation="{{ orientation }}">
+	{% include 'atoms/icon' with {
+		class: 'icon',
+		icon: 'icons/expand-' ~ orientation
+	} %}
+</button>

@@ -1,0 +1,89 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def title = '' %}
+{% def subtitle = '' %}
+{% def link = '' %}
+{% def caption = '' %}
+{% def items = [] %}
+
+{% set column1 = [] %}
+{% set column2 = [] %}
+{% set i = 0 %}
+{% for item in items %}
+	{% set i = i + 1 %}
+	{% if i <= (items|length) / 2 %}
+		{% set column1 = column1|merge([item]) %}
+	{% else %}
+		{% set column2 = column2|merge([item]) %}
+	{% endif %}
+{% endfor %}
+
+{# Template #}
+
+{% if false %}
+	{% block card %}
+		{% if item.style == 'complex' %}
+			<div class="complex" v-anim="fade-up" v-delay="{{ delay }}">
+				<div class="tags">
+					{% for tag in item.tags %}
+						<span class="tag">{{ tag.text|strip }}</span>
+					{% endfor %}
+				</div>
+				<span v-font="title_2">{{ item.title|strip }}</span>
+				<p class="card_text" v-font="body_1">
+					{{ item.text|strip }}
+				</p>
+			</div>
+		{% else %}
+			<div class="simple" v-anim="fade-up" v-delay="{{ delay }}">
+				<span v-font="title_3">{{ item.title|strip }}</span>
+				{% if item.has_tooltip %}
+					<div class="info">
+						{% include 'atoms/icon' with {
+							icon: 'icons/info'
+						} %}
+						{% include 'modules/tooltip' with {
+							items: item.tooltip_items
+						} %}
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
+	{% endblock %}
+{% endif %}
+
+<div class="cards">
+	<div v-flux="default" class="flux">
+		{% if title %}
+			<h2 class="title" v-font="title_1" v-anim="text">
+				{{ title|strip }}
+			</h2>
+		{% endif %}
+
+		{% if condition %}
+			<h3 class="subtitle" v-font="title_3">
+				{{ subtitle|strip }}
+			</h3>
+		{% endif %}
+
+		{% if caption %}
+			<span class="caption" v-font="body_1">{{ caption|strip }}</span>
+		{% endif %}
+
+		<div class="items">
+			<div class="column">
+				{% for item in column1 %}
+					{% set delay = 0 %}
+					{{ block('card') }}
+				{% endfor %}
+			</div>
+			<div class="column">
+				{% for item in column2 %}
+					{% set delay = 0.3 %}
+					{{ block('card') }}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,139 @@
+// Core
+
+@use "../../core/responsive.scss" as *;
+@use "../../core/flux.scss" as *;
+@use "../../core/columns.scss" as *;
+@use "../../core/spacings.scss" as *;
+@use "../../core/utils.scss" as *;
+
+// Theme
+
+@use "../../theme/breakpoints.scss" as *;
+@use "../../theme/variables.scss" as *;
+@use "../../theme/mixins.scss" as *;
+@use "../../theme/typography.scss" as *;
+
+.cookie_options {
+	position: absolute;
+	z-index: 100;
+
+	background: rgb(var(--text));
+	color: rgb(var(--body));
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	@include transition(var(--timing), var(--ease)-out, transform, visibility);
+
+	@media (min-width: #{$tablet + 1px}) {
+		left: calc(var(--frame_right) + 1.6rem);
+		right: calc(var(--frame_right) + 1.6rem);
+		bottom: calc(var(--frame_bottom) + 1.6rem);
+	}
+
+	@media (max-width: $tablet) {
+		left: calc(var(--frame_right) + 0.8rem);
+		right: calc(var(--frame_right) + 0.8rem);
+		bottom: calc(var(--frame_bottom) + 0.8rem);
+		max-height: calc(100% - var(--frame_bottom) - var(--frame_top) - 1.6rem);
+	}
+
+	// &[data-completed="true"] {
+	// 	transform: translateX(-100%) translateX(-5rem);
+	// 	visibility: hidden;
+	// }
+
+	&[inert] {
+		display: none;
+	}
+}
+
+.content {
+	@media (min-width: #{$tablet + 1px}) {
+		padding: 1.8rem 1.8rem 2.4rem 1.8rem;
+	}
+	@media (max-width: $tablet) {
+		padding: 2.4rem;
+	}
+}
+
+.choices {
+	display: grid;
+
+	@media (min-width: #{$tablet + 1px}) {
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 8rem;
+	}
+
+	@media (max-width: $tablet) {
+		gap: 2.4rem;
+	}
+}
+
+.label {
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	margin-bottom: 0.8rem;
+}
+
+.check {
+	cursor: pointer;
+	content: "";
+	display: block;
+	width: 3.4rem;
+	aspect-ratio: 1;
+	margin-bottom: 1.6rem;
+	border: 3px solid rgb(var(--black));
+	font-size: 0;
+}
+
+input:checked + .check {
+	background: rgb(var(--black));
+}
+
+input:disabled + .check {
+	cursor: not-allowed;
+}
+
+input:disabled + .check {
+	background: rgb(var(--grey500));
+	border-color: rgb(var(--grey500));
+}
+
+.close {
+	position: absolute;
+	@include rect(3.4rem);
+	top: 1.8rem;
+	right: 1.8rem;
+	background: red;
+}
+
+.buttons {
+	margin-top: 1.5rem;
+	display: flex;
+	column-gap: 2rem;
+	row-gap: 0.8rem;
+	align-self: flex-end;
+	flex-wrap: wrap;
+
+	@media (max-width: $tablet) {
+		margin-top: 4rem;
+	}
+}
+
+.accept {
+	--button_color: var(--white);
+	--button_background: var(--black);
+	--button_border: var(--black);
+	--button_hover_color: var(--black);
+}
+
+.refuse {
+	--button_color: var(--black);
+	--button_background: 0, 0, 0, 0;
+	--button_border: var(--black);
+	--button_hover_color: var(--black);
+}
