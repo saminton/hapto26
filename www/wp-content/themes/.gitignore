@@ -1,4 +1,35 @@
-.htaccess
-.env
-index.php
+# Ignore everything
+*
+
+# Allow api and front folders
+!api/
+!api/**
+
+!front/
+!front/**
+
+# ignore system files
+
+.idea
+.DS_Store
+* alias
+
+# ignore config files
+
+.env**
+
+# ignore package files
+
+node_modules
+*-lock.yaml
+*-lock.json
+.lock
+
+# ignore cache files
+
 /cache
+!www/wp-content/themes/front/vendor/twig/twig/src/cache
+# ignore build
+
+front/build/*
+front/build/*.min.*
