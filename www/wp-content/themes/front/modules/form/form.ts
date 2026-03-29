@@ -32,7 +32,7 @@ export function Form(args: Component) {
 		onError: (response) => error(response),
 	});
 
-	let nonce: string;
+	let token: string;
 	const message = ref("");
 
 	// Hooks
@@ -41,10 +41,13 @@ export function Form(args: Component) {
 
 	onReady(async () => {
 		try {
-			const res = await ajax("nonce", { name: "contact_form" });
-			nonce = res.data;
+			const res = await ajax("token", {
+				credentials: "same-origin",
+			});
+
+			token = res.token;
 		} catch (error) {
-			console.error("Error retreiving nonce");
+			console.error("Error retreiving token");
 		}
 	});
 
@@ -55,12 +58,13 @@ export function Form(args: Component) {
 	const request = async (data: FormData) => {
 		// Add form type
 		data.append("type", node.id);
-		data.append("nonce", nonce);
+		data.append("token", token);
 		let response: object = {};
 
 		try {
 			response = await ajax("contact-form", data, {
 				format: "form",
+				credentials: "same-origin",
 			});
 		} catch (error) {
 			console.error("Error sending form");

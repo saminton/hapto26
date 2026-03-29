@@ -23,6 +23,7 @@ export function Scrollbar(args: Component) {
 	const scroll = isMain ? useStore("scroll") : receive("scroll", node);
 	const device = useStore("device");
 	const barEl = child("bar") as HTMLElement;
+	const page = useStore("page");
 
 	const drag = useDrag(barEl);
 	const height = ref(0);
@@ -81,6 +82,15 @@ export function Scrollbar(args: Component) {
 
 			const delta = (drag.deltaY / (node.offsetHeight - height.value)) * scroll.size;
 			scroll.set(scroll.target + delta);
+		},
+	);
+
+	watch(
+		() => page.el,
+		() => {
+			if (isMain) {
+				position.value = 0;
+			}
 		},
 	);
 

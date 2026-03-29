@@ -8,8 +8,31 @@
 // 	return vl_query($args);
 // });
 
-vl_register_ajax("nonce", function ($args) {
-	wp_send_json_success(wp_create_nonce($args["name"] . "_nonce"));
+vl_register_ajax("token", function ($args) {
+	if (!isset($_COOKIE["guest_session"])) {
+		$session_id = bin2hex(random_bytes(32));
+
+		setcookie(
+			"guest_session",
+			$session_id,
+			time() + 3600,
+			"/",
+			"",
+			is_ssl(),
+			true // HttpOnly
+		);
+
+		$_COOKIE["guest_session"] = $session_id;
+	} else {
+		$session_id = $_COOKIE["guest_session"];
+	}
+
+	// Create CSRF token bound to session
+	$token = hash_hmac("sha256", $session_id, wp_salt());
+
+	wp_send_json([
+		"token" => $token
+	]);
 });
 
 // vl_register_ajax("page", function ($args) {

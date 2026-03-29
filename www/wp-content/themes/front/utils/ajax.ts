@@ -3,6 +3,7 @@ interface AjaxOptions {
 	origin?: string;
 	format?: string;
 	parse?: boolean;
+	credentials?: "same-origin" | "include";
 	[key: string]: any;
 }
 
@@ -22,6 +23,10 @@ export const ajax = async (action: String, data = {}, options?: AjaxOptions) => 
 			method: defaults.method,
 			headers: {},
 		};
+
+		if (defaults.credentials) {
+			fetchOptions.credentials = defaults.credentials;
+		}
 
 		if (defaults.method === "POST" || defaults.method === "PUT") {
 			if (defaults.format === "string") {

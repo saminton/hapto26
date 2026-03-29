@@ -1,15 +1,18 @@
 <?php
 
 vl_register_ajax("contact-form", function () {
-	if (
-		!isset($_POST["nonce"]) ||
-		!wp_verify_nonce($_POST["nonce"], "contact_form_nonce")
-	) {
-		error_log("Message not sent: invalid nonce");
-		wp_send_json_error([
-			"nonce" => $_POST["nonce"],
-			"message" => "Invalid request"
-		]);
+	// Check token
+	$token = $_POST["token"] ?? "";
+	$session_id = $_COOKIE["guest_session"] ?? "";
+
+	if (!$token || !$session_id) {
+		wp_send_json_error("Missing data");
+	}
+
+	$expected = hash_hmac("sha256", $session_id, wp_salt());
+
+	if (!hash_equals($expected, $token)) {
+		wp_send_json_error("Invalid token");
 	}
 
 	$ip = $_SERVER["REMOTE_ADDR"];
