@@ -1,0 +1,20 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="article"
+		v-barba="container"
+		v-barba-namespace="page"
+		v-scroll="main"
+		data-ancestor="{{ ancestor_id }}"
+		data-id="{{ id }}">
+		{% include 'blocks/article-hero' with {
+			post: post,
+			fields: fields
+		} %}
+
+		{% for item in fields.flexible_content %}
+			{% include 'blocks/' ~ item.component with item %}
+		{% endfor %}
+
+		{% include 'blocks/footer' %}
+	</main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="error"
+		v-barba="container"
+		v-barba-namespace="page"
+		v-scroll="main">
+		<div v-flux="default" class="flux">
+			<h1 class="title">
+				404
+			</h1>
+		</div>
+		{% include 'blocks/text-image' with {
+			subtitle: 'Page not found'
+		} %}
+
+		{% include 'blocks/footer' %}
+	</main>
+{% endblock %}

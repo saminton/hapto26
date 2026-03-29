@@ -1,0 +1,22 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def index = 1 %}
+{% def title = '' %}
+{% def content = '' %}
+
+{# Template #}
+
+<div class="accordion {{ class }}">
+	<button class="summary">
+		<span class="index" v-font="title_2">{{ index|pad(2) }}.</span>
+		<span class="title" v-font="title_2">{{ title|strip }}</span>
+		<div class="icon"></div>
+	</button>
+
+	<div class="content" v-font="format">
+		<div class="text">
+			{{ content|autop }}
+		</div>
+	</div>
+</div>

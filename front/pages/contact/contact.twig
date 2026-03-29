@@ -1,0 +1,16 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="contact"
+		v-barba="container"
+		v-barba-namespace="contact"
+		v-scroll="main"
+		data-ancestor=""
+		data-id="">
+		{% include 'blocks/title' with {
+			text: post.title
+		} %}
+		{% include 'blocks/contact-form' with {
+			form: fields.form
+		} %}
+	</main>
+{% endblock %}

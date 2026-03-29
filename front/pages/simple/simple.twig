@@ -1,0 +1,25 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="simple"
+		v-barba="container"
+		v-barba-namespace="simple"
+		v-scroll="main"
+		data-ancestor=""
+		data-id="">
+		<div class="hero">
+			<div v-flux="default">
+				<h1 v-font="title_0" v-anim="text">
+					{{ post.title|strip }}
+				</h1>
+			</div>
+		</div>
+
+		<div class="content" v-anim="fade-in" v-delay=".5">
+			<div v-flux="default">
+				<div class="paragraph" v-font="format">
+					{{ fields.paragraph|autop }}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

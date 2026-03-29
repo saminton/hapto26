@@ -1,0 +1,19 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def title = '' %}
+{% def text = '' %}
+
+{# Template #}
+
+<div class="reader">
+	<div v-flux="default" class="flux">
+		<h2 class="title" v-font="title_0">
+			{{ title|strip }}
+		</h2>
+
+		<div class="text" v-font="title_2">
+			{{ text|strip }}
+		</div>
+	</div>
+</div>

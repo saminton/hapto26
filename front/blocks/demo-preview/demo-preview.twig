@@ -1,0 +1,43 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def fixed_title = '' %}
+{% def title_list = [] %}
+{% def list = [] %}
+
+{# Template #}
+
+<div class="demo_preview">
+	<div v-flux="default" class="flux">
+		<div class="columns">
+			<div class="left">
+				<div class="top" v-font="title_2">
+					<span class="title_fixed">{{ fixed_title|strip }}</span>
+					<ul class="title_list">
+						{% for item in title_list %}
+							<li class="title_item">{{ item.text|strip }}</li>
+						{% endfor %}
+						<li></li>
+					</ul>
+				</div>
+				<ul class="list">
+					{% for item in list %}
+						<li class="list_item">{{ item.text|strip }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="right">
+				<div class="videos">
+					{% for item in list %}
+						{% include 'atoms/media' with item.video|merge({
+							class: 'video',
+							autoplay: false,
+							loop: false,
+							muted: true
+						}) %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

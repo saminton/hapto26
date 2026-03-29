@@ -1,0 +1,81 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def title = '' %}
+{% def subtitle = '' %}
+{% def link = [] %}
+{% def image = [] %}
+{% def has_text = false %}
+{% def paragraph = '' %}
+
+{# Template #}
+
+<div class="text_image">
+	<div v-flux="default" class="flux">
+		<div class="top">
+			{% if title %}
+				<h2 class="title" v-font="title_1" v-anim="text">
+					{{ title|strip }}
+				</h2>
+			{% endif %}
+
+			{% if link %}
+				{% include 'atoms/button' with link|merge({
+					class: 'link_top',
+					icon: 'icons/arrow-right-up'
+				}) %}
+			{% endif %}
+		</div>
+
+		{% if has_text %}
+			{% if image %}
+				<div class="columns">
+					<div>
+						{% include 'atoms/media' with image %}
+					</div>
+
+					<div v-font="format">
+						{% if subtitle %}
+							<h3>
+								{{ subtitle|strip }}
+							</h3>
+						{% endif %}
+
+						<div>
+							{{ paragraph|raw }}
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div v-font="format">
+					{% if condition %}
+						<h3>
+							{{ subtitle|strip }}
+						</h3>
+					{% endif %}
+
+					<div>
+						{{ paragraph|raw }}
+					</div>
+				</div>
+			{% endif %}
+		{% else %}
+			{% if subtitle %}
+				<h3 class="subtitle" v-font="title_3">
+					{{ subtitle|raw }}
+				</h3>
+			{% endif %}
+
+			{% if image %}
+				{% include 'atoms/media' with image %}
+			{% endif %}
+		{% endif %}
+
+		{% if link %}
+			{% include 'atoms/button' with link|merge({
+				class: 'link_bottom',
+				icon: 'icons/arrow-right-up'
+			}) %}
+		{% endif %}
+	</div>
+</div>
