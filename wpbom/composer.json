@@ -1,0 +1,30 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Sepbit\\WpBom\\": "src/"
+    },
+    "files": [
+      "vendor/cmb2/cmb2/init.php"
+    ]
+  },
+  "require": {
+    "cmb2/cmb2": "dev-master"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "wp-coding-standards/wpcs": "^3.1",
+    "pheromone/phpcs-security-audit": "^2.0",
+    "cyclonedx/cyclonedx-php-composer": "^5.2"
+  },
+  "scripts": {
+    "fix-style": "phpcbf -p --standard=phpcs.xml wpbom.php src/",
+    "check-style": "phpcs -p --standard=phpcs.xml wpbom.php src/",
+    "security" : "phpcs -p --standard=Security wpbom.php src/"
+  },
+  "config": {
+    "allow-plugins": {
+      "cyclonedx/cyclonedx-php-composer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
