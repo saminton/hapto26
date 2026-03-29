@@ -1,0 +1,14 @@
+<?php
+function curl_get_contents($url) {
+	$ch = curl_init($url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+	$data = curl_exec($ch);
+
+	if (!$data) {
+		$data = file_get_contents($url);
+	}
+
+	return $data;
+}

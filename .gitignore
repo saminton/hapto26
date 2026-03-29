@@ -1,0 +1,45 @@
+#hostinger specific
+.private/
+.htaccess.bk
+.htpasswd
+wp-content/mu-plugins/hostinger-auto-updates.php
+
+# ignore everything in the "wp-content" directory, except:
+# "mu-plugins", "plugins", "themes" directory
+
+wp-content/*
+!wp-content/plugins/
+!wp-content/mu-plugins/
+!wp-content/themes/
+# !www/wp-content/uploads/
+
+
+# ignore system files
+
+.idea
+.DS_Store
+* alias
+
+# ignore package files
+
+node_modules
+*-lock.yaml
+*-lock.json
+.lock
+
+# ignore cache files
+
+/cache
+!wp-content/themes/front/vendor/twig/twig/src/cache
+
+# ignore config files
+
+.htaccess
+.env
+wp-config.php
+
+# ignore log files
+
+wp-content/uploads/wc-logs/*
+*.log*
+

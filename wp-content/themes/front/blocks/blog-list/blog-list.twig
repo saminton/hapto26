@@ -1,0 +1,44 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def filters = [] %}
+{% def items = [] %}
+
+{# Template #}
+
+{% if false %}
+	{% block filter %}
+		<label class="filter">
+			<span>{{ item.name }}</span>
+			<input type="radio"
+				name="filter"
+				value="{{ item.id }}"
+				{{ attr('checked', item.checked) }} />
+		</label>
+	{% endblock %}
+{% endif %}
+
+<div class="blog_list">
+	<div v-flux="default">
+		<div class="filters" v-anim="fade-in" v-delay="0.2">
+			{% set item = {
+				name: 'Tous'|translate,
+				id: '',
+				checked: true
+			} %}
+			{{ block('filter') }}
+			{% for entry in filters %}
+				{% set item = entry.term %}
+				{{ block('filter') }}
+			{% endfor %}
+		</div>
+
+		<div class="items">
+			{% for item in items %}
+				{% include 'modules/card-article' with item|merge({
+					index: loop.index0
+				}) %}
+			{% endfor %}
+		</div>
+	</div>
+</div>

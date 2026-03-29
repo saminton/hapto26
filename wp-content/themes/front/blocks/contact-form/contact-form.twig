@@ -1,0 +1,15 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def form = [] %}
+
+{# Template #}
+
+<div class="contact_form">
+	<div v-flux="default">
+		<p v-font="body_1" class="intro">
+			{{ form.intro|strip }}
+		</p>
+		{% include 'modules/form' with form %}
+	</div>
+</div>

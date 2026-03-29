@@ -1,0 +1,22 @@
+{% extends 'layouts/layout.twig' %}
+{% block content %}
+	<main class="home"
+		v-barba="container"
+		v-barba-namespace="page"
+		v-scroll="main"
+		data-ancestor="{{ ancestor_id }}"
+		data-id="{{ id }}">
+		{% include 'blocks/home-hero' with fields.hero %}
+
+		{% set i = 0 %}
+		{% for item in fields.flexible_content %}
+			{% if i == fields.demo_preview.order + 0 %}
+				{% include 'blocks/demo-preview' with fields.demo_preview %}
+			{% endif %}
+			{% include 'blocks/' ~ item.component with item %}
+			{% set i = i + 1 %}
+		{% endfor %}
+
+		{% include 'blocks/footer' %}
+	</main>
+{% endblock %}

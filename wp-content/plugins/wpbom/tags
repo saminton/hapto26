@@ -1,0 +1,29 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/guia/Downloads/wpbom/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+CycloneDXController	src/Controllers/CycloneDXController.php	/^class CycloneDXController {$/;"	c	namespace:Sepbit\\WpBom\\Controllers
+DependencyTrackController	src/Controllers/DependencyTrackController.php	/^class DependencyTrackController {$/;"	c	namespace:Sepbit\\WpBom\\Controllers
+OptionsPageController	src/Controllers/OptionsPageController.php	/^class OptionsPageController {$/;"	c	namespace:Sepbit\\WpBom\\Controllers
+SEPBIT_WPBOM_DIR	wpbom.php	/^define( 'SEPBIT_WPBOM_DIR', plugin_dir_path( __FILE__ ) );$/;"	d	namespace:Sepbit\\WpBom
+SEPBIT_WPBOM_PRE	wpbom.php	/^define( 'SEPBIT_WPBOM_PRE', '_wpbom' );$/;"	d	namespace:Sepbit\\WpBom
+SEPBIT_WPBOM_URL	wpbom.php	/^define( 'SEPBIT_WPBOM_URL', plugin_dir_url( __FILE__ ) );$/;"	d	namespace:Sepbit\\WpBom
+SEPBIT_WPBOM_VER	wpbom.php	/^define( 'SEPBIT_WPBOM_VER', '1.4.0' );$/;"	d	namespace:Sepbit\\WpBom
+Sepbit\\WpBom	wpbom.php	/^namespace Sepbit\\WpBom;$/;"	n
+Sepbit\\WpBom\\Controllers	src/Controllers/CycloneDXController.php	/^namespace Sepbit\\WpBom\\Controllers;$/;"	n
+Sepbit\\WpBom\\Controllers	src/Controllers/DependencyTrackController.php	/^namespace Sepbit\\WpBom\\Controllers;$/;"	n
+Sepbit\\WpBom\\Controllers	src/Controllers/OptionsPageController.php	/^namespace Sepbit\\WpBom\\Controllers;$/;"	n
+auto_update	src/Controllers/DependencyTrackController.php	/^	public static function auto_update() {$/;"	f	class:Sepbit\\WpBom\\Controllers\\DependencyTrackController
+bom	src/Controllers/CycloneDXController.php	/^	public static function bom() {$/;"	f	class:Sepbit\\WpBom\\Controllers\\CycloneDXController
+custom_buttons	src/Controllers/OptionsPageController.php	/^	public static function custom_buttons( $field_args, $field ) {$/;"	f	class:Sepbit\\WpBom\\Controllers\\OptionsPageController
+json	src/Controllers/CycloneDXController.php	/^	public static function json() {$/;"	f	class:Sepbit\\WpBom\\Controllers\\CycloneDXController
+options_page	src/Controllers/OptionsPageController.php	/^	public static function options_page() {$/;"	f	class:Sepbit\\WpBom\\Controllers\\OptionsPageController
+send	src/Controllers/DependencyTrackController.php	/^	public static function send( $server, $api_key, $project, $bom ) {$/;"	f	class:Sepbit\\WpBom\\Controllers\\DependencyTrackController
+update	src/Controllers/DependencyTrackController.php	/^	public static function update() {$/;"	f	class:Sepbit\\WpBom\\Controllers\\DependencyTrackController

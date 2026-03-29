@@ -1,0 +1,17 @@
+{# Vars #}
+
+{% def class = '' %}
+{% def value = '' %}
+
+{# Template #}
+
+<span class="number">
+	{% for digit in value|split('') %}
+		<span class="digit" data-value="{{ digit }}">
+			{% for i in 0..9 %}
+				<span>{{ i }}</span>
+			{% endfor %}
+			<span>0</span>
+		</span>
+	{% endfor %}
+</span>
